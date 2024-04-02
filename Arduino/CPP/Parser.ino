@@ -20,7 +20,8 @@ void ParseCommands(char target) {
     HasInstruction = false;
     IsReading = false;
     IsRunning = false;
-
+    StopPulses();
+    
     Serial.println("Reseted");
   }
 
@@ -115,17 +116,18 @@ void GetTimeFromInstruction(char *data, int siz, int* lengths, int* fracs, int* 
 void SetCurrentValueToArr(char *nomCurr)
 {
   Serial.print("nomCurr: ");Serial.println(nomCurr);
-  if (strcmp(nomCurr, NOMINAL_50) == 0) Currents[pulseCounter] = CURRENT_50;
-  else if   (strcmp(nomCurr, NOMINAL_100) == 0)Currents[pulseCounter] = CURRENT_100;
-  else if   (strcmp(nomCurr, NOMINAL_150) == 0)Currents[pulseCounter] = CURRENT_150;
-  else if   (strcmp(nomCurr, NOMINAL_200) == 0)Currents[pulseCounter] = CURRENT_200;
-  else if   (strcmp(nomCurr, NOMINAL_250) == 0)Currents[pulseCounter] = CURRENT_250;
-  else if   (strcmp(nomCurr, NOMINAL_300) == 0)Currents[pulseCounter] = CURRENT_300;
-  else if   (strcmp(nomCurr, NOMINAL_350) == 0)Currents[pulseCounter] = CURRENT_350;
-  else if   (strcmp(nomCurr, NOMINAL_400) == 0)Currents[pulseCounter] = CURRENT_400;
-  else if   (strcmp(nomCurr, NOMINAL_450) == 0)Currents[pulseCounter] = CURRENT_450;
-  else if   (strcmp(nomCurr, NOMINAL_500) == 0)Currents[pulseCounter] = CURRENT_500;
-  else if   (strcmp(nomCurr, NOMINAL_600) == 0)Currents[pulseCounter] = CURRENT_550;
-  else if   (strcmp(nomCurr, NOMINAL_650) == 0)Currents[pulseCounter] = CURRENT_650;
+  if (strcmp(nomCurr, "50") == 0) Currents[pulseCounter] = 0;
+  else if   (strcmp(nomCurr, "100") == 0)Currents[pulseCounter] = 1;
+  else if   (strcmp(nomCurr, "150") == 0)Currents[pulseCounter] = 2;
+  else if   (strcmp(nomCurr, "200") == 0)Currents[pulseCounter] = 3;
+  else if   (strcmp(nomCurr, "250") == 0)Currents[pulseCounter] = 4;
+  else if   (strcmp(nomCurr, "300") == 0)Currents[pulseCounter] = 5;
+  else if   (strcmp(nomCurr, "350") == 0)Currents[pulseCounter] = 6;
+  else if   (strcmp(nomCurr, "400") == 0)Currents[pulseCounter] = 7;
+  else if   (strcmp(nomCurr, "450") == 0)Currents[pulseCounter] = 8;
+  else if   (strcmp(nomCurr, "500") == 0)Currents[pulseCounter] = 9;
+  else if   (strcmp(nomCurr, "550") == 0)Currents[pulseCounter] = 10;
+  else if   (strcmp(nomCurr, "600") == 0)Currents[pulseCounter] = 11;
+  else Currents[pulseCounter] = 12;
   Serial.print("Current: ");Serial.println(Currents[pulseCounter]);
 }

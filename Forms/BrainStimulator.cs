@@ -18,12 +18,12 @@ namespace BrainStimulator
         private DataGridViewCellStyle? DefaultCellStyle;
 
         private const string JUMPLINE = "\r\n";
-        public const string RESET_BOARD = "F>";
-        private const string RESET_PREVIOUS_SETUP = "E>";
-        private const string START_ROUTINE = "A>";
-        private const string STOP_ROUTINE = "B>";
-        private const string START_READ = "C>";
-        public const string STOP_READ = "D>";
+        public const string RESET_BOARD = "D>";
+        private const string RESET_PREVIOUS_SETUP = "R>";
+        private const string START_ROUTINE = "J>";
+        private const string STOP_ROUTINE = "K>";
+        private const string START_READ = "L>";
+        public const string STOP_READ = "M>";
 
         public BrainStimulator()
         {
@@ -197,7 +197,7 @@ namespace BrainStimulator
 
             try
             {
-                int delay = 100;
+                int delay = 2000;
                 boardConnection!.SendData(STOP_ROUTINE);
                 Thread.Sleep(delay);
 
