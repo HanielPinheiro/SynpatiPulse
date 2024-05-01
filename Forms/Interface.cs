@@ -3,7 +3,7 @@ using MaterialSkin;
 using MaterialSkin.Controls;
 using System.IO.Ports;
 
-namespace SerialPortController
+namespace BrainStimulator
 {
     public partial class Interface : MaterialForm
     {
@@ -83,25 +83,67 @@ namespace SerialPortController
         {
             cbComPortsList.Items.Clear();
             cbComPortsList.Items.AddRange(SerialPort.GetPortNames());
-            cbComPortsList.SelectedIndex = 0;
+            if (cbComPortsList.Items.Count > 0)
+                cbComPortsList.SelectedIndex = 0;
         }
 
         private void btnUpdate_Click(object sender, EventArgs e) { RefreshCom(); }
 
         private void SetDataCommunication() { _control!.SetDataReceivedEventHandler(new SerialDataReceivedEventHandler(DataReceivedHandler)); }
 
-        private void ResetDataCommunication()
+        private void ResetDataCommunication2()
         {
-            _control!.SendData(BrainStimulator.BrainStimulator.STOP_READ);
-            Thread.Sleep(2000);
+            try
+            {
+                int localDelay = 2000000000;
+                int counter = 0;
+                _control!.SendData(BrainStimulator.STOP_READ);
+                while(!_control!.ReadLine().Contains("Read Routine Disabled"))
+                {
+                    counter++;
+                    if (counter == localDelay) break;
+                }
 
-            _control!.SendData(BrainStimulator.BrainStimulator.RESET_BOARD);
-            Thread.Sleep(2000);
+                counter = 0;
+                _control!.SendData(BrainStimulator.RESET_BOARD);
+                while (!_control!.ReadLine().Contains("Stimulator is ready"))
+                {
+                    counter++;
+                    if (counter == localDelay) break;
+                }
 
-            _control!.UnSetDataReceivedEventHandler(new SerialDataReceivedEventHandler(DataReceivedHandler));
-            Thread.Sleep(2000);
+                _control!.UnSetDataReceivedEventHandler(new SerialDataReceivedEventHandler(DataReceivedHandler));
+                Thread.Sleep(2000);
 
-            receivedData = txtReceivedData.Text = string.Empty;
+                receivedData = txtReceivedData.Text = string.Empty;
+            }
+            catch { /*Ignore*/}
+        }
+
+        private async Task ResetDataCommunication()
+        {
+            try
+            {
+                int localDelay = 2000;
+
+                _control!.SendData(BrainStimulator.STOP_READ);
+                Task<string> responseTask = Task.Run(() => _control!.ReadLine());
+                await Task.WhenAny(responseTask, Task.Delay(localDelay)); 
+                
+                //Thread.Sleep(localDelay);
+
+                _control!.SendData(BrainStimulator.RESET_BOARD);
+                responseTask = Task.Run(() => _control!.ReadLine());
+                await Task.WhenAny(responseTask, Task.Delay(localDelay));
+
+                //Thread.Sleep(localDelay);
+
+                _control!.UnSetDataReceivedEventHandler(new SerialDataReceivedEventHandler(DataReceivedHandler));
+                Thread.Sleep(localDelay);
+
+                receivedData = txtReceivedData.Text = string.Empty;
+            }
+            catch { /*Ignore*/}
         }
 
         private void DataReceivedHandler(object sender, SerialDataReceivedEventArgs e)

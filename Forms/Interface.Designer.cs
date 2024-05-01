@@ -1,4 +1,4 @@
-﻿namespace SerialPortController
+﻿namespace BrainStimulator
 {
     partial class Interface
     {

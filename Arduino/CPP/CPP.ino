@@ -13,11 +13,13 @@
 #define CONTROL_RESET_INSTRUCTION 'R'
 #define CONTROL_RESET_BOARD 'D'
 
+#define INSTRUCTION_SET "SET"
 #define INSTRUCTION_POLARITY_P "+"
 #define INSTRUCTION_UNITY_MS 77
 #define INSTRUCTION_UNITY_US 85
 #define INSTRUCTION_UNITY_S 83
 #define INSTRUCTION_DECIMAL '.'
+#define INSTRUCTION_COMMA_SEPARATOR ","
 #define INSTRUCTION_SEPARATOR "$"
 #define INSTRUCTION_END '>'
 
@@ -35,20 +37,28 @@
 
 // =========================================================
 int pulseCounter = 0;
-const int numOfPulses = 50;
+const int numOfPulses = 10;
 
-int Digipot_CurrentValue = 0;
+int PulseCurrents[numOfPulses];
+int PulsePolarities[numOfPulses]; //(Positive or Negative)
 
-int Currents[numOfPulses];                          // listed currents above
-int Polarities[numOfPulses];                        //+1 or -1
+int PulseLengthsIntegerPart[numOfPulses];
+int PulseLengthsFractionalPart[numOfPulses];
+int PulseLengthsMeasureUnity[numOfPulses];
 
-int PulseLengths[numOfPulses];                   //time of pulse length
-int PulseLengthsFractional[numOfPulses];                   //frac part of time of pulse length
-int PulseLengthsMeasure[numOfPulses];               //time of pulse length
+int InterpulseLengthsIntegerPart[numOfPulses];
+int InterpulseLengthsFractionalPart[numOfPulses];
+int InterpulseLengthsMeasureUnity[numOfPulses];
 
-int InterpulseLengths[numOfPulses];              //time of interpulse interval
-int InterpulseLengthsFractional[numOfPulses];              //frac part of time of interpulse interval
-int InterpulseLengthsMeasure[numOfPulses];          //time of interpulse interval
+// =========================================================
+const int numPulseTrains = 199;
+float LorenzPulseTrainValues[numPulseTrains];
+
+int LorenzCounter = 0;
+int LorenzBatteryInterval = 0;
+int LorenzBatteryCounter = 0;
+int LorenzPreviousPolarity = 1;
+int LorenzMode = 0;
 
 bool HasInstruction = false;
 bool IsReading = false;

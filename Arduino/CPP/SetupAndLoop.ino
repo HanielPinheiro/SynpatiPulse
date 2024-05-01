@@ -53,23 +53,9 @@ void loop()
         else if (IsReading) ParseInstruction(tempData);
       }
     }
+    
     Serial_ResetBuffer();
-
-    //  while (Serial.available() > 0) {
-    //    int readedBytes = Serial.readBytesUntil(INSTRUCTION_END, tempData, bufferSize);
-    //
-    //    int arraySize = 0;
-    //    for (int i = 0; i < readedBytes; i++)
-    //      if (tempData[i] != newLine && tempData[i] != 0x00)
-    //        arraySize++;
-    //
-    //    if (arraySize > 0)
-    //    {
-    //      if (arraySize == 1)  ParseCommands(tempData[0]);
-    //      else if (IsReading) ParseInstruction(tempData);
-    //    }
-    //  }
-    //  Serial_ResetBuffer();
+    
   }
 }
 

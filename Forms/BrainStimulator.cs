@@ -4,7 +4,6 @@ using MaterialSkin;
 using MaterialSkin.Controls;
 using OxyPlot;
 using OxyPlot.Series;
-using SerialPortController;
 using System.ComponentModel;
 using System.Data;
 

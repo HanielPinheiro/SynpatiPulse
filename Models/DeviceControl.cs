@@ -57,6 +57,12 @@ namespace BrainStimulator.Models
         public void InitializeSerialPort() { serialPort!.Open(); }
 
         /// <summary>
+        /// Encapsulation of ReadLine
+        /// </summary>
+        /// <returns></returns>
+        public string ReadLine() { return serialPort.ReadLine(); }
+
+        /// <summary>
         /// Following IDispose
         /// </summary>
         public void Dispose()
