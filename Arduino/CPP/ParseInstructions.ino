@@ -1,9 +1,8 @@
 void ParseInstruction(char* data) {
   int tempPolarity = 0;
   char *token = strtok(data, INSTRUCTION_SEPARATOR);
-  
-if(token == INSTRUCTION_SET)
-{
+if(!strcmp(token,INSTRUCTION_SET))
+{   
   token = strtok(NULL, INSTRUCTION_SEPARATOR);
   SetCurrentValueToArr(token);
 

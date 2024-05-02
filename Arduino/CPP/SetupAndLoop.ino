@@ -31,6 +31,8 @@ void loop()
 {
   //SET$150$+$200U$999.8M> //Continuar testes
   //SET$450$-$200.8M$1.2S>
+  //SET$50$+$100U$100M>
+  //SET$100$-$100U$100M>
   if (IsRunning) {
     RunRoutine();
     //Serial.println(micros());
