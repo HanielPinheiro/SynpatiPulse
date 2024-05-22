@@ -93,13 +93,13 @@ namespace SerialPortController
         private void ResetDataCommunication()
         {
             _control!.SendData(BrainStimulator.BrainStimulator.STOP_READ);
-            Thread.Sleep(100);
+            Thread.Sleep(2000);
 
             _control!.SendData(BrainStimulator.BrainStimulator.RESET_BOARD);
-            Thread.Sleep(100);
+            Thread.Sleep(2000);
 
             _control!.UnSetDataReceivedEventHandler(new SerialDataReceivedEventHandler(DataReceivedHandler));
-            Thread.Sleep(100);
+            Thread.Sleep(2000);
 
             receivedData = txtReceivedData.Text = string.Empty;
         }
@@ -107,37 +107,7 @@ namespace SerialPortController
         private void DataReceivedHandler(object sender, SerialDataReceivedEventArgs e)
         {
             string newText = ((SerialPort)sender).ReadExisting();
-            if (!IsRunning)
-            {
-                if (newText.Contains(LOOP) && readAllData) IsRunning = true; else IsRunning = false;
-
-                var separarDadosLidos = newText.Split(new string[] { "R\r\n", "Re\r\n", "Rea\r\n", "Read\r\n", "Readi\r\n", "Readin\r\n", "Reading\r\n", "\r\n", "\r", "\n" }, StringSplitOptions.RemoveEmptyEntries).ToList();
-                separarDadosLidos.RemoveAll(x => x.Contains(READING));
-                receivedData += string.Join(JUMPLINE, separarDadosLidos);
-                if (receivedData.Contains(SAVED_DATA))
-                {
-                    int result = 0;
-                    var separate = receivedData.Split(SAVED_DATA);
-                    if (separate.Length > 0)
-                    {
-                        var separate2 = separate[1].Split(START_ROUTINE);
-                        int.TryParse(separate2[0].Replace(JUMPLINE, string.Empty), out result);
-                    }
-
-                    var step1 = receivedData.Split("Reseted");
-                    if (step1.Length > 1) receivedData = step1[1];
-
-                    if (result == numberOfPulses && !receivedData.Contains(LOOP))
-                    {
-                        readAllData = true;
-                        var empty = receivedData.Replace(READING, string.Empty).Split(JUMPLINE, StringSplitOptions.RemoveEmptyEntries);
-                        receivedData = null;
-                        Thread.Sleep(10);
-                        this.BeginInvoke(() => { txtReceivedData.Text = $"{string.Join(JUMPLINE, empty)}{JUMPLINE}{START_ROUTINE}"; });
-                    }
-                }
-                Thread.Sleep(10);
-            }
+            this.BeginInvoke(() => { txtReceivedData.Text += newText; });
         }
 
         public void SendData(string text)
@@ -297,7 +267,7 @@ namespace SerialPortController
         {
             if (_control != null && _control!.IsConnected)
             {
-                string message = $"Você realmente deseja fechar esta janela? {JUMPLINE}{JUMPLINE} Isso irá cortar a comunicação com o estimulador.";
+                string message = $"VocÃª realmente deseja fechar esta janela? {JUMPLINE}{JUMPLINE} Isso irÃ¡ cortar a comunicaÃ§Ã£o com o estimulador.";
                 string caption = "Fechar Interface";
                 var result = MessageBox.Show(message, caption, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
