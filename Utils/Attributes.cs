@@ -1,4 +1,4 @@
-﻿namespace BrainStimulator.Utils
+﻿namespace SynaptiPulse.Utils
 {
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Event | AttributeTargets.Class | AttributeTargets.Method)]
     public class ColumnSizeAttribute : Attribute

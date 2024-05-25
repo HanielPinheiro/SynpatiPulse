@@ -1,21 +1,22 @@
 ﻿using System.IO.Ports;
 
-namespace BrainStimulator.Models
+namespace SynaptiPulse.Models
 {
     public class DeviceControl : IDisposable
     {
-        private const int defaultSleep = 1000;
+        private const int defaultSleep = 3000;
 
-        private readonly DeviceControlParameters parameters = new DeviceControlParameters();
+        private readonly DeviceControlParameters parameters = new();
         private readonly SerialPort serialPort;
+
         public bool IsConnected { get => serialPort!.IsOpen; }
 
         public DeviceControl() { serialPort = new SerialPort(); }
 
         /// <summary>
-        /// This constructor use <see cref="DefaultBoardConfiguration"/>
+        /// This constructor use <see cref="string"/>
         /// </summary>
-        /// <param name="portName"></param>
+        /// <param name="_portName"></param>
         public DeviceControl(string _portName)
         {
             serialPort = new SerialPort();
@@ -24,6 +25,10 @@ namespace BrainStimulator.Models
             parameters.CopyTo(serialPort);
         }
 
+        /// <summary>
+        /// This constructor use <see cref="DeviceControlParameters"/>
+        /// </summary>
+        /// <param name="_parameters"></param>
         public DeviceControl(DeviceControlParameters _parameters)
         {
             serialPort = new SerialPort();
@@ -37,7 +42,7 @@ namespace BrainStimulator.Models
         /// <summary>
         /// Reset serialPort
         /// </summary>
-        public void Reset(bool defaultConfiguration)
+        public void Reset()
         {
             Dispose();
 
@@ -57,18 +62,17 @@ namespace BrainStimulator.Models
         public void InitializeSerialPort() { serialPort!.Open(); }
 
         /// <summary>
-        /// Encapsulation of ReadLine
-        /// </summary>
-        /// <returns></returns>
-        public string ReadLine() { return serialPort.ReadLine(); }
-
-        /// <summary>
         /// Following IDispose
         /// </summary>
         public void Dispose()
         {
-            serialPort!.Close();
-            serialPort!.Dispose();
+            if (IsConnected)
+            {
+                serialPort!.Close();
+                serialPort!.Dispose();
+
+                GC.SuppressFinalize(this);
+            }
         }
 
         /// <summary>
@@ -90,6 +94,7 @@ namespace BrainStimulator.Models
 
         #endregion
 
+        #region DataReceiveHandler      
 
         /// <summary>
         /// Set a Received Event Handler to handler data received from board
@@ -109,11 +114,33 @@ namespace BrainStimulator.Models
             serialPort!.DataReceived -= dataReceivedHandler;
         }
 
+        /// <summary>
+        /// Encapsulation of WriteLine
+        /// </summary>
+        /// <param name="txt"></param>
         public void SendData(string txt)
         {
             if (IsConnected) serialPort!.WriteLine(txt);
         }
 
+        /// <summary>
+        /// Encapsulation of ReadLine
+        /// </summary>
+        /// <returns></returns>
+        public string ReadLine()
+        {
+                return serialPort.ReadLine();
+        }
+
+        #endregion
+
     }
 }
+
+
+
+
+
+
+
 

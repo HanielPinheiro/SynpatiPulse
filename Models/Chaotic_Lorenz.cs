@@ -1,6 +1,6 @@
 ﻿using System.IO.Ports;
 
-namespace BrainStimulator.Models
+namespace SynaptiPulse.Models
 {
     public class Chaotic_Lorenz
     {

@@ -1,7 +1,7 @@
 ﻿using OxyPlot;
 using OxyPlot.Series;
 
-namespace BrainStimulator.Models
+namespace SynaptiPulse.Models
 {
     /// <summary>
     /// Classe que gera os dados pra preencher o combobox
@@ -35,20 +35,20 @@ namespace BrainStimulator.Models
 
         public void SetDataPointsFrom(Pulse p, LineSeries lineSeries, PulseLikeDataPoint? predecessor)
         {
-            var targetCurrent = Pulse.pulseCurrentToCombobox.Where(e => e.Value == p.Current).First();
-            bool result = Pulse.pulseCurrentValues.TryGetValue(targetCurrent.Key, out double currentValue);
+            var targetCurrent = Pulse.PulseCurrentToCombobox.Where(e => e.Value == p.Current).First();
+            bool result = Pulse.PulseCurrentValues.TryGetValue(targetCurrent.Key, out double currentValue);
             if (!result) throw new Exception($"Failed when try to generate chart - {nameof(currentValue)}");
 
-            var targetPolarity = Pulse.pulsePolarityToCombobox.Where(e => e.Value == p.Polarity).First();
-            result = Pulse.pulsePolarityValues.TryGetValue(targetPolarity.Key, out double polarityValue);
+            var targetPolarity = Pulse.PulsePolarityToCombobox.Where(e => e.Value == p.Polarity).First();
+            result = Pulse.PulsePolarityValues.TryGetValue(targetPolarity.Key, out double polarityValue);
             if (!result) throw new Exception($"Failed when try to generate chart - {nameof(polarityValue)}");
 
-            var targetAfterPulseLength = Pulse.measureUnityToCombobox.Where(e => e.Value == p.AfterPulseMeasureUnity).First();
-            result = Pulse.measureUnityValues.TryGetValue(targetAfterPulseLength.Key, out double afterPulseUnity);
+            var targetAfterPulseLength = Pulse.MeasureUnityToCombobox.Where(e => e.Value == p.AfterPulseMeasureUnity).First();
+            result = Pulse.MeasureUnityValues.TryGetValue(targetAfterPulseLength.Key, out double afterPulseUnity);
             if (!result) throw new Exception($"Failed when try to generate chart - {nameof(afterPulseUnity)}");
 
-            var targetPulseLength = Pulse.measureUnityToCombobox.Where(e => e.Value == p.PulseMeasureUnity).First();
-            result = Pulse.measureUnityValues.TryGetValue(targetPulseLength.Key, out double pulseUnity);
+            var targetPulseLength = Pulse.MeasureUnityToCombobox.Where(e => e.Value == p.PulseMeasureUnity).First();
+            result = Pulse.MeasureUnityValues.TryGetValue(targetPulseLength.Key, out double pulseUnity);
             if (!result) throw new Exception($"Failed when try to generate chart - {nameof(pulseUnity)}");
 
             var firstX = (predecessor == null) ? 0 : predecessor.FifthPoint.X;

@@ -1,8 +1,8 @@
-﻿using BrainStimulator.Utils;
+﻿using SynaptiPulse.Utils;
 using System.ComponentModel;
 using System.Globalization;
 
-namespace BrainStimulator.Models
+namespace SynaptiPulse.Models
 {
     /// <summary>
     /// Classe que define o objeto Pulse que aparece no grid
@@ -11,26 +11,44 @@ namespace BrainStimulator.Models
     {
         #region Static fields
 
-        public static Dictionary<string, int> columSizeFromProperties = ReflectionHandler.GetFromProperties_ColumnSizeAttribute<Pulse>();
-        public static Dictionary<string, string> displayNameFromProperties = ReflectionHandler.GetFromProperties_DisplayNameAttributes<Pulse>();
+        private static readonly Dictionary<string, int> columSizeFromProperties = ReflectionHandler.GetFromProperties_ColumnSizeAttribute<Pulse>();
+        private static readonly Dictionary<string, string> displayNameFromProperties = ReflectionHandler.GetFromProperties_DisplayNameAttributes<Pulse>();
 
-        public static Dictionary<PulsePolariy, string> pulsePolarityToCombobox = ReflectionHandler.GetFromEnum_DescriptionAttributes<PulsePolariy>();
-        public static Dictionary<PulseCurrents, string> pulseCurrentToCombobox = ReflectionHandler.GetFromEnum_DescriptionAttributes<PulseCurrents>();
-        public static Dictionary<MeasureUnity, string> measureUnityToCombobox = ReflectionHandler.GetFromEnum_DescriptionAttributes<MeasureUnity>();
+        private static readonly Dictionary<PulsePolariy, string> pulsePolarityToCombobox = ReflectionHandler.GetFromEnum_DescriptionAttributes<PulsePolariy>();
+        private static readonly Dictionary<PulseCurrents, string> pulseCurrentToCombobox = ReflectionHandler.GetFromEnum_DescriptionAttributes<PulseCurrents>();
+        private static readonly Dictionary<MeasureUnity, string> measureUnityToCombobox = ReflectionHandler.GetFromEnum_DescriptionAttributes<MeasureUnity>();
 
-        public static Dictionary<PulsePolariy, double> pulsePolarityValues = ReflectionHandler.GetFromEnum_DefaultValueAttributes<PulsePolariy>();
-        public static Dictionary<PulseCurrents, double> pulseCurrentValues = ReflectionHandler.GetFromEnum_DefaultValueAttributes<PulseCurrents>();
-        public static Dictionary<MeasureUnity, double> measureUnityValues = ReflectionHandler.GetFromEnum_DefaultValueAttributes<MeasureUnity>();
-        
-        public static Dictionary<string, string> measureUnity_DefaultToAmbientRelation= ReflectionHandler.GetFromEnum_DescriptionAndAmbientValueAttributes<MeasureUnity>();
+        private static readonly Dictionary<PulsePolariy, double> pulsePolarityValues = ReflectionHandler.GetFromEnum_DefaultValueAttributes<PulsePolariy>();
+        private static readonly Dictionary<PulseCurrents, double> pulseCurrentValues = ReflectionHandler.GetFromEnum_DefaultValueAttributes<PulseCurrents>();
+        private static readonly Dictionary<MeasureUnity, double> measureUnityValues = ReflectionHandler.GetFromEnum_DefaultValueAttributes<MeasureUnity>();
 
-        public const string Layout = $"|{nameof(Pulse.PulseLength)}|{nameof(Pulse.PulseMeasureUnity)}|{nameof(Pulse.AfterPulseLength)}"
-                                    + $"|{nameof(Pulse.AfterPulseMeasureUnity)}|{nameof(Pulse.Polarity)}";
-        //+ $"|{nameof(Pulse.AfterPulseMeasureUnity)}|{nameof(Pulse.Current)}|{nameof(Pulse.Polarity)}";
+        private static readonly Dictionary<string, string> measureUnity_DefaultToAmbientRelation = ReflectionHandler.GetFromEnum_DescriptionAndAmbientValueAttributes<MeasureUnity>();
 
         #endregion
 
-        public Pulse(){}
+        public const string SingleLayout = $"|{nameof(Pulse.AfterPulseLength)}|{nameof(Pulse.AfterPulseMeasureUnity)}";
+        public const string CompleteLayout = $"|{nameof(Pulse.PulseLength)}|{nameof(Pulse.PulseMeasureUnity)}|{nameof(Pulse.AfterPulseLength)}|{nameof(Pulse.AfterPulseMeasureUnity)}|{nameof(Pulse.Polarity)}|{nameof(Pulse.Current)}";
+
+        public Pulse() { }
+
+        #region Encapsulated Properties to Static Fields
+
+        public static Dictionary<string, int> ColumSizeFromProperties { get => columSizeFromProperties; }
+        public static Dictionary<string, string> DisplayNameFromProperties { get => displayNameFromProperties; }
+
+        public static Dictionary<PulsePolariy, string> PulsePolarityToCombobox { get => pulsePolarityToCombobox; }
+        public static Dictionary<PulseCurrents, string> PulseCurrentToCombobox { get => pulseCurrentToCombobox; }
+        public static Dictionary<MeasureUnity, string> MeasureUnityToCombobox { get => measureUnityToCombobox; }
+
+        public static Dictionary<PulsePolariy, double> PulsePolarityValues { get => pulsePolarityValues; }
+        public static Dictionary<PulseCurrents, double> PulseCurrentValues { get => pulseCurrentValues; }
+        public static Dictionary<MeasureUnity, double> MeasureUnityValues { get => measureUnityValues; }
+
+        public static Dictionary<string, string> MeasureUnity_DefaultToAmbientRelation { get => measureUnity_DefaultToAmbientRelation; }
+
+        #endregion
+
+        #region Display Grid Properties
 
         #region Largura do Pulso
 
@@ -79,6 +97,8 @@ namespace BrainStimulator.Models
 
         [DisplayName("Polaridade [uA]"), ColumnSize(90)]
         public string Polarity { get; set; } = pulsePolarityToCombobox[PulsePolariy.Positive];
+
+        #endregion
 
         public override string ToString()
         {

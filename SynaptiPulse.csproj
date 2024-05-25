@@ -10,8 +10,23 @@
 
   <ItemGroup>
     <Compile Remove="ArduinoController\**" />
+    <Compile Remove="Arduino\**" />
     <EmbeddedResource Remove="ArduinoController\**" />
+    <EmbeddedResource Remove="Arduino\**" />
     <None Remove="ArduinoController\**" />
+    <None Remove="Arduino\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Forms\BrainStimulator_Bkp.cs" />
+    <Compile Remove="Forms\BrainStimulator_Bkp.Designer.cs" />
+    <Compile Remove="Forms\Interface.cs" />
+    <Compile Remove="Forms\Interface.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Remove="Forms\BrainStimulator_Bkp.resx" />
+    <EmbeddedResource Remove="Forms\Interface.resx" />
   </ItemGroup>
 
   <ItemGroup>
