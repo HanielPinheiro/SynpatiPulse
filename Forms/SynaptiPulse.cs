@@ -9,6 +9,7 @@ using System.Data;
 using System.IO.Ports;
 using System.Globalization;
 using System.Text;
+using OxyPlot.WindowsForms;
 
 namespace SynaptiPulse
 {
@@ -96,11 +97,11 @@ namespace SynaptiPulse
             PeriodicTab_GridMain.SetHeaderText(Pulse.DisplayNameFromProperties);
             PeriodicTab_GridMain.SetWidth(Pulse.ColumSizeFromProperties);
 
-            ChaosTab_ChartPlotView.Model = GetModel();
             ChaosTab_GridMain.DefaultConfiguration(periodicTabPulses, () => ChaosTab_GridMain.SetPersistString(this.GetType().FullName + Pulse.SingleLayout));
             ChaosTab_GridMain.SetCellStyle(DefaultCellStyle!);
             ChaosTab_GridMain.SetHeaderText(Pulse.DisplayNameFromProperties);
             ChaosTab_GridMain.SetWidth(Pulse.ColumSizeFromProperties);
+            ChaosTab_ChartPlotView_Train.Model = GetModelToTrainPulses();
         }
 
         #endregion
@@ -145,6 +146,23 @@ namespace SynaptiPulse
                 MarkerFill = OxyColor.FromRgb(materialSkinManager.ColorScheme.LightPrimaryColor.R, materialSkinManager.ColorScheme.LightPrimaryColor.G, materialSkinManager.ColorScheme.LightPrimaryColor.B),
                 MarkerStrokeThickness = 1.5,
 
+            };
+            model.Series.Add(lineSeries);
+            return model;
+        }
+
+        private PlotModel GetModelToTrainPulses()
+        {
+            var model = new PlotModel();
+            var lineSeries = new LineSeries()
+            {
+                SeriesGroupName = "Series 1",
+                Color = OxyColor.FromRgb(materialSkinManager.ColorScheme.PrimaryColor.R, materialSkinManager.ColorScheme.PrimaryColor.G, materialSkinManager.ColorScheme.PrimaryColor.B),
+                MarkerType = MarkerType.Circle,
+                MarkerSize = 1,
+                MarkerStroke = OxyColor.FromRgb(materialSkinManager.ColorScheme.DarkPrimaryColor.R, materialSkinManager.ColorScheme.DarkPrimaryColor.G, materialSkinManager.ColorScheme.DarkPrimaryColor.B),
+                MarkerFill = OxyColor.FromRgb(materialSkinManager.ColorScheme.LightPrimaryColor.R, materialSkinManager.ColorScheme.LightPrimaryColor.G, materialSkinManager.ColorScheme.LightPrimaryColor.B),
+                MarkerStrokeThickness = 0.5,                
             };
             model.Series.Add(lineSeries);
             return model;
@@ -295,7 +313,7 @@ namespace SynaptiPulse
                         predecessor = chartPoints;
                     }
 
-                ChaosTab_ChartPlotView.Model = model;
+                ChaosTab_ChartPlotView_Train.Model = model;
             }
             catch (Exception ex) { Error($"Problema ao tentar executar {nameof(RefreshChart_ChaosTab)}", ex); }
         }
@@ -357,6 +375,7 @@ namespace SynaptiPulse
                     openFileDialog.RestoreDirectory = true;
 
                     if (openFileDialog.ShowDialog() == DialogResult.OK) filePath = openFileDialog.FileName;
+                    else return;
                 }
 
                 chaosData = string.Empty;
@@ -403,6 +422,8 @@ namespace SynaptiPulse
 
         private void ChaosTab_SendConfigToBoard_Click(object sender, EventArgs e)
         {
+
+
             Task.WaitAny(Task.Run(() => SendConfig_ChaoticData()));
         }
 
@@ -543,7 +564,7 @@ namespace SynaptiPulse
             btnConnect.Enabled = value;
             btnDisconnect.Enabled = !value;
             PeriodicTab_SendConfigToBoard.Enabled = !value;
-            ChaosTab_SendConfigToBoard.Enabled = !value;
+            ChaosTab_btnSendConfigToBoard.Enabled = !value;
 
             cbComPortsList.Enabled = value;
             btnUpdate.Enabled = value;

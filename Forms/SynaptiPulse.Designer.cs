@@ -46,16 +46,24 @@
             tabChaos = new TabPage();
             tableLayoutPanel2 = new TableLayoutPanel();
             tableLayoutPanel3 = new TableLayoutPanel();
-            ChaosTab_ChartPlotView = new OxyPlot.WindowsForms.PlotView();
             tableLayoutPanel4 = new TableLayoutPanel();
             ChaosTab_GridMain = new DataGridView();
             TbPanel_Chaos = new TableLayoutPanel();
+            ChaosTab_CbPulseTrains = new MaterialSkin.Controls.MaterialComboBox();
+            ChaosTab_LblInterpulseInterval = new MaterialSkin.Controls.MaterialLabel();
             ChaosTab_CbCurrent = new MaterialSkin.Controls.MaterialComboBox();
-            ChaosTab_LoadPulses = new MaterialSkin.Controls.MaterialButton();
             ChaosTab_LblCurrent = new MaterialSkin.Controls.MaterialLabel();
             ChaosTab_LblPulseLarge = new MaterialSkin.Controls.MaterialLabel();
-            ChaosTab_SendConfigToBoard = new MaterialSkin.Controls.MaterialButton();
             ChaosTab_TxtPulseLength = new MaterialSkin.Controls.MaterialTextBox();
+            ChaosTab_btnLoadPulses = new MaterialSkin.Controls.MaterialButton();
+            ChaosTab_btnStartStimulus = new MaterialSkin.Controls.MaterialButton();
+            ChaosTab_btnSendConfigToBoard = new MaterialSkin.Controls.MaterialButton();
+            ChaosTab_TxtInterpulseInterval = new MaterialSkin.Controls.MaterialTextBox();
+            tableLayoutPanel5 = new TableLayoutPanel();
+            ChaosTab_ChartPlotView_Train = new OxyPlot.WindowsForms.PlotView();
+            tableLayoutPanel6 = new TableLayoutPanel();
+            ChaosTab_LblInterval = new MaterialSkin.Controls.MaterialLabel();
+            ChaosTab_LblPulseTrain = new MaterialSkin.Controls.MaterialLabel();
             groupBox2 = new GroupBox();
             txtReceivedData = new MaterialSkin.Controls.MaterialMultiLineTextBox();
             btnDisconnect = new MaterialSkin.Controls.MaterialButton();
@@ -96,6 +104,8 @@
             tableLayoutPanel4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)ChaosTab_GridMain).BeginInit();
             TbPanel_Chaos.SuspendLayout();
+            tableLayoutPanel5.SuspendLayout();
+            tableLayoutPanel6.SuspendLayout();
             groupBox2.SuspendLayout();
             groupBox1.SuspendLayout();
             SuspendLayout();
@@ -398,8 +408,8 @@
             tableLayoutPanel3.ColumnCount = 1;
             tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 26.43979F));
             tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 73.56021F));
-            tableLayoutPanel3.Controls.Add(ChaosTab_ChartPlotView, 0, 1);
             tableLayoutPanel3.Controls.Add(tableLayoutPanel4, 0, 0);
+            tableLayoutPanel3.Controls.Add(tableLayoutPanel5, 0, 1);
             tableLayoutPanel3.Dock = DockStyle.Fill;
             tableLayoutPanel3.Location = new Point(0, 0);
             tableLayoutPanel3.Margin = new Padding(0);
@@ -410,19 +420,6 @@
             tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
             tableLayoutPanel3.Size = new Size(786, 499);
             tableLayoutPanel3.TabIndex = 0;
-            // 
-            // ChaosTab_ChartPlotView
-            // 
-            ChaosTab_ChartPlotView.Dock = DockStyle.Fill;
-            ChaosTab_ChartPlotView.Location = new Point(3, 200);
-            ChaosTab_ChartPlotView.Name = "ChaosTab_ChartPlotView";
-            ChaosTab_ChartPlotView.PanCursor = Cursors.Hand;
-            ChaosTab_ChartPlotView.Size = new Size(780, 296);
-            ChaosTab_ChartPlotView.TabIndex = 7;
-            ChaosTab_ChartPlotView.Text = "plotView1";
-            ChaosTab_ChartPlotView.ZoomHorizontalCursor = Cursors.SizeWE;
-            ChaosTab_ChartPlotView.ZoomRectangleCursor = Cursors.SizeNWSE;
-            ChaosTab_ChartPlotView.ZoomVerticalCursor = Cursors.SizeNS;
             // 
             // tableLayoutPanel4
             // 
@@ -462,32 +459,78 @@
             // 
             TbPanel_Chaos.CellBorderStyle = TableLayoutPanelCellBorderStyle.Single;
             TbPanel_Chaos.ColumnCount = 2;
-            TbPanel_Chaos.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 47.7124176F));
-            TbPanel_Chaos.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 52.2875824F));
+            TbPanel_Chaos.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 54.6174126F));
+            TbPanel_Chaos.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 45.3825874F));
+            TbPanel_Chaos.Controls.Add(ChaosTab_CbPulseTrains, 1, 3);
+            TbPanel_Chaos.Controls.Add(ChaosTab_LblInterpulseInterval, 0, 2);
             TbPanel_Chaos.Controls.Add(ChaosTab_CbCurrent, 1, 0);
-            TbPanel_Chaos.Controls.Add(ChaosTab_LoadPulses, 1, 2);
             TbPanel_Chaos.Controls.Add(ChaosTab_LblCurrent, 0, 0);
             TbPanel_Chaos.Controls.Add(ChaosTab_LblPulseLarge, 0, 1);
-            TbPanel_Chaos.Controls.Add(ChaosTab_SendConfigToBoard, 1, 3);
             TbPanel_Chaos.Controls.Add(ChaosTab_TxtPulseLength, 1, 1);
+            TbPanel_Chaos.Controls.Add(ChaosTab_btnLoadPulses, 0, 3);
+            TbPanel_Chaos.Controls.Add(ChaosTab_btnStartStimulus, 1, 4);
+            TbPanel_Chaos.Controls.Add(ChaosTab_btnSendConfigToBoard, 0, 4);
+            TbPanel_Chaos.Controls.Add(ChaosTab_TxtInterpulseInterval, 1, 2);
             TbPanel_Chaos.Dock = DockStyle.Fill;
             TbPanel_Chaos.Location = new Point(0, 0);
             TbPanel_Chaos.Margin = new Padding(0);
             TbPanel_Chaos.Name = "TbPanel_Chaos";
-            TbPanel_Chaos.RowCount = 4;
+            TbPanel_Chaos.RowCount = 5;
             TbPanel_Chaos.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
             TbPanel_Chaos.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
             TbPanel_Chaos.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
             TbPanel_Chaos.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
+            TbPanel_Chaos.RowStyles.Add(new RowStyle(SizeType.Absolute, 36F));
+            TbPanel_Chaos.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
             TbPanel_Chaos.Size = new Size(380, 197);
             TbPanel_Chaos.TabIndex = 7;
             // 
+            // ChaosTab_CbPulseTrains
+            // 
+            ChaosTab_CbPulseTrains.AutoResize = false;
+            ChaosTab_CbPulseTrains.BackColor = SystemColors.Control;
+            ChaosTab_CbPulseTrains.Depth = 0;
+            ChaosTab_CbPulseTrains.Dock = DockStyle.Fill;
+            ChaosTab_CbPulseTrains.DrawMode = DrawMode.OwnerDrawVariable;
+            ChaosTab_CbPulseTrains.DropDownHeight = 118;
+            ChaosTab_CbPulseTrains.DropDownStyle = ComboBoxStyle.DropDownList;
+            ChaosTab_CbPulseTrains.DropDownWidth = 121;
+            ChaosTab_CbPulseTrains.Enabled = false;
+            ChaosTab_CbPulseTrains.Font = new Font("Microsoft Sans Serif", 14F, FontStyle.Bold, GraphicsUnit.Pixel);
+            ChaosTab_CbPulseTrains.ForeColor = SystemColors.ControlText;
+            ChaosTab_CbPulseTrains.FormattingEnabled = true;
+            ChaosTab_CbPulseTrains.IntegralHeight = false;
+            ChaosTab_CbPulseTrains.ItemHeight = 29;
+            ChaosTab_CbPulseTrains.Location = new Point(210, 121);
+            ChaosTab_CbPulseTrains.MaxDropDownItems = 4;
+            ChaosTab_CbPulseTrains.MouseState = MaterialSkin.MouseState.OUT;
+            ChaosTab_CbPulseTrains.Name = "ChaosTab_CbPulseTrains";
+            ChaosTab_CbPulseTrains.Size = new Size(166, 35);
+            ChaosTab_CbPulseTrains.StartIndex = 0;
+            ChaosTab_CbPulseTrains.TabIndex = 31;
+            ChaosTab_CbPulseTrains.UseTallSize = false;
+            // 
+            // ChaosTab_LblInterpulseInterval
+            // 
+            ChaosTab_LblInterpulseInterval.AutoSize = true;
+            ChaosTab_LblInterpulseInterval.BackColor = SystemColors.Control;
+            ChaosTab_LblInterpulseInterval.Depth = 0;
+            ChaosTab_LblInterpulseInterval.Dock = DockStyle.Fill;
+            ChaosTab_LblInterpulseInterval.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
+            ChaosTab_LblInterpulseInterval.Location = new Point(4, 79);
+            ChaosTab_LblInterpulseInterval.MouseState = MaterialSkin.MouseState.HOVER;
+            ChaosTab_LblInterpulseInterval.Name = "ChaosTab_LblInterpulseInterval";
+            ChaosTab_LblInterpulseInterval.Size = new Size(199, 38);
+            ChaosTab_LblInterpulseInterval.TabIndex = 28;
+            ChaosTab_LblInterpulseInterval.Text = "Intervalo entre trens de pulso [ms]:";
+            ChaosTab_LblInterpulseInterval.TextAlign = ContentAlignment.MiddleCenter;
+            // 
             // ChaosTab_CbCurrent
             // 
-            ChaosTab_CbCurrent.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             ChaosTab_CbCurrent.AutoResize = false;
             ChaosTab_CbCurrent.BackColor = SystemColors.Control;
             ChaosTab_CbCurrent.Depth = 0;
+            ChaosTab_CbCurrent.Dock = DockStyle.Fill;
             ChaosTab_CbCurrent.DrawMode = DrawMode.OwnerDrawVariable;
             ChaosTab_CbCurrent.DropDownHeight = 118;
             ChaosTab_CbCurrent.DropDownStyle = ComboBoxStyle.DropDownList;
@@ -497,86 +540,45 @@
             ChaosTab_CbCurrent.FormattingEnabled = true;
             ChaosTab_CbCurrent.IntegralHeight = false;
             ChaosTab_CbCurrent.ItemHeight = 29;
-            ChaosTab_CbCurrent.Location = new Point(184, 7);
+            ChaosTab_CbCurrent.Location = new Point(210, 4);
             ChaosTab_CbCurrent.MaxDropDownItems = 4;
             ChaosTab_CbCurrent.MouseState = MaterialSkin.MouseState.OUT;
             ChaosTab_CbCurrent.Name = "ChaosTab_CbCurrent";
-            ChaosTab_CbCurrent.Size = new Size(192, 35);
+            ChaosTab_CbCurrent.Size = new Size(166, 35);
             ChaosTab_CbCurrent.StartIndex = 0;
             ChaosTab_CbCurrent.TabIndex = 22;
             ChaosTab_CbCurrent.UseTallSize = false;
             ChaosTab_CbCurrent.SelectedIndexChanged += ChaosTab_CbCurrent_SelectedIndexChanged;
             // 
-            // ChaosTab_LoadPulses
-            // 
-            ChaosTab_LoadPulses.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-            ChaosTab_LoadPulses.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            ChaosTab_LoadPulses.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
-            ChaosTab_LoadPulses.Depth = 0;
-            ChaosTab_LoadPulses.HighEmphasis = true;
-            ChaosTab_LoadPulses.Icon = null;
-            ChaosTab_LoadPulses.Location = new Point(185, 105);
-            ChaosTab_LoadPulses.Margin = new Padding(4, 6, 4, 6);
-            ChaosTab_LoadPulses.MouseState = MaterialSkin.MouseState.HOVER;
-            ChaosTab_LoadPulses.Name = "ChaosTab_LoadPulses";
-            ChaosTab_LoadPulses.NoAccentTextColor = Color.Empty;
-            ChaosTab_LoadPulses.Size = new Size(190, 36);
-            ChaosTab_LoadPulses.TabIndex = 23;
-            ChaosTab_LoadPulses.Text = "Carregar Dados";
-            ChaosTab_LoadPulses.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
-            ChaosTab_LoadPulses.UseAccentColor = false;
-            ChaosTab_LoadPulses.UseVisualStyleBackColor = true;
-            ChaosTab_LoadPulses.Click += ChaosTab_LoadPulses_Click;
-            // 
             // ChaosTab_LblCurrent
             // 
-            ChaosTab_LblCurrent.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             ChaosTab_LblCurrent.AutoSize = true;
             ChaosTab_LblCurrent.BackColor = SystemColors.Control;
             ChaosTab_LblCurrent.Depth = 0;
+            ChaosTab_LblCurrent.Dock = DockStyle.Fill;
             ChaosTab_LblCurrent.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
-            ChaosTab_LblCurrent.Location = new Point(4, 15);
+            ChaosTab_LblCurrent.Location = new Point(4, 1);
             ChaosTab_LblCurrent.MouseState = MaterialSkin.MouseState.HOVER;
             ChaosTab_LblCurrent.Name = "ChaosTab_LblCurrent";
-            ChaosTab_LblCurrent.Size = new Size(173, 19);
+            ChaosTab_LblCurrent.Size = new Size(199, 38);
             ChaosTab_LblCurrent.TabIndex = 24;
-            ChaosTab_LblCurrent.Text = "Corrente:";
+            ChaosTab_LblCurrent.Text = "Corrente [uA]:";
+            ChaosTab_LblCurrent.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // ChaosTab_LblPulseLarge
             // 
-            ChaosTab_LblPulseLarge.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             ChaosTab_LblPulseLarge.AutoSize = true;
             ChaosTab_LblPulseLarge.BackColor = SystemColors.Control;
             ChaosTab_LblPulseLarge.Depth = 0;
+            ChaosTab_LblPulseLarge.Dock = DockStyle.Fill;
             ChaosTab_LblPulseLarge.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
-            ChaosTab_LblPulseLarge.Location = new Point(4, 64);
+            ChaosTab_LblPulseLarge.Location = new Point(4, 40);
             ChaosTab_LblPulseLarge.MouseState = MaterialSkin.MouseState.HOVER;
             ChaosTab_LblPulseLarge.Name = "ChaosTab_LblPulseLarge";
-            ChaosTab_LblPulseLarge.Size = new Size(173, 19);
+            ChaosTab_LblPulseLarge.Size = new Size(199, 38);
             ChaosTab_LblPulseLarge.TabIndex = 25;
-            ChaosTab_LblPulseLarge.Text = "Largura do Pulso (us):";
-            // 
-            // ChaosTab_SendConfigToBoard
-            // 
-            ChaosTab_SendConfigToBoard.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-            ChaosTab_SendConfigToBoard.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            ChaosTab_SendConfigToBoard.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
-            ChaosTab_SendConfigToBoard.Depth = 0;
-            ChaosTab_SendConfigToBoard.Enabled = false;
-            ChaosTab_SendConfigToBoard.HighEmphasis = true;
-            ChaosTab_SendConfigToBoard.Icon = null;
-            ChaosTab_SendConfigToBoard.Location = new Point(185, 154);
-            ChaosTab_SendConfigToBoard.Margin = new Padding(4, 6, 4, 6);
-            ChaosTab_SendConfigToBoard.MouseState = MaterialSkin.MouseState.HOVER;
-            ChaosTab_SendConfigToBoard.Name = "ChaosTab_SendConfigToBoard";
-            ChaosTab_SendConfigToBoard.NoAccentTextColor = Color.Empty;
-            ChaosTab_SendConfigToBoard.Size = new Size(190, 36);
-            ChaosTab_SendConfigToBoard.TabIndex = 8;
-            ChaosTab_SendConfigToBoard.Text = "Enviar Config à placa";
-            ChaosTab_SendConfigToBoard.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
-            ChaosTab_SendConfigToBoard.UseAccentColor = false;
-            ChaosTab_SendConfigToBoard.UseVisualStyleBackColor = true;
-            ChaosTab_SendConfigToBoard.Click += ChaosTab_SendConfigToBoard_Click;
+            ChaosTab_LblPulseLarge.Text = "Largura do Pulso [us]:";
+            ChaosTab_LblPulseLarge.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // ChaosTab_TxtPulseLength
             // 
@@ -586,17 +588,174 @@
             ChaosTab_TxtPulseLength.Depth = 0;
             ChaosTab_TxtPulseLength.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point);
             ChaosTab_TxtPulseLength.LeadingIcon = null;
-            ChaosTab_TxtPulseLength.Location = new Point(184, 56);
+            ChaosTab_TxtPulseLength.Location = new Point(210, 43);
             ChaosTab_TxtPulseLength.MaxLength = 50;
             ChaosTab_TxtPulseLength.MouseState = MaterialSkin.MouseState.OUT;
             ChaosTab_TxtPulseLength.Multiline = false;
             ChaosTab_TxtPulseLength.Name = "ChaosTab_TxtPulseLength";
-            ChaosTab_TxtPulseLength.Size = new Size(192, 36);
+            ChaosTab_TxtPulseLength.Size = new Size(166, 36);
             ChaosTab_TxtPulseLength.TabIndex = 26;
             ChaosTab_TxtPulseLength.Text = "100";
             ChaosTab_TxtPulseLength.TrailingIcon = null;
             ChaosTab_TxtPulseLength.UseTallSize = false;
             ChaosTab_TxtPulseLength.Leave += ChaosTab_TxtPulseLength_Leave;
+            // 
+            // ChaosTab_btnLoadPulses
+            // 
+            ChaosTab_btnLoadPulses.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            ChaosTab_btnLoadPulses.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            ChaosTab_btnLoadPulses.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            ChaosTab_btnLoadPulses.Depth = 0;
+            ChaosTab_btnLoadPulses.HighEmphasis = true;
+            ChaosTab_btnLoadPulses.Icon = null;
+            ChaosTab_btnLoadPulses.Location = new Point(5, 124);
+            ChaosTab_btnLoadPulses.Margin = new Padding(4, 6, 4, 6);
+            ChaosTab_btnLoadPulses.MouseState = MaterialSkin.MouseState.HOVER;
+            ChaosTab_btnLoadPulses.Name = "ChaosTab_btnLoadPulses";
+            ChaosTab_btnLoadPulses.NoAccentTextColor = Color.Empty;
+            ChaosTab_btnLoadPulses.Size = new Size(197, 26);
+            ChaosTab_btnLoadPulses.TabIndex = 23;
+            ChaosTab_btnLoadPulses.Text = "Carregar Trens de Pulsos";
+            ChaosTab_btnLoadPulses.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            ChaosTab_btnLoadPulses.UseAccentColor = false;
+            ChaosTab_btnLoadPulses.UseVisualStyleBackColor = true;
+            ChaosTab_btnLoadPulses.Click += ChaosTab_LoadPulses_Click;
+            // 
+            // ChaosTab_btnStartStimulus
+            // 
+            ChaosTab_btnStartStimulus.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            ChaosTab_btnStartStimulus.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            ChaosTab_btnStartStimulus.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            ChaosTab_btnStartStimulus.Depth = 0;
+            ChaosTab_btnStartStimulus.Enabled = false;
+            ChaosTab_btnStartStimulus.HighEmphasis = true;
+            ChaosTab_btnStartStimulus.Icon = null;
+            ChaosTab_btnStartStimulus.Location = new Point(211, 163);
+            ChaosTab_btnStartStimulus.Margin = new Padding(4, 6, 4, 6);
+            ChaosTab_btnStartStimulus.MouseState = MaterialSkin.MouseState.HOVER;
+            ChaosTab_btnStartStimulus.Name = "ChaosTab_btnStartStimulus";
+            ChaosTab_btnStartStimulus.NoAccentTextColor = Color.Empty;
+            ChaosTab_btnStartStimulus.Size = new Size(164, 27);
+            ChaosTab_btnStartStimulus.TabIndex = 30;
+            ChaosTab_btnStartStimulus.Text = "Começar Estimulação";
+            ChaosTab_btnStartStimulus.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            ChaosTab_btnStartStimulus.UseAccentColor = false;
+            ChaosTab_btnStartStimulus.UseVisualStyleBackColor = true;
+            // 
+            // ChaosTab_btnSendConfigToBoard
+            // 
+            ChaosTab_btnSendConfigToBoard.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            ChaosTab_btnSendConfigToBoard.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            ChaosTab_btnSendConfigToBoard.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            ChaosTab_btnSendConfigToBoard.Depth = 0;
+            ChaosTab_btnSendConfigToBoard.Enabled = false;
+            ChaosTab_btnSendConfigToBoard.HighEmphasis = true;
+            ChaosTab_btnSendConfigToBoard.Icon = null;
+            ChaosTab_btnSendConfigToBoard.Location = new Point(5, 163);
+            ChaosTab_btnSendConfigToBoard.Margin = new Padding(4, 6, 4, 6);
+            ChaosTab_btnSendConfigToBoard.MouseState = MaterialSkin.MouseState.HOVER;
+            ChaosTab_btnSendConfigToBoard.Name = "ChaosTab_btnSendConfigToBoard";
+            ChaosTab_btnSendConfigToBoard.NoAccentTextColor = Color.Empty;
+            ChaosTab_btnSendConfigToBoard.Size = new Size(197, 27);
+            ChaosTab_btnSendConfigToBoard.TabIndex = 8;
+            ChaosTab_btnSendConfigToBoard.Text = "Enviar Config à placa";
+            ChaosTab_btnSendConfigToBoard.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            ChaosTab_btnSendConfigToBoard.UseAccentColor = false;
+            ChaosTab_btnSendConfigToBoard.UseVisualStyleBackColor = true;
+            ChaosTab_btnSendConfigToBoard.Click += ChaosTab_SendConfigToBoard_Click;
+            // 
+            // ChaosTab_TxtInterpulseInterval
+            // 
+            ChaosTab_TxtInterpulseInterval.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            ChaosTab_TxtInterpulseInterval.AnimateReadOnly = false;
+            ChaosTab_TxtInterpulseInterval.BorderStyle = BorderStyle.None;
+            ChaosTab_TxtInterpulseInterval.Depth = 0;
+            ChaosTab_TxtInterpulseInterval.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            ChaosTab_TxtInterpulseInterval.LeadingIcon = null;
+            ChaosTab_TxtInterpulseInterval.Location = new Point(210, 82);
+            ChaosTab_TxtInterpulseInterval.MaxLength = 50;
+            ChaosTab_TxtInterpulseInterval.MouseState = MaterialSkin.MouseState.OUT;
+            ChaosTab_TxtInterpulseInterval.Multiline = false;
+            ChaosTab_TxtInterpulseInterval.Name = "ChaosTab_TxtInterpulseInterval";
+            ChaosTab_TxtInterpulseInterval.Size = new Size(166, 36);
+            ChaosTab_TxtInterpulseInterval.TabIndex = 29;
+            ChaosTab_TxtInterpulseInterval.Text = "50000";
+            ChaosTab_TxtInterpulseInterval.TrailingIcon = null;
+            ChaosTab_TxtInterpulseInterval.UseTallSize = false;
+            // 
+            // tableLayoutPanel5
+            // 
+            tableLayoutPanel5.ColumnCount = 1;
+            tableLayoutPanel5.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            tableLayoutPanel5.Controls.Add(ChaosTab_ChartPlotView_Train, 0, 1);
+            tableLayoutPanel5.Controls.Add(tableLayoutPanel6, 0, 0);
+            tableLayoutPanel5.Dock = DockStyle.Fill;
+            tableLayoutPanel5.Location = new Point(3, 200);
+            tableLayoutPanel5.Name = "tableLayoutPanel5";
+            tableLayoutPanel5.RowCount = 2;
+            tableLayoutPanel5.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F));
+            tableLayoutPanel5.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tableLayoutPanel5.Size = new Size(780, 296);
+            tableLayoutPanel5.TabIndex = 9;
+            // 
+            // ChaosTab_ChartPlotView_Train
+            // 
+            ChaosTab_ChartPlotView_Train.Dock = DockStyle.Fill;
+            ChaosTab_ChartPlotView_Train.Location = new Point(3, 43);
+            ChaosTab_ChartPlotView_Train.Name = "ChaosTab_ChartPlotView_Train";
+            ChaosTab_ChartPlotView_Train.PanCursor = Cursors.Hand;
+            ChaosTab_ChartPlotView_Train.Size = new Size(774, 250);
+            ChaosTab_ChartPlotView_Train.TabIndex = 28;
+            ChaosTab_ChartPlotView_Train.Text = "plotView1";
+            ChaosTab_ChartPlotView_Train.ZoomHorizontalCursor = Cursors.SizeWE;
+            ChaosTab_ChartPlotView_Train.ZoomRectangleCursor = Cursors.SizeNWSE;
+            ChaosTab_ChartPlotView_Train.ZoomVerticalCursor = Cursors.SizeNS;
+            // 
+            // tableLayoutPanel6
+            // 
+            tableLayoutPanel6.ColumnCount = 2;
+            tableLayoutPanel6.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutPanel6.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutPanel6.Controls.Add(ChaosTab_LblInterval, 0, 0);
+            tableLayoutPanel6.Controls.Add(ChaosTab_LblPulseTrain, 0, 0);
+            tableLayoutPanel6.Dock = DockStyle.Fill;
+            tableLayoutPanel6.Location = new Point(3, 3);
+            tableLayoutPanel6.Name = "tableLayoutPanel6";
+            tableLayoutPanel6.RowCount = 1;
+            tableLayoutPanel6.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayoutPanel6.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayoutPanel6.Size = new Size(774, 34);
+            tableLayoutPanel6.TabIndex = 29;
+            // 
+            // ChaosTab_LblInterval
+            // 
+            ChaosTab_LblInterval.Anchor = AnchorStyles.Top | AnchorStyles.Bottom;
+            ChaosTab_LblInterval.AutoSize = true;
+            ChaosTab_LblInterval.BackColor = SystemColors.Control;
+            ChaosTab_LblInterval.Depth = 0;
+            ChaosTab_LblInterval.Enabled = false;
+            ChaosTab_LblInterval.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
+            ChaosTab_LblInterval.Location = new Point(549, 0);
+            ChaosTab_LblInterval.MouseState = MaterialSkin.MouseState.HOVER;
+            ChaosTab_LblInterval.Name = "ChaosTab_LblInterval";
+            ChaosTab_LblInterval.Size = new Size(62, 34);
+            ChaosTab_LblInterval.TabIndex = 27;
+            ChaosTab_LblInterval.Text = "Intervalo";
+            // 
+            // ChaosTab_LblPulseTrain
+            // 
+            ChaosTab_LblPulseTrain.Anchor = AnchorStyles.Top | AnchorStyles.Bottom;
+            ChaosTab_LblPulseTrain.AutoSize = true;
+            ChaosTab_LblPulseTrain.BackColor = SystemColors.Control;
+            ChaosTab_LblPulseTrain.Depth = 0;
+            ChaosTab_LblPulseTrain.Enabled = false;
+            ChaosTab_LblPulseTrain.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
+            ChaosTab_LblPulseTrain.Location = new Point(130, 0);
+            ChaosTab_LblPulseTrain.MouseState = MaterialSkin.MouseState.HOVER;
+            ChaosTab_LblPulseTrain.Name = "ChaosTab_LblPulseTrain";
+            ChaosTab_LblPulseTrain.Size = new Size(127, 34);
+            ChaosTab_LblPulseTrain.TabIndex = 26;
+            ChaosTab_LblPulseTrain.Text = "Trem de pulsos: 1";
             // 
             // groupBox2
             // 
@@ -1023,6 +1182,9 @@
             ((System.ComponentModel.ISupportInitialize)ChaosTab_GridMain).EndInit();
             TbPanel_Chaos.ResumeLayout(false);
             TbPanel_Chaos.PerformLayout();
+            tableLayoutPanel5.ResumeLayout(false);
+            tableLayoutPanel6.ResumeLayout(false);
+            tableLayoutPanel6.PerformLayout();
             groupBox2.ResumeLayout(false);
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
@@ -1071,15 +1233,23 @@
         private TabPage tabChaos;
         private TableLayoutPanel tableLayoutPanel2;
         private TableLayoutPanel tableLayoutPanel3;
-        private OxyPlot.WindowsForms.PlotView ChaosTab_ChartPlotView;
         private TableLayoutPanel tableLayoutPanel4;
         private TableLayoutPanel TbPanel_Chaos;
         private MaterialSkin.Controls.MaterialComboBox ChaosTab_CbCurrent;
-        private MaterialSkin.Controls.MaterialButton ChaosTab_LoadPulses;
-        private MaterialSkin.Controls.MaterialButton ChaosTab_SendConfigToBoard;
+        private MaterialSkin.Controls.MaterialButton ChaosTab_btnLoadPulses;
+        private MaterialSkin.Controls.MaterialButton ChaosTab_btnSendConfigToBoard;
         private MaterialSkin.Controls.MaterialLabel ChaosTab_LblCurrent;
         private MaterialSkin.Controls.MaterialLabel ChaosTab_LblPulseLarge;
         private MaterialSkin.Controls.MaterialTextBox ChaosTab_TxtPulseLength;
         private DataGridView ChaosTab_GridMain;
+        private MaterialSkin.Controls.MaterialLabel ChaosTab_LblInterpulseInterval;
+        private MaterialSkin.Controls.MaterialTextBox ChaosTab_TxtInterpulseInterval;
+        private TableLayoutPanel tableLayoutPanel5;
+        private MaterialSkin.Controls.MaterialButton ChaosTab_btnStartStimulus;
+        private OxyPlot.WindowsForms.PlotView ChaosTab_ChartPlotView_Train;
+        private MaterialSkin.Controls.MaterialComboBox ChaosTab_CbPulseTrains;
+        private TableLayoutPanel tableLayoutPanel6;
+        private MaterialSkin.Controls.MaterialLabel ChaosTab_LblInterval;
+        private MaterialSkin.Controls.MaterialLabel ChaosTab_LblPulseTrain;
     }
 }
