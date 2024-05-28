@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Atmel Studio Solution File, Format Version 11.00
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{E66E83B9-2572-4076-B26E-6BE79FF3018A}") = "ArduinoCore", "CPP\ArduinoCore\ArduinoCore.cppproj", "{FFD644E3-98E4-4018-8ED2-DEDDECC76FCE}"
+EndProject
+Project("{E66E83B9-2572-4076-B26E-6BE79FF3018A}") = "SynaptiPulse", "SynaptiPulse\SynaptiPulse.cppproj", "{8BAF2052-0DC4-4D31-B3EB-1494D1785941}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|AVR = Debug|AVR
+		Release|AVR = Release|AVR
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FFD644E3-98E4-4018-8ED2-DEDDECC76FCE}.Debug|AVR.ActiveCfg = Debug|AVR
+		{FFD644E3-98E4-4018-8ED2-DEDDECC76FCE}.Debug|AVR.Build.0 = Debug|AVR
+		{FFD644E3-98E4-4018-8ED2-DEDDECC76FCE}.Release|AVR.ActiveCfg = Release|AVR
+		{FFD644E3-98E4-4018-8ED2-DEDDECC76FCE}.Release|AVR.Build.0 = Release|AVR
+		{8BAF2052-0DC4-4D31-B3EB-1494D1785941}.Debug|AVR.ActiveCfg = Debug|AVR
+		{8BAF2052-0DC4-4D31-B3EB-1494D1785941}.Debug|AVR.Build.0 = Debug|AVR
+		{8BAF2052-0DC4-4D31-B3EB-1494D1785941}.Release|AVR.ActiveCfg = Release|AVR
+		{8BAF2052-0DC4-4D31-B3EB-1494D1785941}.Release|AVR.Build.0 = Release|AVR
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
