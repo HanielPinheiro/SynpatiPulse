@@ -12,7 +12,7 @@
 
 int main(void)
 {
-    /* Entry point application */
+    /* Replace with your application code */
     while (1) 
     {
     }

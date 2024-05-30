@@ -1,4 +1,8 @@
-﻿#include "Variables.h"
+﻿/*Begining of Auto generated code by Atmel studio */
+#include <Arduino.h>
+
+/*End of auto generated code by Atmel studio */
+
 
 //Beginning of Auto generated function prototypes by Atmel Studio
 void ParseInstruction(char* data);

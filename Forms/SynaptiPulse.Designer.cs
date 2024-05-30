@@ -41,7 +41,6 @@
             PeriodicTab_SendConfigToBoard = new MaterialSkin.Controls.MaterialButton();
             PeriodicTab_CbCurrents = new MaterialSkin.Controls.MaterialComboBox();
             PeriodicTab_SwitchCurrent = new MaterialSkin.Controls.MaterialSwitch();
-            materialButton1 = new MaterialSkin.Controls.MaterialButton();
             PeriodicTab_GridMain = new DataGridView();
             PeriodicTab_ChartPlotView = new OxyPlot.WindowsForms.PlotView();
             tabChaos = new TabPage();
@@ -179,7 +178,8 @@
             // tbPanel_PeriodicTab
             // 
             tbPanel_PeriodicTab.ColumnCount = 1;
-            tbPanel_PeriodicTab.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            tbPanel_PeriodicTab.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 28.53403F));
+            tbPanel_PeriodicTab.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 71.4659653F));
             tbPanel_PeriodicTab.Controls.Add(tableLayoutPanel7, 0, 0);
             tbPanel_PeriodicTab.Controls.Add(PeriodicTab_ChartPlotView, 0, 1);
             tbPanel_PeriodicTab.Dock = DockStyle.Fill;
@@ -187,8 +187,8 @@
             tbPanel_PeriodicTab.Margin = new Padding(0);
             tbPanel_PeriodicTab.Name = "tbPanel_PeriodicTab";
             tbPanel_PeriodicTab.RowCount = 2;
-            tbPanel_PeriodicTab.RowStyles.Add(new RowStyle(SizeType.Percent, 46.7666359F));
-            tbPanel_PeriodicTab.RowStyles.Add(new RowStyle(SizeType.Percent, 53.2333641F));
+            tbPanel_PeriodicTab.RowStyles.Add(new RowStyle(SizeType.Percent, 40.28056F));
+            tbPanel_PeriodicTab.RowStyles.Add(new RowStyle(SizeType.Percent, 59.71944F));
             tbPanel_PeriodicTab.Size = new Size(786, 499);
             tbPanel_PeriodicTab.TabIndex = 2;
             // 
@@ -207,31 +207,30 @@
             tableLayoutPanel7.RowStyles.Add(new RowStyle(SizeType.Percent, 21.393034F));
             tableLayoutPanel7.RowStyles.Add(new RowStyle(SizeType.Percent, 78.6069641F));
             tableLayoutPanel7.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel7.Size = new Size(786, 233);
+            tableLayoutPanel7.Size = new Size(786, 201);
             tableLayoutPanel7.TabIndex = 0;
             // 
             // PeriodicTab_HeaderPanel
             // 
-            PeriodicTab_HeaderPanel.ColumnCount = 6;
-            PeriodicTab_HeaderPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 11.8320608F));
-            PeriodicTab_HeaderPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 13.9949112F));
-            PeriodicTab_HeaderPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 16.666666F));
-            PeriodicTab_HeaderPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 18.70229F));
-            PeriodicTab_HeaderPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 22.0101776F));
-            PeriodicTab_HeaderPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 16.666666F));
+            PeriodicTab_HeaderPanel.ColumnCount = 5;
+            PeriodicTab_HeaderPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 22.6063824F));
+            PeriodicTab_HeaderPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 21.6755314F));
+            PeriodicTab_HeaderPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 28.4053154F));
+            PeriodicTab_HeaderPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 27.408638F));
+            PeriodicTab_HeaderPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 136F));
             PeriodicTab_HeaderPanel.Controls.Add(PeriodicTab_AddPulse, 0, 0);
             PeriodicTab_HeaderPanel.Controls.Add(PeriodicTab_RemovePulse, 1, 0);
             PeriodicTab_HeaderPanel.Controls.Add(PeriodicTab_SendConfigToBoard, 2, 0);
-            PeriodicTab_HeaderPanel.Controls.Add(PeriodicTab_CbCurrents, 5, 0);
-            PeriodicTab_HeaderPanel.Controls.Add(PeriodicTab_SwitchCurrent, 4, 0);
-            PeriodicTab_HeaderPanel.Controls.Add(materialButton1, 3, 0);
+            PeriodicTab_HeaderPanel.Controls.Add(PeriodicTab_CbCurrents, 4, 0);
+            PeriodicTab_HeaderPanel.Controls.Add(PeriodicTab_SwitchCurrent, 3, 0);
             PeriodicTab_HeaderPanel.Dock = DockStyle.Fill;
             PeriodicTab_HeaderPanel.Location = new Point(0, 0);
             PeriodicTab_HeaderPanel.Margin = new Padding(0);
             PeriodicTab_HeaderPanel.Name = "PeriodicTab_HeaderPanel";
             PeriodicTab_HeaderPanel.RowCount = 1;
             PeriodicTab_HeaderPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            PeriodicTab_HeaderPanel.Size = new Size(786, 49);
+            PeriodicTab_HeaderPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            PeriodicTab_HeaderPanel.Size = new Size(786, 43);
             PeriodicTab_HeaderPanel.TabIndex = 6;
             // 
             // PeriodicTab_AddPulse
@@ -247,7 +246,7 @@
             PeriodicTab_AddPulse.MouseState = MaterialSkin.MouseState.HOVER;
             PeriodicTab_AddPulse.Name = "PeriodicTab_AddPulse";
             PeriodicTab_AddPulse.NoAccentTextColor = Color.Empty;
-            PeriodicTab_AddPulse.Size = new Size(85, 36);
+            PeriodicTab_AddPulse.Size = new Size(138, 31);
             PeriodicTab_AddPulse.TabIndex = 0;
             PeriodicTab_AddPulse.Text = "adicionar pulsos";
             PeriodicTab_AddPulse.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
@@ -263,12 +262,12 @@
             PeriodicTab_RemovePulse.Depth = 0;
             PeriodicTab_RemovePulse.HighEmphasis = true;
             PeriodicTab_RemovePulse.Icon = null;
-            PeriodicTab_RemovePulse.Location = new Point(97, 6);
+            PeriodicTab_RemovePulse.Location = new Point(150, 6);
             PeriodicTab_RemovePulse.Margin = new Padding(4, 6, 4, 6);
             PeriodicTab_RemovePulse.MouseState = MaterialSkin.MouseState.HOVER;
             PeriodicTab_RemovePulse.Name = "PeriodicTab_RemovePulse";
             PeriodicTab_RemovePulse.NoAccentTextColor = Color.Empty;
-            PeriodicTab_RemovePulse.Size = new Size(102, 36);
+            PeriodicTab_RemovePulse.Size = new Size(132, 31);
             PeriodicTab_RemovePulse.TabIndex = 5;
             PeriodicTab_RemovePulse.Text = "Remover pulsos";
             PeriodicTab_RemovePulse.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
@@ -285,12 +284,12 @@
             PeriodicTab_SendConfigToBoard.Enabled = false;
             PeriodicTab_SendConfigToBoard.HighEmphasis = true;
             PeriodicTab_SendConfigToBoard.Icon = null;
-            PeriodicTab_SendConfigToBoard.Location = new Point(207, 6);
+            PeriodicTab_SendConfigToBoard.Location = new Point(290, 6);
             PeriodicTab_SendConfigToBoard.Margin = new Padding(4, 6, 4, 6);
             PeriodicTab_SendConfigToBoard.MouseState = MaterialSkin.MouseState.HOVER;
             PeriodicTab_SendConfigToBoard.Name = "PeriodicTab_SendConfigToBoard";
             PeriodicTab_SendConfigToBoard.NoAccentTextColor = Color.Empty;
-            PeriodicTab_SendConfigToBoard.Size = new Size(123, 36);
+            PeriodicTab_SendConfigToBoard.Size = new Size(176, 31);
             PeriodicTab_SendConfigToBoard.TabIndex = 8;
             PeriodicTab_SendConfigToBoard.Text = "Enviar Config à placa";
             PeriodicTab_SendConfigToBoard.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
@@ -313,11 +312,11 @@
             PeriodicTab_CbCurrents.FormattingEnabled = true;
             PeriodicTab_CbCurrents.IntegralHeight = false;
             PeriodicTab_CbCurrents.ItemHeight = 29;
-            PeriodicTab_CbCurrents.Location = new Point(657, 6);
+            PeriodicTab_CbCurrents.Location = new Point(650, 4);
             PeriodicTab_CbCurrents.MaxDropDownItems = 4;
             PeriodicTab_CbCurrents.MouseState = MaterialSkin.MouseState.OUT;
             PeriodicTab_CbCurrents.Name = "PeriodicTab_CbCurrents";
-            PeriodicTab_CbCurrents.Size = new Size(126, 35);
+            PeriodicTab_CbCurrents.Size = new Size(133, 35);
             PeriodicTab_CbCurrents.StartIndex = 0;
             PeriodicTab_CbCurrents.TabIndex = 22;
             PeriodicTab_CbCurrents.UseTallSize = false;
@@ -333,39 +332,17 @@
             PeriodicTab_SwitchCurrent.Depth = 0;
             PeriodicTab_SwitchCurrent.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
             PeriodicTab_SwitchCurrent.ForeColor = SystemColors.ControlText;
-            PeriodicTab_SwitchCurrent.Location = new Point(481, 6);
+            PeriodicTab_SwitchCurrent.Location = new Point(470, 3);
             PeriodicTab_SwitchCurrent.Margin = new Padding(0);
             PeriodicTab_SwitchCurrent.MouseLocation = new Point(-1, -1);
             PeriodicTab_SwitchCurrent.MouseState = MaterialSkin.MouseState.HOVER;
             PeriodicTab_SwitchCurrent.Name = "PeriodicTab_SwitchCurrent";
             PeriodicTab_SwitchCurrent.Ripple = true;
-            PeriodicTab_SwitchCurrent.Size = new Size(173, 37);
+            PeriodicTab_SwitchCurrent.Size = new Size(177, 37);
             PeriodicTab_SwitchCurrent.TabIndex = 21;
             PeriodicTab_SwitchCurrent.Text = "Fixar corrente";
-            PeriodicTab_SwitchCurrent.TextAlign = ContentAlignment.MiddleCenter;
             PeriodicTab_SwitchCurrent.UseVisualStyleBackColor = false;
             PeriodicTab_SwitchCurrent.CheckedChanged += PeriodicTab_SwitchGlobalCurrent_CheckedChanged;
-            // 
-            // materialButton1
-            // 
-            materialButton1.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-            materialButton1.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            materialButton1.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
-            materialButton1.Depth = 0;
-            materialButton1.Enabled = false;
-            materialButton1.HighEmphasis = true;
-            materialButton1.Icon = null;
-            materialButton1.Location = new Point(338, 6);
-            materialButton1.Margin = new Padding(4, 6, 4, 6);
-            materialButton1.MouseState = MaterialSkin.MouseState.HOVER;
-            materialButton1.Name = "materialButton1";
-            materialButton1.NoAccentTextColor = Color.Empty;
-            materialButton1.Size = new Size(139, 36);
-            materialButton1.TabIndex = 31;
-            materialButton1.Text = "Começar Estimulação";
-            materialButton1.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
-            materialButton1.UseAccentColor = false;
-            materialButton1.UseVisualStyleBackColor = true;
             // 
             // PeriodicTab_GridMain
             // 
@@ -376,11 +353,11 @@
             PeriodicTab_GridMain.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             PeriodicTab_GridMain.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             PeriodicTab_GridMain.Dock = DockStyle.Fill;
-            PeriodicTab_GridMain.Location = new Point(0, 49);
+            PeriodicTab_GridMain.Location = new Point(0, 43);
             PeriodicTab_GridMain.Margin = new Padding(0);
             PeriodicTab_GridMain.Name = "PeriodicTab_GridMain";
             PeriodicTab_GridMain.RowTemplate.Height = 25;
-            PeriodicTab_GridMain.Size = new Size(786, 184);
+            PeriodicTab_GridMain.Size = new Size(786, 158);
             PeriodicTab_GridMain.TabIndex = 1;
             PeriodicTab_GridMain.CellEndEdit += PeriodicTab_GridMain_CellEndEdit;
             PeriodicTab_GridMain.ColumnDataPropertyNameChanged += PeriodicTab_GridMain_ColumnDataPropertyNameChanged;
@@ -389,10 +366,10 @@
             // PeriodicTab_ChartPlotView
             // 
             PeriodicTab_ChartPlotView.Dock = DockStyle.Fill;
-            PeriodicTab_ChartPlotView.Location = new Point(3, 236);
+            PeriodicTab_ChartPlotView.Location = new Point(3, 204);
             PeriodicTab_ChartPlotView.Name = "PeriodicTab_ChartPlotView";
             PeriodicTab_ChartPlotView.PanCursor = Cursors.Hand;
-            PeriodicTab_ChartPlotView.Size = new Size(780, 260);
+            PeriodicTab_ChartPlotView.Size = new Size(780, 292);
             PeriodicTab_ChartPlotView.TabIndex = 1;
             PeriodicTab_ChartPlotView.Text = "plotView1";
             PeriodicTab_ChartPlotView.ZoomHorizontalCursor = Cursors.SizeWE;
@@ -1275,6 +1252,5 @@
         private TableLayoutPanel tableLayoutPanel6;
         private MaterialSkin.Controls.MaterialLabel ChaosTab_LblInterval;
         private MaterialSkin.Controls.MaterialLabel ChaosTab_LblPulseTrain;
-        private MaterialSkin.Controls.MaterialButton materialButton1;
     }
 }
