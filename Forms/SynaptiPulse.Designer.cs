@@ -384,7 +384,7 @@
             tabChaos.Padding = new Padding(3);
             tabChaos.Size = new Size(792, 505);
             tabChaos.TabIndex = 1;
-            tabChaos.Text = "Pulsos Caóticos";
+            tabChaos.Text = "Trem de Pulso";
             tabChaos.UseVisualStyleBackColor = true;
             // 
             // tableLayoutPanel2
@@ -457,7 +457,6 @@
             // 
             // TbPanel_Chaos
             // 
-            TbPanel_Chaos.CellBorderStyle = TableLayoutPanelCellBorderStyle.Single;
             TbPanel_Chaos.ColumnCount = 2;
             TbPanel_Chaos.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 54.6174126F));
             TbPanel_Chaos.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 45.3825874F));
@@ -501,14 +500,15 @@
             ChaosTab_CbPulseTrains.FormattingEnabled = true;
             ChaosTab_CbPulseTrains.IntegralHeight = false;
             ChaosTab_CbPulseTrains.ItemHeight = 29;
-            ChaosTab_CbPulseTrains.Location = new Point(210, 121);
+            ChaosTab_CbPulseTrains.Location = new Point(210, 123);
             ChaosTab_CbPulseTrains.MaxDropDownItems = 4;
             ChaosTab_CbPulseTrains.MouseState = MaterialSkin.MouseState.OUT;
             ChaosTab_CbPulseTrains.Name = "ChaosTab_CbPulseTrains";
-            ChaosTab_CbPulseTrains.Size = new Size(166, 35);
+            ChaosTab_CbPulseTrains.Size = new Size(167, 35);
             ChaosTab_CbPulseTrains.StartIndex = 0;
             ChaosTab_CbPulseTrains.TabIndex = 31;
             ChaosTab_CbPulseTrains.UseTallSize = false;
+            ChaosTab_CbPulseTrains.SelectedIndexChanged += ChaosTab_CbPulseTrains_SelectedIndexChanged;
             // 
             // ChaosTab_LblInterpulseInterval
             // 
@@ -517,10 +517,10 @@
             ChaosTab_LblInterpulseInterval.Depth = 0;
             ChaosTab_LblInterpulseInterval.Dock = DockStyle.Fill;
             ChaosTab_LblInterpulseInterval.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
-            ChaosTab_LblInterpulseInterval.Location = new Point(4, 79);
+            ChaosTab_LblInterpulseInterval.Location = new Point(3, 80);
             ChaosTab_LblInterpulseInterval.MouseState = MaterialSkin.MouseState.HOVER;
             ChaosTab_LblInterpulseInterval.Name = "ChaosTab_LblInterpulseInterval";
-            ChaosTab_LblInterpulseInterval.Size = new Size(199, 38);
+            ChaosTab_LblInterpulseInterval.Size = new Size(201, 40);
             ChaosTab_LblInterpulseInterval.TabIndex = 28;
             ChaosTab_LblInterpulseInterval.Text = "Intervalo entre trens de pulso [ms]:";
             ChaosTab_LblInterpulseInterval.TextAlign = ContentAlignment.MiddleCenter;
@@ -540,11 +540,11 @@
             ChaosTab_CbCurrent.FormattingEnabled = true;
             ChaosTab_CbCurrent.IntegralHeight = false;
             ChaosTab_CbCurrent.ItemHeight = 29;
-            ChaosTab_CbCurrent.Location = new Point(210, 4);
+            ChaosTab_CbCurrent.Location = new Point(210, 3);
             ChaosTab_CbCurrent.MaxDropDownItems = 4;
             ChaosTab_CbCurrent.MouseState = MaterialSkin.MouseState.OUT;
             ChaosTab_CbCurrent.Name = "ChaosTab_CbCurrent";
-            ChaosTab_CbCurrent.Size = new Size(166, 35);
+            ChaosTab_CbCurrent.Size = new Size(167, 35);
             ChaosTab_CbCurrent.StartIndex = 0;
             ChaosTab_CbCurrent.TabIndex = 22;
             ChaosTab_CbCurrent.UseTallSize = false;
@@ -557,10 +557,10 @@
             ChaosTab_LblCurrent.Depth = 0;
             ChaosTab_LblCurrent.Dock = DockStyle.Fill;
             ChaosTab_LblCurrent.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
-            ChaosTab_LblCurrent.Location = new Point(4, 1);
+            ChaosTab_LblCurrent.Location = new Point(3, 0);
             ChaosTab_LblCurrent.MouseState = MaterialSkin.MouseState.HOVER;
             ChaosTab_LblCurrent.Name = "ChaosTab_LblCurrent";
-            ChaosTab_LblCurrent.Size = new Size(199, 38);
+            ChaosTab_LblCurrent.Size = new Size(201, 40);
             ChaosTab_LblCurrent.TabIndex = 24;
             ChaosTab_LblCurrent.Text = "Corrente [uA]:";
             ChaosTab_LblCurrent.TextAlign = ContentAlignment.MiddleCenter;
@@ -572,10 +572,10 @@
             ChaosTab_LblPulseLarge.Depth = 0;
             ChaosTab_LblPulseLarge.Dock = DockStyle.Fill;
             ChaosTab_LblPulseLarge.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
-            ChaosTab_LblPulseLarge.Location = new Point(4, 40);
+            ChaosTab_LblPulseLarge.Location = new Point(3, 40);
             ChaosTab_LblPulseLarge.MouseState = MaterialSkin.MouseState.HOVER;
             ChaosTab_LblPulseLarge.Name = "ChaosTab_LblPulseLarge";
-            ChaosTab_LblPulseLarge.Size = new Size(199, 38);
+            ChaosTab_LblPulseLarge.Size = new Size(201, 40);
             ChaosTab_LblPulseLarge.TabIndex = 25;
             ChaosTab_LblPulseLarge.Text = "Largura do Pulso [us]:";
             ChaosTab_LblPulseLarge.TextAlign = ContentAlignment.MiddleCenter;
@@ -593,7 +593,7 @@
             ChaosTab_TxtPulseLength.MouseState = MaterialSkin.MouseState.OUT;
             ChaosTab_TxtPulseLength.Multiline = false;
             ChaosTab_TxtPulseLength.Name = "ChaosTab_TxtPulseLength";
-            ChaosTab_TxtPulseLength.Size = new Size(166, 36);
+            ChaosTab_TxtPulseLength.Size = new Size(167, 36);
             ChaosTab_TxtPulseLength.TabIndex = 26;
             ChaosTab_TxtPulseLength.Text = "100";
             ChaosTab_TxtPulseLength.TrailingIcon = null;
@@ -608,12 +608,12 @@
             ChaosTab_btnLoadPulses.Depth = 0;
             ChaosTab_btnLoadPulses.HighEmphasis = true;
             ChaosTab_btnLoadPulses.Icon = null;
-            ChaosTab_btnLoadPulses.Location = new Point(5, 124);
+            ChaosTab_btnLoadPulses.Location = new Point(4, 126);
             ChaosTab_btnLoadPulses.Margin = new Padding(4, 6, 4, 6);
             ChaosTab_btnLoadPulses.MouseState = MaterialSkin.MouseState.HOVER;
             ChaosTab_btnLoadPulses.Name = "ChaosTab_btnLoadPulses";
             ChaosTab_btnLoadPulses.NoAccentTextColor = Color.Empty;
-            ChaosTab_btnLoadPulses.Size = new Size(197, 26);
+            ChaosTab_btnLoadPulses.Size = new Size(199, 28);
             ChaosTab_btnLoadPulses.TabIndex = 23;
             ChaosTab_btnLoadPulses.Text = "Carregar Trens de Pulsos";
             ChaosTab_btnLoadPulses.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
@@ -630,17 +630,18 @@
             ChaosTab_btnStartStimulus.Enabled = false;
             ChaosTab_btnStartStimulus.HighEmphasis = true;
             ChaosTab_btnStartStimulus.Icon = null;
-            ChaosTab_btnStartStimulus.Location = new Point(211, 163);
+            ChaosTab_btnStartStimulus.Location = new Point(211, 166);
             ChaosTab_btnStartStimulus.Margin = new Padding(4, 6, 4, 6);
             ChaosTab_btnStartStimulus.MouseState = MaterialSkin.MouseState.HOVER;
             ChaosTab_btnStartStimulus.Name = "ChaosTab_btnStartStimulus";
             ChaosTab_btnStartStimulus.NoAccentTextColor = Color.Empty;
-            ChaosTab_btnStartStimulus.Size = new Size(164, 27);
+            ChaosTab_btnStartStimulus.Size = new Size(165, 25);
             ChaosTab_btnStartStimulus.TabIndex = 30;
             ChaosTab_btnStartStimulus.Text = "Começar Estimulação";
             ChaosTab_btnStartStimulus.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
             ChaosTab_btnStartStimulus.UseAccentColor = false;
             ChaosTab_btnStartStimulus.UseVisualStyleBackColor = true;
+            ChaosTab_btnStartStimulus.Click += ChaosTab_btnStartStimulus_Click;
             // 
             // ChaosTab_btnSendConfigToBoard
             // 
@@ -651,12 +652,12 @@
             ChaosTab_btnSendConfigToBoard.Enabled = false;
             ChaosTab_btnSendConfigToBoard.HighEmphasis = true;
             ChaosTab_btnSendConfigToBoard.Icon = null;
-            ChaosTab_btnSendConfigToBoard.Location = new Point(5, 163);
+            ChaosTab_btnSendConfigToBoard.Location = new Point(4, 166);
             ChaosTab_btnSendConfigToBoard.Margin = new Padding(4, 6, 4, 6);
             ChaosTab_btnSendConfigToBoard.MouseState = MaterialSkin.MouseState.HOVER;
             ChaosTab_btnSendConfigToBoard.Name = "ChaosTab_btnSendConfigToBoard";
             ChaosTab_btnSendConfigToBoard.NoAccentTextColor = Color.Empty;
-            ChaosTab_btnSendConfigToBoard.Size = new Size(197, 27);
+            ChaosTab_btnSendConfigToBoard.Size = new Size(199, 25);
             ChaosTab_btnSendConfigToBoard.TabIndex = 8;
             ChaosTab_btnSendConfigToBoard.Text = "Enviar Config à placa";
             ChaosTab_btnSendConfigToBoard.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
@@ -672,12 +673,12 @@
             ChaosTab_TxtInterpulseInterval.Depth = 0;
             ChaosTab_TxtInterpulseInterval.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point);
             ChaosTab_TxtInterpulseInterval.LeadingIcon = null;
-            ChaosTab_TxtInterpulseInterval.Location = new Point(210, 82);
+            ChaosTab_TxtInterpulseInterval.Location = new Point(210, 83);
             ChaosTab_TxtInterpulseInterval.MaxLength = 50;
             ChaosTab_TxtInterpulseInterval.MouseState = MaterialSkin.MouseState.OUT;
             ChaosTab_TxtInterpulseInterval.Multiline = false;
             ChaosTab_TxtInterpulseInterval.Name = "ChaosTab_TxtInterpulseInterval";
-            ChaosTab_TxtInterpulseInterval.Size = new Size(166, 36);
+            ChaosTab_TxtInterpulseInterval.Size = new Size(167, 36);
             ChaosTab_TxtInterpulseInterval.TabIndex = 29;
             ChaosTab_TxtInterpulseInterval.Text = "50000";
             ChaosTab_TxtInterpulseInterval.TrailingIcon = null;

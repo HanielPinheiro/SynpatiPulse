@@ -38,6 +38,7 @@ namespace SynaptiPulse.Models
             var targetCurrent = Pulse.PulseCurrentToCombobox.Where(e => e.Value == p.Current).First();
             bool result = Pulse.PulseCurrentValues.TryGetValue(targetCurrent.Key, out double currentValue);
             if (!result) throw new Exception($"Failed when try to generate chart - {nameof(currentValue)}");
+            if(p.PulseLength == 0) currentValue= 0;
 
             var targetPolarity = Pulse.PulsePolarityToCombobox.Where(e => e.Value == p.Polarity).First();
             result = Pulse.PulsePolarityValues.TryGetValue(targetPolarity.Key, out double polarityValue);

@@ -19,16 +19,15 @@ namespace SynaptiPulse
         private readonly DeviceControlParameters? editableParameters = new();
 
         public bool IsRunning { get; private set; } = false;
-        public int numberOfPulses = 0;
         private string receivedData = string.Empty;
         private string chaosData = string.Empty;
+        private Pulse[][]? parsedChaosData = null;
 
         private readonly BindingList<Pulse> periodicTabPulses = new();
         private readonly BindingList<Pulse> chaoticTabPulses = new();
 
         private readonly MaterialSkinManager materialSkinManager = MaterialSkinManager.Instance;
         private DataGridViewCellStyle? DefaultCellStyle;
-
         public const string STOP_READ = "M>";
         public const string RESET_BOARD = "D>";
         private const string JUMPLINE = "\r\n";
@@ -36,6 +35,7 @@ namespace SynaptiPulse
         private const string START_ROUTINE = "J>";
         private const string STOP_ROUTINE = "K>";
         private const string START_READ = "L>";
+        private const string CB_PULSE_TRAIN = "Trem de Pulso ";
 
         public SynaptiPulse()
         {
@@ -97,7 +97,7 @@ namespace SynaptiPulse
             PeriodicTab_GridMain.SetHeaderText(Pulse.DisplayNameFromProperties);
             PeriodicTab_GridMain.SetWidth(Pulse.ColumSizeFromProperties);
 
-            ChaosTab_GridMain.DefaultConfiguration(periodicTabPulses, () => ChaosTab_GridMain.SetPersistString(this.GetType().FullName + Pulse.SingleLayout));
+            ChaosTab_GridMain.DefaultConfiguration(chaoticTabPulses, () => ChaosTab_GridMain.SetPersistString(this.GetType().FullName + Pulse.SingleLayout));
             ChaosTab_GridMain.SetCellStyle(DefaultCellStyle!);
             ChaosTab_GridMain.SetHeaderText(Pulse.DisplayNameFromProperties);
             ChaosTab_GridMain.SetWidth(Pulse.ColumSizeFromProperties);
@@ -162,7 +162,7 @@ namespace SynaptiPulse
                 MarkerSize = 1,
                 MarkerStroke = OxyColor.FromRgb(materialSkinManager.ColorScheme.DarkPrimaryColor.R, materialSkinManager.ColorScheme.DarkPrimaryColor.G, materialSkinManager.ColorScheme.DarkPrimaryColor.B),
                 MarkerFill = OxyColor.FromRgb(materialSkinManager.ColorScheme.LightPrimaryColor.R, materialSkinManager.ColorScheme.LightPrimaryColor.G, materialSkinManager.ColorScheme.LightPrimaryColor.B),
-                MarkerStrokeThickness = 0.5,                
+                MarkerStrokeThickness = 0.5,
             };
             model.Series.Add(lineSeries);
             return model;
@@ -292,8 +292,25 @@ namespace SynaptiPulse
 
         private void RefreshAll_ChaosTab()
         {
+            RefreshCbPulseTrains();
+            RefreshPartial_ChaosTab();
+        }
+
+        private void RefreshPartial_ChaosTab()
+        {
             Refresh();
             RefreshChart_ChaosTab();
+        }
+
+        private void RefreshCbPulseTrains()
+        {
+            if (parsedChaosData != null && parsedChaosData!.Length > 0)
+            {
+                List<string> l = new();
+                for (int i = 0; i < parsedChaosData.Length; i++) l.Add(CB_PULSE_TRAIN + (i + 1));
+                ChaosTab_CbPulseTrains.DataSource = l;
+                ChaosTab_CbPulseTrains.Enabled = true;
+            }
         }
 
         private void RefreshChart_ChaosTab()
@@ -320,9 +337,23 @@ namespace SynaptiPulse
 
         private void ChaosTab_CbCurrent_SelectedIndexChanged(object sender, EventArgs e)
         {
-            foreach (Pulse item in chaoticTabPulses)
-                item.Current = (ChaosTab_CbCurrent.SelectedValue as string)!;
-            RefreshAll_ChaosTab();
+            if (parsedChaosData != null)
+            {
+                foreach (var data in parsedChaosData!)
+                    foreach (Pulse item in data) item.Current = (ChaosTab_CbCurrent.SelectedValue as string)!;
+                RefreshAll_ChaosTab();
+            }
+        }
+
+        private void ChaosTab_CbPulseTrains_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (parsedChaosData != null)
+            {
+                int value = int.Parse((ChaosTab_CbPulseTrains.SelectedValue as string)!.Replace(CB_PULSE_TRAIN, ""), CultureInfo.InvariantCulture);
+                chaoticTabPulses.Clear();
+                foreach (var item in parsedChaosData![value - 1]) chaoticTabPulses.Add(item);
+                RefreshPartial_ChaosTab();
+            }
         }
 
         private void ChaosTab_TxtPulseLength_Leave(object sender, EventArgs e)
@@ -333,29 +364,8 @@ namespace SynaptiPulse
                 bool conversion = double.TryParse(value.Replace(',', '.'), out double newValue);
                 if (conversion) newValue = Math.Round(newValue, 0);
                 else newValue = Math.Round(double.Parse(value, NumberStyles.None, CultureInfo.CurrentCulture), 0);
-                newValue /= 1000000d;
-
-                List<double> interpulsesIntervals = chaosData.Split("\r\n", StringSplitOptions.RemoveEmptyEntries).Select(p => Math.Round((double.Parse(p, CultureInfo.InvariantCulture) - newValue) * 1000, 3)).ToList();
-                if (interpulsesIntervals.Any(p => p <= 0)) throw new InvalidOperationException("O tempo estipulado para largura do pulso é muito grande!");
-
-                MeasureUnity newUnity = MeasureUnity.Microseconds;
-                if (newValue >= 1d) newUnity = MeasureUnity.Seconds;
-                else if (newValue >= 0.001d)
-                {
-                    newUnity = MeasureUnity.Milliseconds;
-                    newValue *= 1000d;
-                }
-
-                int counter = 0;
-                foreach (Pulse item in chaoticTabPulses)
-                {
-                    item.PulseLength = newValue;
-                    item.PulseMeasureUnity = Pulse.MeasureUnityToCombobox[newUnity];
-                    item.AfterPulseLength = interpulsesIntervals[counter];
-                    counter++;
-                }
-
-                RefreshAll_ChaosTab();
+               
+                ParseData(newValue);
             }
             catch (InvalidOperationException iEx) { Error("Erro por ação inválida!", iEx); }
             catch (Exception ex) { Error("Erro não esperado!", ex); }
@@ -365,6 +375,8 @@ namespace SynaptiPulse
         {
             try
             {
+                #region Choose File
+
                 string filePath = string.Empty;
 
                 using (OpenFileDialog openFileDialog = new())
@@ -378,6 +390,10 @@ namespace SynaptiPulse
                     else return;
                 }
 
+                #endregion
+
+                #region Read File
+
                 chaosData = string.Empty;
                 using (FileStream fs = File.OpenRead(filePath))
                 {
@@ -388,45 +404,78 @@ namespace SynaptiPulse
                     while ((newData = fs.Read(buffer, 0, buffer.Length)) > 0)
                         chaosData += temp.GetString(buffer, 0, newData);
                 }
+                chaosData = chaosData.Replace(',', '.');
 
-                string current = (ChaosTab_CbCurrent.SelectedValue as string)!;
-                double pulseLength = double.Parse(ChaosTab_TxtPulseLength.Text.Replace(',', '.').Split('.')[0], CultureInfo.InvariantCulture);
-                double pulseLengthInMicros = pulseLength / 1000000.0d;
+                #endregion
 
-                List<double> interpulsesIntervals = chaosData.Split("\r\n", StringSplitOptions.RemoveEmptyEntries).Select(p => Math.Round((double.Parse(p, CultureInfo.InvariantCulture) - pulseLengthInMicros) * 1000, 3)).ToList();
-                if (interpulsesIntervals.Any(p => p <= 0)) throw new InvalidOperationException("O tempo estipulado para largura do pulso é muito grande!");
-
-                chaoticTabPulses.Clear();
-
-                foreach (double interval in interpulsesIntervals)
-                {
-                    Pulse p = new()
-                    {
-                        Polarity = Pulse.PulsePolarityToCombobox[PulsePolariy.Positive],
-                        Current = current,
-                        PulseLength = pulseLength,
-                        PulseMeasureUnity = Pulse.MeasureUnityToCombobox[MeasureUnity.Microseconds],
-                        AfterPulseLength = interval,
-                        AfterPulseMeasureUnity = Pulse.MeasureUnityToCombobox[MeasureUnity.Milliseconds]
-                    };
-                    chaoticTabPulses.Add(p);
-                }
-
-                ChaosTab_GridMain.DataSource = chaoticTabPulses;
-                RefreshAll_ChaosTab();
+                ParseData();
             }
             catch (InvalidOperationException iEx) { Error("Erro por ação inválida!", iEx); }
             catch (Exception ex) { Error("Erro ao carregar arquivo caótico", ex); }
+        }
 
+        private void ParseData(double? newPulseLengthValueInMicros = null)
+        {
+            string current = (ChaosTab_CbCurrent.SelectedValue as string)!;
+
+            double pulseLength = 0d;
+            if (newPulseLengthValueInMicros.HasValue) pulseLength = newPulseLengthValueInMicros.Value;
+            else pulseLength = double.Parse(ChaosTab_TxtPulseLength.Text.Replace(',', '.').Split('.')[0], CultureInfo.InvariantCulture);
+            double pulseLengthInSeconds = pulseLength / 1e6d;
+
+            string pulseLengthMeasure = Pulse.MeasureUnityToCombobox[MeasureUnity.Microseconds];
+            if (pulseLength >= 1e6d) { pulseLength /= 1e6d; pulseLengthMeasure = Pulse.MeasureUnityToCombobox[MeasureUnity.Seconds]; }
+            else if (pulseLength >= 1e3d) { pulseLength /= 1e3d; pulseLengthMeasure = Pulse.MeasureUnityToCombobox[MeasureUnity.Milliseconds]; }
+
+            List<double[]> totalData = chaosData.Replace(',', '.')
+                                        .Split("\r\n", StringSplitOptions.RemoveEmptyEntries)
+                                        .Select(p => p.Split(';', StringSplitOptions.RemoveEmptyEntries)
+                                           .Select(d => double.Parse(d, CultureInfo.InvariantCulture)).ToArray()
+                                         ).ToList();
+            int rows = totalData.Count;
+            int columns = totalData[0].Length;
+
+
+
+            parsedChaosData = new Pulse[columns][];
+            Pulse[]? rowData = null;
+            for (int col = 0; col < columns; col++)
+            {
+                rowData = new Pulse[rows];
+                for (int row = 0; row < rows; row++)
+                {
+                    double afterPulseLengthInMs = 0d;
+                    if (row > 0) afterPulseLengthInMs = Math.Round((totalData[row][col] - totalData[row - 1][col] - pulseLengthInSeconds) * 1000, 3);
+                    else afterPulseLengthInMs = Math.Round(totalData[row][col] * 1000, 3);
+                    if (afterPulseLengthInMs <= 0d) throw new InvalidOperationException("O tempo estipulado para largura do pulso é muito grande!");
+
+                    Pulse pulse = new()
+                    {
+                        Polarity = Pulse.PulsePolarityToCombobox[PulsePolariy.Positive],
+                        Current = current,
+                        PulseLength =  row > 0 ? pulseLength : 0, 
+                        PulseMeasureUnity = pulseLengthMeasure,
+                        AfterPulseLength = afterPulseLengthInMs,
+                        AfterPulseMeasureUnity = Pulse.MeasureUnityToCombobox[MeasureUnity.Milliseconds]
+                    };
+
+                    rowData[row] = pulse;
+                }
+                parsedChaosData[col] = rowData;
+            }
+
+            RefreshAll_ChaosTab();
         }
 
         private void ChaosTab_SendConfigToBoard_Click(object sender, EventArgs e)
         {
-
-
             Task.WaitAny(Task.Run(() => SendConfig_ChaoticData()));
         }
 
+        private void ChaosTab_btnStartStimulus_Click(object sender, EventArgs e)
+        {
+
+        }
 
         #endregion
 
@@ -580,10 +629,9 @@ namespace SynaptiPulse
             txtReceivedData.SelectionStart = txtReceivedData.TextLength;
             txtReceivedData.ScrollToCaret();
         }
-        public void ResetControllers(int newNumberOfPulses)
+        public void ResetControllers()
         {
             IsRunning = false;
-            numberOfPulses = newNumberOfPulses;
             receivedData = string.Empty;
             this.BeginInvoke(() => { txtReceivedData.Text = string.Empty; });
         }
@@ -634,7 +682,6 @@ namespace SynaptiPulse
         {
             string newText = ((SerialPort)sender).ReadExisting();
             this.BeginInvoke(() => { txtReceivedData.Text += newText; });
-            //txtReceivedData.Text += ((SerialPort)sender).ReadExisting();
         }
 
         private void SetDataCommunication()
@@ -679,7 +726,7 @@ namespace SynaptiPulse
         public void SendConfig_PeriodicData()
         {
             int delay = 100;
-            ResetControllers(PeriodicTab_GridMain.Rows.Count);
+            ResetControllers();
             try
             {
                 SendData(STOP_ROUTINE);
@@ -716,7 +763,7 @@ namespace SynaptiPulse
         public void SendConfig_ChaoticData()
         {
             int delay = 100;
-            ResetControllers(ChaosTab_GridMain.Rows.Count);
+            ResetControllers();
             try
             {
                 SendData(STOP_ROUTINE);
@@ -796,8 +843,6 @@ namespace SynaptiPulse
             MessageBox.Show($"{errorMessage} {JUMPLINE}{JUMPLINE}Exception message:{JUMPLINE} {e.Message}", "Erro!", MessageBoxButtons.OK, MessageBoxIcon.Error); ;
         }
 
-        #endregion
-
-     
+        #endregion        
     }
 }
