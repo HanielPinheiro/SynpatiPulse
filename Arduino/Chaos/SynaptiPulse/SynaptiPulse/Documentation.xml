@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Name>SynaptiPulse</Name>
+<Author>Haniel</Author>
+<Scholl>UNIFESP - PPGEB</Scholl>
+<Description>An biphasic pre-defined current-constant pulsed-modulated stimulator to be applied in mouses brains.</Description>
+<Application>The mean is to understand how periodic, non-periodic and chaotic mode of DBS can affect the brain state during epileptical crysis.</Application>
+<BoardCircuit>Schematic was developed based on: https://hal.science/hal-01347597/file/SEPIA_final.pdf </BoardCircuit>
+
+<SofwareDevelopment>
+	
+	<PreDefinitons>
+		<Pulse>
+			A pulse, in our application, is composed of four components, Polarity (or phase), Current(or intensity), PulseLength and InterPulseInterval.
+			To achieve biphasic polarity the stimulator apply voltage in one electrode, and the other stays on gnd, this generate a difference of potential between the electrodes, controlling the current flow.
+			<Polarity>
+				Is the valence of pulse, if is positive or negative, this define the direction of current flowing in the charge(brain). 
+				Imagine two electrodes positioneds in different places on brain. Positive polarity means current flowing from A electrode to B. 
+				Negative polarity means the inverse, from B to A.
+			</Polarity>
+			<Current>
+				The current intensity was controlled by a current-control component, and vary from 0 to 650uA (micro Amperes)				
+			</Current>
+			<PulseLength>
+				The PulseLength is the amount of time that current is applied on charge. This time can be configured from micro seconds to seconds in our system, but, for our applications, the value was 100us.
+			</PulseLength>
+			<InterPulseInterval>
+				This is the time that system maintain 0 current on the charge, until trigger a new pulse. The values can vary from microseconds to seconds, but in our applications will have miliseconds.
+			</InterPulseInterval>
+		</Pulse>
+	</PreDefinitons>
+	
+	<C_Sharp_GUI>
+		The C# GUI has two components, one to interface with board and another to user preset the pulse parameters.
+		In case of non-periodic and chaotic regimes, we will use 4 PulseTrains of 200 pulses each. The Pulse Length, current and polarity will be the same, only the InterPulseInterval will vary.
+		The values was predicted by python script using Lorenz and Rossler maps to chaos regime and random seed probability theory to non-periodic regime and the values can't obbey some classical distribution.		
+	</C_Sharp_GUI>
+	
+	<ArduinoFirmware>
+		<ArduinoVersion>ATMEGA328P New Bootloader Arduino Nano </ArduinoVersion>
+		Our little firmware has great importance in the execution of our experiments. This is the key to our pulses was perfectly configured and our results aren't biased.
+		
+		globalVariables, routinesDeclarations and config.h has the main constants and variables to configure all.
+		
+		Arduino millis func is being used here to count how much time has passed after beggining of program.
+		
+		DigiPotCurrents - configure the ports to control the 8Bits Digital to Analog Converter 2R Ladder Resistors Cascade. This is responsible to set the voltage on current controller.
+		
+		Serial_Hal - configure ATMEGA328P to correctly communicate using UART.
+		
+		Serial_ParseCommands - parse the commands from C# and drive the actions of uC.
+		
+		Serial_ParseInstructions - parse the pulses sended by C# GUI and prepare the data arrays to run pulses
+		
+		RunPulses - Control the digitalPorts to correctly deliver the pre-parsed pulses into charge.
+		
+		<Commands>
+			All Commands ends in jocker char '>' this is used to identify the end of command
+			A> Reset uC using watchdog timer.
+			B> Reset all data used in the pulse programming
+			C> Start to run the Routine of pulses. Only can be used after set Mode.
+			D> Stop to run the Routine of pulses, if it was started.
+			E> Read new pulses. Only can be used after set Mode. If pre-exist readed pulses, must reset all data with B>.
+			F> Stop read new pulses if is reading.
+			G> Set mode to Periodic.
+			H> SetMode to PulseTrains.
+		</Commands>
+
+		<Instructions>
+			All Instructions ends in jocker char '>'. Used to identify the end of instruction
+
+			SET$450$0$200.008M$1.025S>
+
+			SET - Is the reserved word to identify a pulse being transmited
+			$ - Is the separator jocker char. Used to separate the datas in a pulse instruction
+			Block 1 - the numbers that comes after SET. Represents the Current Intensity. Values vary from 0 to 650 always in intervals of 50: 0,50,100,150,200,250,300,350,400,450,500,550,600,650. Unity i uA.
+			Block 2 - the sequence that comes after Block 1. Represents the Polarity. Value vary from 0 to 1.
+			Block 3 - the sequence that comes after Block 2. Represents the PulseLength Time. Value vary from 0 to 999.999. Has a final char that represents time unity.
+			Block 4 - the sequence that comes after Block 3. Represents the InterPulseInterval Time. Value vary from 0 to 999.999. Has a final char that represents time unity.
+			Time Unity Chars: U, M, S. U = Microseconds, M = Miliseconds, S = Seconds. 1.025S represents 1 seconds and 25 miliseconds.
+		</Instructions>
+		
+	</ArduinoFirmware>	
+	
+</SofwareDevelopment>

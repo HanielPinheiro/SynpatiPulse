@@ -1,67 +1,106 @@
 void ParseCommands(char target) {
-  
-  if (target == CONTROL_RESET_BOARD)  //D>
-  {    
+  if (target == CONTROL_RESET_BOARD)  //A>
+  {
     Serial.end();
     asm ("jmp (0x0000)");
   }
 
-  if (target == CONTROL_RESET_INSTRUCTION)  //R>
+  if (target == CONTROL_RESET_INSTRUCTION)  //B>
   {
-    Serial_ResetBuffer();
-  
-    pulseCounter = 0;
-
-    InterpulseLengthsIntegerPart[numOfPulses] = { NULL };
-    PulseCurrents[numOfPulses] = { NULL };
-    PulsePolarities[numOfPulses] = { NULL };
-    PulseLengthsIntegerPart[numOfPulses] = { NULL };
+    StopPulses();
+    ResetArrays();
 
     HasInstruction = false;
     IsReading = false;
     IsRunning = false;
-    StopPulses();
-    
+    IsWaiting = false;
+    NeedToParse = false;
+
+    PulseMode = false;
+    PulseCounter = 0;
+    PulseTrainMode = false;
+    PulseTrainCounter = 0;
+    PulseTrainInterval = 0;
+
+    Serial_ResetBuffer();
     Serial.println("Reseted");
   }
 
-  if (target == CONTROL_START_ROUTINE)  //J>
+  if (target == CONTROL_ROUTINE_START)  //C>
   {
-    Serial.println("Start Routine");
+    Serial.println("StartingRoutine");
     if (!IsReading && HasInstruction)
     {
-      SetPotentiometerValue(PulseCurrents[0]);
       IsRunning = true;
-      Serial.println("Routine Enabled");
+      Serial.println("RoutineEnabled");
     }
   }
 
-  if (target == CONTROL_STOP_ROUTINE)  //K>
+  if (target == CONTROL_ROUTINE_STOP)  //D>
   {
-    Serial.println("Stop Routine");
+    Serial.println("StopingRoutine");
     if (IsRunning && !IsReading && HasInstruction)
     {
       IsRunning = false;
-      Serial.println("Routine Disabled");
+      Serial.println("RoutineDisabled");
     }
   }
 
-  if (target == CONTROL_READ_INSTRUCTIONS)  //L>
-  { Serial.println("Start Read Instructions");
+  if (target == CONTROL_READ_START)  //E>
+  { Serial.println("StartingRead");
     if (!IsRunning && !HasInstruction) {
       IsReading = true;
-      Serial.println("Read Routine Enabled");
+      Serial.println("ReadEnabled");
     }
   }
 
-  if (target == CONTROL_STOP_READ_INSTRUCTIONS)  //M>
+  if (target == CONTROL_READ_STOP)  //F>
   {
-    Serial.println("Stop Read Instructions");
+    Serial.println("StopingRead");
     if (!IsRunning && IsReading && !HasInstruction) {
       IsReading = false;
       HasInstruction = true;
-      Serial.println("Read Routine Disabled");
-      Serial.print("Saved data: "); Serial.println(pulseCounter);
+      Serial.println("ReadDisabled");
+      Serial.print("SavedData: "); Serial.println(PulseCounter);
     }
   }
+
+  if (target == CONTROL_MODE_PERIODIC)  //G>
+  {
+    if (!IsRunning && IsReading) {
+      if (HasInstruction && PulseTrainMode) Serial.println("NeedReset");
+      else {
+        Serial.println("PeriodicMode");
+        PulseTrainMode = false;
+        PulseMode = true;
+      }
+    }
+  }
+
+  if (target == CONTROL_MODE_PULSETRAINS) //H>
+  {
+    if (!IsRunning && IsReading) {
+      if (HasInstruction && PulseMode) Serial.println("NeedReset");
+      else {
+        Serial.println("PulseTrainMode");
+        PulseTrainMode = true;
+        PulseMode = false;
+      }
+    }
+  }
+}
+
+void ResetArrays()
+{
+  PulseCurrents[numOfPulses] = { NULL };
+
+  PulsePolarities[numOfPulses] = { NULL };
+
+  PulseLengthsIntegerPart[numOfPulses] = { NULL };
+  PulseLengthsFractionalPart[numOfPulses] = { NULL };
+  PulseLengthsMeasureUnity[numOfPulses] = { NULL };
+
+  InterpulseLengthsIntegerPart[numOfPulses] = { NULL };
+  InterpulseLengthsFractionalPart[numOfPulses] = { NULL };
+  InterpulseLengthsMeasureUnity[numOfPulses] = { NULL };
 }

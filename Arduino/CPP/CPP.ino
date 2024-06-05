@@ -1,19 +1,19 @@
-
-#define CONTROL_START_ROUTINE 'J'
-#define CONTROL_STOP_ROUTINE 'K'
-#define CONTROL_READ_INSTRUCTIONS 'L'
-#define CONTROL_STOP_READ_INSTRUCTIONS 'M'
-#define CONTROL_RESET_INSTRUCTION 'R'
-#define CONTROL_RESET_BOARD 'D'
+#define CONTROL_RESET_BOARD 'A'
+#define CONTROL_RESET_INSTRUCTION 'B'
+#define CONTROL_ROUTINE_START 'C'
+#define CONTROL_ROUTINE_STOP 'D'
+#define CONTROL_READ_START 'E'
+#define CONTROL_READ_STOP 'F'
+#define CONTROL_MODE_PERIODIC 'G'
+#define CONTROL_MODE_PULSETRAINS 'H'
 
 #define INSTRUCTION_SET "SET"
-#define INSTRUCTION_POLARITY_P "+"
+#define INSTRUCTION_PT "PT"
 #define INSTRUCTION_UNITY_MS 77
 #define INSTRUCTION_UNITY_US 85
 #define INSTRUCTION_UNITY_S 83
 #define INSTRUCTION_DECIMAL '.'
-#define INSTRUCTION_COMMA_SEPARATOR ","
-#define INSTRUCTION_SEPARATOR "$"
+#define INSTRUCTION_SEPARATOR '$'
 #define INSTRUCTION_END '>'
 
 #define Ladder_0 9
@@ -28,12 +28,24 @@
 #define CLOCK_1_PIN 12
 #define CLOCK_2_PIN 11
 
-// =========================================================
-int pulseCounter = 0;
-const int numOfPulses = 10;
+#define numOfPulses 50
+#define numPulseTrains 4
 
-int PulseCurrents[numOfPulses];
-int PulsePolarities[numOfPulses]; //(Positive or Negative)
+// =========================================================
+
+bool HasInstruction = false;
+bool IsReading = false;
+bool IsRunning = false;
+bool IsWaiting = false;
+bool NeedToParse = false;
+bool PulseTrainArrayIsFull = false;
+
+// =========================================================
+int PulseCounter = 0;
+bool PulseMode = false;
+
+char PulseCurrents[numOfPulses];
+int PulsePolarities[numOfPulses];
 
 int PulseLengthsIntegerPart[numOfPulses];
 int PulseLengthsFractionalPart[numOfPulses];
@@ -44,20 +56,14 @@ int InterpulseLengthsFractionalPart[numOfPulses];
 int InterpulseLengthsMeasureUnity[numOfPulses];
 
 // =========================================================
-const int numPulseTrains = 199;
-float LorenzPulseTrainValues[numPulseTrains];
 
-int LorenzCounter = 0;
-int LorenzBatteryInterval = 0;
-int LorenzBatteryCounter = 0;
-int LorenzPreviousPolarity = 1;
-int LorenzMode = 0;
-
-bool HasInstruction = false;
-bool IsReading = false;
-bool IsRunning = false;
+char PulseTrains[numPulseTrains][numOfPulses];
+bool PulseTrainMode = false;
+int PulseTrainCounter = 0;
+int PulseTrainInterval = 0;
 
 // =========================================================
+
 const int bufferSize = 30;
 int counterBuffer = 0;
 char tempData[bufferSize];
