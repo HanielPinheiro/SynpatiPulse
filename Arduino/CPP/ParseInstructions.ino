@@ -1,45 +1,48 @@
 void ParsePulseTrainInstruction()
 {
-  if(PulseTrainArrayIsFull)
-  {
-   while(PulseCounter < numOfPulses)
-    ParseInstruction(PulseTrains[PulseTrainCounter][PulseCounter]);
-   
-   NeedToParse = false;
-   PulseTrainCounter++;
-   PulseCounter = 0; // sai da ParseInstruction como 50 no final
+  if (PulseTrainArrayIsFull /*&& PulseTrainCounter < numPulseTrains*/)
+  {    
+   //while (PulseCounter < numOfPulses)    
+   /*for(int i =0; i < numOfPulses; i++)
+         ParseInstruction(PulseTrains[i].c_str());     
+    */
+    //PulseTrainCounter++;
+    PulseCounter = numOfPulses; 
+    NeedToParse = false;
   }
 }
 
 // =========================================================
 
-void ParseInstruction(char* data) {
-  int tempPolarity = 0;
+void ParseInstruction(char* data) {  
+//  Serial.println(data);
   char *token = strtok(data, INSTRUCTION_SEPARATOR);
+
   if (!strcmp(token, INSTRUCTION_SET))
   {
-    token = strtok(NULL, INSTRUCTION_SEPARATOR);
-    PulseCurrents[PulseCounter] = token; 
-    //SetCurrentValueToArr(token); //anterior 
+    token = strtok(NULL, INSTRUCTION_SEPARATOR);    
+    Pulse[0] = atoi(token); //mandar o token como numero direto do c#
+    Serial.print("Current: "); Serial.println(Pulse[0]);
 
     token = strtok(NULL, INSTRUCTION_SEPARATOR);
-    tempPolarity = atoi(token);
-    PulsePolarities[PulseCounter] = tempPolarity;
+    Pulse[1] = atoi(token);
+    Serial.print("Polarity: "); Serial.println(Pulse[1]);
 
-    token = strtok(NULL, INSTRUCTION_SEPARATOR);
-    GetTimeFromInstruction(token, strlen(token), PulseLengthsIntegerPart, PulseLengthsFractionalPart, PulseLengthsMeasureUnity);
+    token = strtok(NULL, INSTRUCTION_SEPARATOR);    
+    GetTimeFromInstruction(token, strlen(token), 2); //,PulseLengthsIntegerPart, PulseLengthsFractionalPart, PulseLengthsMeasureUnity);
 
-    token = strtok(NULL, INSTRUCTION_SEPARATOR);
-    GetTimeFromInstruction(token, strlen(token), InterpulseLengthsIntegerPart, InterpulseLengthsFractionalPart, InterpulseLengthsMeasureUnity);
+    token = strtok(NULL, INSTRUCTION_SEPARATOR);    
+    GetTimeFromInstruction(token, strlen(token), 5);//, InterpulseLengthsIntegerPart, InterpulseLengthsFractionalPart, InterpulseLengthsMeasureUnity);
 
     PulseCounter++;
   }
-  Serial.println("Parsed");
+  Serial.println("<Parsed>");
 }
 
 // =========================================================
-void GetTimeFromInstruction(char *data, int siz, int* lengths, int* fracs, int* measures)
+void GetTimeFromInstruction(char *data, int siz, int index) //int* lengths, int* fracs, int* measures)
 {
+  Serial.println(data);
   double intPart;
   double fractPart = modf(atof(data), &intPart);
   fractPart *= 1000;
@@ -51,35 +54,14 @@ void GetTimeFromInstruction(char *data, int siz, int* lengths, int* fracs, int* 
       measureUnity = data[i];
   }
 
-  lengths[PulseCounter] = (int)intPart;
-  fracs[PulseCounter] = (int)fractPart;
-  measures[PulseCounter] = measureUnity;
+  //lengths[PulseCounter] = (int)intPart;
+  //fracs[PulseCounter] = (int)fractPart;
+  //measures[PulseCounter] = measureUnity;
+  Pulse[index] = (int)intPart;
+  Pulse[index+1]= (int)fractPart;
+  Pulse[index+2]= measureUnity;
 
-  //Serial.print("Data: "); Serial.println(data);
-  Serial.print("Integer: "); Serial.println(lengths[PulseCounter]);
-  Serial.print("Frac: "); Serial.println(fracs[PulseCounter]);
-  Serial.print("Measure: "); Serial.println(measures[PulseCounter]);//*/
+  Serial.print("Integer: "); Serial.println(Pulse[index]);
+  Serial.print("Frac: "); Serial.println( Pulse[index+1]);
+  Serial.print("Measure: "); Serial.println(Pulse[index+2]);
 }
-
-// =========================================================
-/*
-void SetCurrentValueToArr(char *nomCurr)
-{
-  
-  //Serial.print("nomCurr: "); Serial.println(nomCurr);
-  if (strcmp(nomCurr, "50") == 0) PulseCurrents[PulseCounter] = 0;
-  else if   (strcmp(nomCurr, "100") == 0)PulseCurrents[PulseCounter] = 1;
-  else if   (strcmp(nomCurr, "150") == 0)PulseCurrents[PulseCounter] = 2;
-  else if   (strcmp(nomCurr, "200") == 0)PulseCurrents[PulseCounter] = 3;
-  else if   (strcmp(nomCurr, "250") == 0)PulseCurrents[PulseCounter] = 4;
-  else if   (strcmp(nomCurr, "300") == 0)PulseCurrents[PulseCounter] = 5;
-  else if   (strcmp(nomCurr, "350") == 0)PulseCurrents[PulseCounter] = 6;
-  else if   (strcmp(nomCurr, "400") == 0)PulseCurrents[PulseCounter] = 7;
-  else if   (strcmp(nomCurr, "450") == 0)PulseCurrents[PulseCounter] = 8;
-  else if   (strcmp(nomCurr, "500") == 0)PulseCurrents[PulseCounter] = 9;
-  else if   (strcmp(nomCurr, "550") == 0)PulseCurrents[PulseCounter] = 10;
-  else if   (strcmp(nomCurr, "600") == 0)PulseCurrents[PulseCounter] = 11;
-  else PulseCurrents[PulseCounter] = 12;
-  Serial.print("Current: "); Serial.println(PulseCurrents[PulseCounter]);
-}
-*/

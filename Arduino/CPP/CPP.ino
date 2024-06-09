@@ -1,4 +1,4 @@
-#define CONTROL_RESET_BOARD 'A'
+  #define CONTROL_RESET_BOARD 'A'
 #define CONTROL_RESET_INSTRUCTION 'B'
 #define CONTROL_ROUTINE_START 'C'
 #define CONTROL_ROUTINE_STOP 'D'
@@ -8,12 +8,11 @@
 #define CONTROL_MODE_PULSETRAINS 'H'
 
 #define INSTRUCTION_SET "SET"
-#define INSTRUCTION_PT "PT"
 #define INSTRUCTION_UNITY_MS 77
 #define INSTRUCTION_UNITY_US 85
 #define INSTRUCTION_UNITY_S 83
 #define INSTRUCTION_DECIMAL '.'
-#define INSTRUCTION_SEPARATOR '$'
+#define INSTRUCTION_SEPARATOR "$"
 #define INSTRUCTION_END '>'
 
 #define Ladder_0 9
@@ -29,42 +28,40 @@
 #define CLOCK_2_PIN 11
 
 #define numOfPulses 50
-#define numPulseTrains 4
+#define bufferSize 30
 
 // =========================================================
 
-bool HasInstruction = false;
-bool IsReading = false;
-bool IsRunning = false;
-bool IsWaiting = false;
-bool NeedToParse = false;
-bool PulseTrainArrayIsFull = false;
+boolean HasInstruction = false;
+boolean IsReading = false;
+boolean IsRunning = false;
+boolean IsWaiting = false;
+boolean NeedToParse = false;
+boolean PulseTrainArrayIsFull = false;
 
 // =========================================================
 int PulseCounter = 0;
-bool PulseMode = false;
+boolean PulseMode = false;
+int Pulse[8] = {0};
+/*
+char PulseCurrents[numOfPulses]= {"NULL"};
+int PulsePolarities[numOfPulses]= {"NULL"};
 
-char PulseCurrents[numOfPulses];
-int PulsePolarities[numOfPulses];
+int PulseLengthsIntegerPart[numOfPulses]= {"NULL"};
+int PulseLengthsFractionalPart[numOfPulses]= {"NULL"};
+int PulseLengthsMeasureUnity[numOfPulses]= {"NULL"};
 
-int PulseLengthsIntegerPart[numOfPulses];
-int PulseLengthsFractionalPart[numOfPulses];
-int PulseLengthsMeasureUnity[numOfPulses];
-
-int InterpulseLengthsIntegerPart[numOfPulses];
-int InterpulseLengthsFractionalPart[numOfPulses];
-int InterpulseLengthsMeasureUnity[numOfPulses];
+int InterpulseLengthsIntegerPart[numOfPulses]= {"NULL"};
+int InterpulseLengthsFractionalPart[numOfPulses]= {"NULL"};
+int InterpulseLengthsMeasureUnity[numOfPulses]= {"NULL"};*/
 
 // =========================================================
 
-char PulseTrains[numPulseTrains][numOfPulses];
-bool PulseTrainMode = false;
+String PulseTrains[numOfPulses] = {"NULL"};
+boolean PulseTrainMode = false;
 int PulseTrainCounter = 0;
 int PulseTrainInterval = 0;
 
 // =========================================================
-
-const int bufferSize = 30;
 int counterBuffer = 0;
 char tempData[bufferSize];
-const char newLine = '\n';

@@ -4,8 +4,6 @@ namespace SynaptiPulse.Models
 {
     public class DeviceControl : IDisposable
     {
-        private const int defaultSleep = 3000;
-
         private readonly DeviceControlParameters parameters = new();
         private readonly SerialPort serialPort;
 
@@ -85,7 +83,7 @@ namespace SynaptiPulse.Models
                 if (!string.IsNullOrEmpty(instructionToSendToTurnOffBoard))
                 {
                     serialPort!.Write(instructionToSendToTurnOffBoard);
-                    Thread.Sleep(defaultSleep);
+                    Thread.Sleep(SynaptiPulse.Delay);
                 }
 
                 serialPort!.Dispose();

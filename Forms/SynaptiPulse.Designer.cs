@@ -41,7 +41,7 @@
             PeriodicTab_SendConfigToBoard = new MaterialSkin.Controls.MaterialButton();
             PeriodicTab_CbCurrents = new MaterialSkin.Controls.MaterialComboBox();
             PeriodicTab_SwitchCurrent = new MaterialSkin.Controls.MaterialSwitch();
-            materialButton1 = new MaterialSkin.Controls.MaterialButton();
+            PeriodicTab_StartStimulation = new MaterialSkin.Controls.MaterialButton();
             PeriodicTab_GridMain = new DataGridView();
             PeriodicTab_ChartPlotView = new OxyPlot.WindowsForms.PlotView();
             tabChaos = new TabPage();
@@ -66,6 +66,7 @@
             ChaosTab_LblInterval = new MaterialSkin.Controls.MaterialLabel();
             ChaosTab_LblPulseTrain = new MaterialSkin.Controls.MaterialLabel();
             groupBox2 = new GroupBox();
+            btnCleanTxtReceive = new MaterialSkin.Controls.MaterialButton();
             txtReceivedData = new MaterialSkin.Controls.MaterialMultiLineTextBox();
             btnDisconnect = new MaterialSkin.Controls.MaterialButton();
             btnConnect = new MaterialSkin.Controls.MaterialButton();
@@ -224,7 +225,7 @@
             PeriodicTab_HeaderPanel.Controls.Add(PeriodicTab_SendConfigToBoard, 2, 0);
             PeriodicTab_HeaderPanel.Controls.Add(PeriodicTab_CbCurrents, 5, 0);
             PeriodicTab_HeaderPanel.Controls.Add(PeriodicTab_SwitchCurrent, 4, 0);
-            PeriodicTab_HeaderPanel.Controls.Add(materialButton1, 3, 0);
+            PeriodicTab_HeaderPanel.Controls.Add(PeriodicTab_StartStimulation, 3, 0);
             PeriodicTab_HeaderPanel.Dock = DockStyle.Fill;
             PeriodicTab_HeaderPanel.Location = new Point(0, 0);
             PeriodicTab_HeaderPanel.Margin = new Padding(0);
@@ -313,7 +314,7 @@
             PeriodicTab_CbCurrents.FormattingEnabled = true;
             PeriodicTab_CbCurrents.IntegralHeight = false;
             PeriodicTab_CbCurrents.ItemHeight = 29;
-            PeriodicTab_CbCurrents.Location = new Point(657, 6);
+            PeriodicTab_CbCurrents.Location = new Point(657, 7);
             PeriodicTab_CbCurrents.MaxDropDownItems = 4;
             PeriodicTab_CbCurrents.MouseState = MaterialSkin.MouseState.OUT;
             PeriodicTab_CbCurrents.Name = "PeriodicTab_CbCurrents";
@@ -346,26 +347,27 @@
             PeriodicTab_SwitchCurrent.UseVisualStyleBackColor = false;
             PeriodicTab_SwitchCurrent.CheckedChanged += PeriodicTab_SwitchGlobalCurrent_CheckedChanged;
             // 
-            // materialButton1
+            // PeriodicTab_StartStimulation
             // 
-            materialButton1.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-            materialButton1.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            materialButton1.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
-            materialButton1.Depth = 0;
-            materialButton1.Enabled = false;
-            materialButton1.HighEmphasis = true;
-            materialButton1.Icon = null;
-            materialButton1.Location = new Point(338, 6);
-            materialButton1.Margin = new Padding(4, 6, 4, 6);
-            materialButton1.MouseState = MaterialSkin.MouseState.HOVER;
-            materialButton1.Name = "materialButton1";
-            materialButton1.NoAccentTextColor = Color.Empty;
-            materialButton1.Size = new Size(139, 36);
-            materialButton1.TabIndex = 31;
-            materialButton1.Text = "Começar Estimulação";
-            materialButton1.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
-            materialButton1.UseAccentColor = false;
-            materialButton1.UseVisualStyleBackColor = true;
+            PeriodicTab_StartStimulation.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            PeriodicTab_StartStimulation.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            PeriodicTab_StartStimulation.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            PeriodicTab_StartStimulation.Depth = 0;
+            PeriodicTab_StartStimulation.Enabled = false;
+            PeriodicTab_StartStimulation.HighEmphasis = true;
+            PeriodicTab_StartStimulation.Icon = null;
+            PeriodicTab_StartStimulation.Location = new Point(338, 6);
+            PeriodicTab_StartStimulation.Margin = new Padding(4, 6, 4, 6);
+            PeriodicTab_StartStimulation.MouseState = MaterialSkin.MouseState.HOVER;
+            PeriodicTab_StartStimulation.Name = "PeriodicTab_StartStimulation";
+            PeriodicTab_StartStimulation.NoAccentTextColor = Color.Empty;
+            PeriodicTab_StartStimulation.Size = new Size(139, 36);
+            PeriodicTab_StartStimulation.TabIndex = 31;
+            PeriodicTab_StartStimulation.Text = "Começar Estimulação";
+            PeriodicTab_StartStimulation.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            PeriodicTab_StartStimulation.UseAccentColor = false;
+            PeriodicTab_StartStimulation.UseVisualStyleBackColor = true;
+            PeriodicTab_StartStimulation.Click += PeriodicTab_StartStimulation_Click;
             // 
             // PeriodicTab_GridMain
             // 
@@ -783,6 +785,7 @@
             // 
             // groupBox2
             // 
+            groupBox2.Controls.Add(btnCleanTxtReceive);
             groupBox2.Controls.Add(txtReceivedData);
             groupBox2.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
             groupBox2.Location = new Point(272, 4);
@@ -792,6 +795,27 @@
             groupBox2.TabStop = false;
             groupBox2.Text = "Dados Recebidos";
             // 
+            // btnCleanTxtReceive
+            // 
+            btnCleanTxtReceive.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            btnCleanTxtReceive.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            btnCleanTxtReceive.Depth = 0;
+            btnCleanTxtReceive.Dock = DockStyle.Top;
+            btnCleanTxtReceive.HighEmphasis = true;
+            btnCleanTxtReceive.Icon = null;
+            btnCleanTxtReceive.Location = new Point(3, 28);
+            btnCleanTxtReceive.Margin = new Padding(4, 6, 4, 6);
+            btnCleanTxtReceive.MouseState = MaterialSkin.MouseState.HOVER;
+            btnCleanTxtReceive.Name = "btnCleanTxtReceive";
+            btnCleanTxtReceive.NoAccentTextColor = Color.Empty;
+            btnCleanTxtReceive.Size = new Size(312, 36);
+            btnCleanTxtReceive.TabIndex = 20;
+            btnCleanTxtReceive.Text = "Limpar";
+            btnCleanTxtReceive.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            btnCleanTxtReceive.UseAccentColor = false;
+            btnCleanTxtReceive.UseVisualStyleBackColor = true;
+            btnCleanTxtReceive.Click += btnCleanTxtReceive_Click;
+            // 
             // txtReceivedData
             // 
             txtReceivedData.BackColor = Color.FromArgb(255, 255, 255);
@@ -799,11 +823,11 @@
             txtReceivedData.Depth = 0;
             txtReceivedData.Font = new Font("Microsoft Sans Serif", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
             txtReceivedData.ForeColor = Color.FromArgb(222, 0, 0, 0);
-            txtReceivedData.Location = new Point(6, 31);
+            txtReceivedData.Location = new Point(6, 73);
             txtReceivedData.MouseState = MaterialSkin.MouseState.HOVER;
             txtReceivedData.Name = "txtReceivedData";
             txtReceivedData.ReadOnly = true;
-            txtReceivedData.Size = new Size(306, 481);
+            txtReceivedData.Size = new Size(306, 439);
             txtReceivedData.TabIndex = 0;
             txtReceivedData.Text = "";
             txtReceivedData.TextChanged += TxtReceivedData_TextChanged;
@@ -1210,6 +1234,7 @@
             tableLayoutPanel6.ResumeLayout(false);
             tableLayoutPanel6.PerformLayout();
             groupBox2.ResumeLayout(false);
+            groupBox2.PerformLayout();
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
             ResumeLayout(false);
@@ -1275,6 +1300,7 @@
         private TableLayoutPanel tableLayoutPanel6;
         private MaterialSkin.Controls.MaterialLabel ChaosTab_LblInterval;
         private MaterialSkin.Controls.MaterialLabel ChaosTab_LblPulseTrain;
-        private MaterialSkin.Controls.MaterialButton materialButton1;
+        private MaterialSkin.Controls.MaterialButton PeriodicTab_StartStimulation;
+        private MaterialSkin.Controls.MaterialButton btnCleanTxtReceive;
     }
 }

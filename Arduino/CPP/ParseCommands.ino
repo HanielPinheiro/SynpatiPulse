@@ -8,7 +8,7 @@ void ParseCommands(char target) {
   if (target == CONTROL_RESET_INSTRUCTION)  //B>
   {
     StopPulses();
-    ResetArrays();
+    //ResetArrays();
 
     HasInstruction = false;
     IsReading = false;
@@ -22,55 +22,60 @@ void ParseCommands(char target) {
     PulseTrainCounter = 0;
     PulseTrainInterval = 0;
 
-    Serial_ResetBuffer();
-    Serial.println("Reseted");
+    Serial.println("<Reseted>");
   }
 
   if (target == CONTROL_ROUTINE_START)  //C>
   {
-    Serial.println("StartingRoutine");
+   // Serial.println("StartingRoutine");
     if (!IsReading && HasInstruction)
     {
       IsRunning = true;
-      Serial.println("RoutineEnabled");
+      Serial.println("<RoutineEnabled>");
     }
   }
 
   if (target == CONTROL_ROUTINE_STOP)  //D>
   {
-    Serial.println("StopingRoutine");
+    //Serial.println("StopingRoutine");
     if (IsRunning && !IsReading && HasInstruction)
     {
       IsRunning = false;
-      Serial.println("RoutineDisabled");
+      Serial.println("<RoutineDisabled>");
     }
   }
 
   if (target == CONTROL_READ_START)  //E>
-  { Serial.println("StartingRead");
+  { //Serial.println("StartingRead");
     if (!IsRunning && !HasInstruction) {
       IsReading = true;
-      Serial.println("ReadEnabled");
+      Serial.println("<ReadEnabled>");
     }
   }
 
   if (target == CONTROL_READ_STOP)  //F>
   {
-    Serial.println("StopingRead");
+    //Serial.println("StopingRead");
     if (!IsRunning && IsReading && !HasInstruction) {
       IsReading = false;
       HasInstruction = true;
-      Serial.println("ReadDisabled");
-      Serial.print("SavedData: "); Serial.println(PulseCounter);
+      //Serial.println("<ReadDisabled>");
+      Serial.print("SavedData:");
+      if (PulseMode) Serial.println(PulseCounter);
+      else 
+      {
+        Serial.println(PulseTrainCounter);
+        ParsePulseTrainInstruction();
+      }
     }
   }
 
   if (target == CONTROL_MODE_PERIODIC)  //G>
   {
     if (!IsRunning && IsReading) {
-      if (HasInstruction && PulseTrainMode) Serial.println("NeedReset");
+      if (HasInstruction && PulseTrainMode) Serial.println("<MustReset>");
       else {
-        Serial.println("PeriodicMode");
+        Serial.println("<PeriodicMode>");
         PulseTrainMode = false;
         PulseMode = true;
       }
@@ -80,18 +85,19 @@ void ParseCommands(char target) {
   if (target == CONTROL_MODE_PULSETRAINS) //H>
   {
     if (!IsRunning && IsReading) {
-      if (HasInstruction && PulseMode) Serial.println("NeedReset");
+      if (HasInstruction && PulseMode) Serial.println("<MustReset>");
       else {
-        Serial.println("PulseTrainMode");
+        Serial.println("<PulseTrainMode>");
         PulseTrainMode = true;
         PulseMode = false;
       }
     }
   }
 }
-
+/*
 void ResetArrays()
 {
+  
   PulseCurrents[numOfPulses] = { NULL };
 
   PulsePolarities[numOfPulses] = { NULL };
@@ -103,4 +109,4 @@ void ResetArrays()
   InterpulseLengthsIntegerPart[numOfPulses] = { NULL };
   InterpulseLengthsFractionalPart[numOfPulses] = { NULL };
   InterpulseLengthsMeasureUnity[numOfPulses] = { NULL };
-}
+}*/
