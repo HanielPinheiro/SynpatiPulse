@@ -26,7 +26,7 @@ namespace BrainStimulator
         public const string STOP_READ = "M>";
         public const string startStimulus = "INICIAR ESTIMULAÇÃO";
         public const string stopStimulus = "PARAR ESTIMULAÇÃO";
-        public const string appName = "\\BrainStiumlator\\";
+        public const string appName = "\\BrainStimulator\\";
 
         private readonly string path;
         private readonly string fullPath;
@@ -78,6 +78,8 @@ namespace BrainStimulator
                         pulses.Add(p);
                     }
                 }
+
+                cbCurrents.SelectedIndex = Pulse.pulseCurrentToCombobox.Values.ToList().IndexOf(pulses[0].Current);
 
                 Refresh();
                 RefreshChart();
@@ -228,9 +230,11 @@ namespace BrainStimulator
         {
             if (!Directory.Exists(path)) Directory.CreateDirectory(path);
 
-            if (!File.Exists(fullPath)) File.CreateText(fullPath);
+            StreamWriter? sw = null;
+            if (!File.Exists(fullPath)) sw = File.CreateText(fullPath);
 
-            using (StreamWriter sw = new StreamWriter(fullPath))
+            if (sw == null) sw = new StreamWriter(fullPath);
+            using (sw)
             {
                 foreach (var pulse in pulses)
                     sw.WriteLine(pulse);
@@ -305,7 +309,7 @@ namespace BrainStimulator
                     PeriodicTab_StartRoutine.Text = startStimulus;
                 }
             }
-        }       
+        }
 
         private void PeriodicTab_StartRoutine_EnabledChanged(object sender, EventArgs e)
         {
