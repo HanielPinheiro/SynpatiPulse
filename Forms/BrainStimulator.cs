@@ -24,15 +24,20 @@ namespace BrainStimulator
         private const string STOP_ROUTINE = "K>";
         private const string START_READ = "L>";
         public const string STOP_READ = "M>";
-
         public const string startStimulus = "INICIAR ESTIMULAÇÃO";
         public const string stopStimulus = "PARAR ESTIMULAÇÃO";
+        public const string appName = "\\BrainStiumlator\\";
+
+        private readonly string path;
+        private readonly string fullPath;
 
         public BrainStimulator()
         {
             InitializeComponent();
             SetFormTheme();
             cbCurrents.DataSource = Pulse.pulseCurrentToCombobox.Select(p => p.Value).ToList();
+            path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + appName;
+            fullPath = path + "pulses.txt";
         }
 
         #region On Load
@@ -61,6 +66,22 @@ namespace BrainStimulator
             PeriodicTab_GridMain.SetCellStyle(DefaultCellStyle!);
             PeriodicTab_GridMain.SetHeaderText(Pulse.displayNameFromProperties);
             PeriodicTab_GridMain.SetWidth(Pulse.columSizeFromProperties);
+
+            if (Directory.Exists(path) && File.Exists(fullPath))
+            {
+                using (StreamReader sr = File.OpenText(fullPath))
+                {
+                    string? newLine = string.Empty;
+                    while ((newLine = sr.ReadLine()) != null)
+                    {
+                        var p = new Pulse(newLine);
+                        pulses.Add(p);
+                    }
+                }
+
+                Refresh();
+                RefreshChart();
+            }
         }
 
         #endregion
@@ -205,6 +226,16 @@ namespace BrainStimulator
 
         private void PeriodicTab_SendConfigToBoard_Click(object sender, EventArgs e)
         {
+            if (!Directory.Exists(path)) Directory.CreateDirectory(path);
+
+            if (!File.Exists(fullPath)) File.CreateText(fullPath);
+
+            using (StreamWriter sw = new StreamWriter(fullPath))
+            {
+                foreach (var pulse in pulses)
+                    sw.WriteLine(pulse);
+            }
+
             boardConnection!.ResetControllers(PeriodicTab_GridMain.Rows.Count);
 
             try

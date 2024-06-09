@@ -11,6 +11,7 @@ namespace BrainStimulator.Models
     /// </summary>
     public class Pulse
     {
+        private const string separator = "$";
         #region Static fields
 
         public static readonly Dictionary<string, int> columSizeFromProperties = ReflectionHandler.GetFromProperties_ColumnSizeAttribute<Pulse>();
@@ -33,6 +34,11 @@ namespace BrainStimulator.Models
         #endregion
 
         public Pulse(){}
+
+        public Pulse(string newLine)
+        {
+            var splitedString = newLine.Split(separator);
+        }
 
         #region Largura do Pulso
 
@@ -83,8 +89,7 @@ namespace BrainStimulator.Models
         public string Polarity { get; set; } = pulsePolarityToCombobox[PulsePolariy.Positive];
 
         public override string ToString()
-        {
-            string separator = "$";
+        {            
             return $"SET{separator}{Current}{separator}{Polarity}{separator}{PulseLength}{measureUnity_DefaultToAmbientRelation[PulseMeasureUnity]}{separator}{AfterPulseLength}{measureUnity_DefaultToAmbientRelation[AfterPulseMeasureUnity]}>";
         }
     }
