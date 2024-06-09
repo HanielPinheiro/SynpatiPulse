@@ -4,9 +4,9 @@ namespace BrainStimulator.Models
 {
     public class DeviceControl : IDisposable
     {
-        private const int defaultSleep = 1000;
+        public const int delay = 2000;
 
-        private readonly DeviceControlParameters parameters = new DeviceControlParameters();
+        private readonly DeviceControlParameters parameters = new();
         private readonly SerialPort serialPort;
         public bool IsConnected { get => serialPort!.IsOpen; }
 
@@ -37,7 +37,7 @@ namespace BrainStimulator.Models
         /// <summary>
         /// Reset serialPort
         /// </summary>
-        public void Reset(bool defaultConfiguration)
+        public void Reset()
         {
             Dispose();
 
@@ -63,6 +63,7 @@ namespace BrainStimulator.Models
         {
             serialPort!.Close();
             serialPort!.Dispose();
+            GC.SuppressFinalize(this);
         }
 
         /// <summary>
@@ -75,7 +76,7 @@ namespace BrainStimulator.Models
                 if (!string.IsNullOrEmpty(instructionToSendToTurnOffBoard))
                 {
                     serialPort!.Write(instructionToSendToTurnOffBoard);
-                    Thread.Sleep(defaultSleep);
+                    Thread.Sleep(delay);
                 }
 
                 serialPort!.Dispose();

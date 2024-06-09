@@ -15,19 +15,21 @@ namespace SerialPortController
 
         private readonly DeviceControlParameters? _parameters = new();
         public readonly MaterialButton externalSendDataButton;
+        public readonly MaterialButton externalStartButton;
         public readonly MaterialButton externalConnectButton;
 
         private DeviceControl? _control;
         private string? receivedData;
-
-        public bool IsRunning { get; private set; } = false;
-        private bool readAllData = false;
+        public bool IsConnected = false;
+        public bool BoardHasData = false;
         public int numberOfPulses = 0;
+        public bool StimulationHasStarted = false;
 
-        public Interface(MaterialButton btnConnect, MaterialButton btnSend)
+        public Interface(MaterialButton btnConnect, MaterialButton btnSend, MaterialButton btnStart)
         {
             externalConnectButton = btnConnect;
             externalSendDataButton = btnSend;
+            externalStartButton = btnStart;
 
             InitializeComponent();
 
@@ -60,18 +62,15 @@ namespace SerialPortController
             RefreshCom();
             FillFieldsWithDefaultData(false);
             DisableFields();
-
         }
 
         public void ResetControllers(int newNumberOfPulses)
         {
-            IsRunning = false;
-            readAllData = false;
             numberOfPulses = newNumberOfPulses;
             receivedData = txtReceivedData.Text = string.Empty;
         }
 
-        private void txtReceivedData_TextChanged(object sender, EventArgs e)
+        private void TxtReceivedData_TextChanged(object sender, EventArgs e)
         {
             txtReceivedData.SelectionStart = txtReceivedData.TextLength;
             txtReceivedData.ScrollToCaret();
@@ -86,7 +85,7 @@ namespace SerialPortController
             cbComPortsList.SelectedIndex = 0;
         }
 
-        private void btnUpdate_Click(object sender, EventArgs e) { RefreshCom(); }
+        private void BtnUpdate_Click(object sender, EventArgs e) { RefreshCom(); }
 
         private void SetDataCommunication() { _control!.SetDataReceivedEventHandler(new SerialDataReceivedEventHandler(DataReceivedHandler)); }
 
@@ -128,7 +127,7 @@ namespace SerialPortController
 
         #region Switch On / Off
 
-        private void switchDefaultParameters_CheckedChanged(object sender, EventArgs e)
+        private void SwitchDefaultParameters_CheckedChanged(object sender, EventArgs e)
         {
             if (switchDefaultParameters.Checked)
             {
@@ -202,7 +201,7 @@ namespace SerialPortController
 
         #region Conectar / Disconectar
 
-        private void btnConnect_Click(object sender, EventArgs e)
+        private void BtnConnect_Click(object sender, EventArgs e)
         {
             try
             {
@@ -214,11 +213,13 @@ namespace SerialPortController
                 SetButtonsState(false);
 
                 SetDataCommunication();
+
+                IsConnected = true;
             }
             catch (Exception ex) { Error("Problema ao tentar conectar na placa", ex); }
         }
 
-        private void btnDisconnect_Click(object sender, EventArgs e)
+        private void BtnDisconnect_Click(object sender, EventArgs e)
         {
             try
             {
@@ -227,6 +228,11 @@ namespace SerialPortController
                 _control!.Dispose();
 
                 SetButtonsState(true);
+                externalStartButton.Text = BrainStimulator.BrainStimulator.startStimulus;
+
+                IsConnected = false;
+                BoardHasData = false;
+                StimulationHasStarted = false;
             }
             catch (Exception ex) { Error("Problema ao tentar conectar na placa", ex); }
         }
@@ -234,6 +240,7 @@ namespace SerialPortController
         {
             btnConnect.Enabled = value;
             externalSendDataButton.Enabled = !value;
+            externalStartButton.Enabled = !value;
             btnDisconnect.Enabled = !value;
 
             cbComPortsList.Enabled = value;
@@ -259,6 +266,7 @@ namespace SerialPortController
 
             externalConnectButton.Enabled = true;
             externalSendDataButton.Enabled = false;
+            externalStartButton.Enabled = false;
 
             if (_control != null) try { _control!.Dispose(); } catch { /* Ignorado */ }
         }
@@ -317,7 +325,7 @@ namespace SerialPortController
 
         #endregion
 
-        private void Error(string errorMessage, Exception e)
+        static private void Error(string errorMessage, Exception e)
         {
             MessageBox.Show($"{errorMessage} {JUMPLINE}{JUMPLINE}Exception message:{JUMPLINE} {e.Message}", "Erro!", MessageBoxButtons.OK, MessageBoxIcon.Error); ;
         }

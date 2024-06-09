@@ -75,7 +75,7 @@
             btnUpdate.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
             btnUpdate.UseAccentColor = false;
             btnUpdate.UseVisualStyleBackColor = true;
-            btnUpdate.Click += btnUpdate_Click;
+            btnUpdate.Click += BtnUpdate_Click;
             // 
             // materialDrawer1
             // 
@@ -396,7 +396,7 @@
             switchDefaultParameters.TabIndex = 12;
             switchDefaultParameters.Text = "Usar parâmetros padrão";
             switchDefaultParameters.UseVisualStyleBackColor = true;
-            switchDefaultParameters.CheckedChanged += switchDefaultParameters_CheckedChanged;
+            switchDefaultParameters.CheckedChanged += SwitchDefaultParameters_CheckedChanged;
             // 
             // btnConnect
             // 
@@ -417,7 +417,7 @@
             btnConnect.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
             btnConnect.UseAccentColor = false;
             btnConnect.UseVisualStyleBackColor = true;
-            btnConnect.Click += btnConnect_Click;
+            btnConnect.Click += BtnConnect_Click;
             // 
             // btnDisconnect
             // 
@@ -439,7 +439,7 @@
             btnDisconnect.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
             btnDisconnect.UseAccentColor = false;
             btnDisconnect.UseVisualStyleBackColor = true;
-            btnDisconnect.Click += btnDisconnect_Click;
+            btnDisconnect.Click += BtnDisconnect_Click;
             // 
             // groupBox2
             // 
@@ -466,7 +466,7 @@
             txtReceivedData.Size = new Size(323, 482);
             txtReceivedData.TabIndex = 0;
             txtReceivedData.Text = "";
-            txtReceivedData.TextChanged += txtReceivedData_TextChanged;
+            txtReceivedData.TextChanged += TxtReceivedData_TextChanged;
             // 
             // Interface
             // 

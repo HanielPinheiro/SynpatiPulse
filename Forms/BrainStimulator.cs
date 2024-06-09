@@ -13,8 +13,8 @@ namespace BrainStimulator
     public partial class BrainStimulator : MaterialForm
     {
         private readonly BindingList<Pulse> pulses = new();
+        private readonly MaterialSkinManager materialSkinManager = MaterialSkinManager.Instance;
         private Interface? boardConnection;
-        private MaterialSkinManager materialSkinManager = MaterialSkinManager.Instance;
         private DataGridViewCellStyle? DefaultCellStyle;
 
         private const string JUMPLINE = "\r\n";
@@ -24,6 +24,9 @@ namespace BrainStimulator
         private const string STOP_ROUTINE = "K>";
         private const string START_READ = "L>";
         public const string STOP_READ = "M>";
+
+        public const string startStimulus = "INICIAR ESTIMULAÇÃO";
+        public const string stopStimulus = "PARAR ESTIMULAÇÃO";
 
         public BrainStimulator()
         {
@@ -113,12 +116,19 @@ namespace BrainStimulator
 
         private void PeriodicTab_AddPulse_Click(object sender, EventArgs e)
         {
-            if (pulses.Count < 10)
+            try
             {
-                var p = new Pulse();
-                pulses.Add(p);
-                RefreshChart();
+                if (pulses.Count < 10)
+                {
+                    Pulse p = new();
+                    p.Current = cbCurrents.SelectedValue as string ?? throw new InvalidOperationException("Erro no seletor de corrente");
+                    pulses.Add(p);
+                    RefreshChart();
+                }
+                if (boardConnection != null && pulses.Count > 0 && boardConnection!.IsConnected && !boardConnection!.StimulationHasStarted)
+                    PeriodicTab_SendConfigToBoard.Enabled = true;
             }
+            catch (InvalidOperationException ex) { Error("Problema ao adicionar pulso", ex); }
         }
 
         private void PeriodicTab_RemovePulse_Click(object sender, EventArgs e)
@@ -130,14 +140,16 @@ namespace BrainStimulator
 
             foreach (Pulse pulse in pulsesToRemove) pulses.Remove(pulse);
 
+            if (pulses.Count <= 0 && boardConnection != null && boardConnection.IsConnected) PeriodicTab_SendConfigToBoard.Enabled = false;
+
             RefreshChart();
         }
 
         private void PeriodicTab_ConnectBoard_Click(object sender, EventArgs e)
         {
-            if (Application.OpenForms.OfType<Interface>().Count() == 0)
+            if (!Application.OpenForms.OfType<Interface>().Any())
             {
-                boardConnection = new Interface(PeriodicTab_ConnectBoard, PeriodicTab_SendConfigToBoard);
+                boardConnection = new Interface(PeriodicTab_ConnectBoard, PeriodicTab_SendConfigToBoard, PeriodicTab_StartRoutine);
                 boardConnection.Show();
                 PeriodicTab_ConnectBoard.Enabled = false;
             }
@@ -186,7 +198,7 @@ namespace BrainStimulator
 
         #endregion
 
-        private void Error(string errorMessage, Exception e)
+        static private void Error(string errorMessage, Exception e)
         {
             MessageBox.Show($"{errorMessage} {JUMPLINE}{JUMPLINE}Exception message:{JUMPLINE} {e.Message}", "Erro!", MessageBoxButtons.OK, MessageBoxIcon.Error); ;
         }
@@ -197,15 +209,14 @@ namespace BrainStimulator
 
             try
             {
-                int delay = 2000;
                 boardConnection!.SendData(STOP_ROUTINE);
-                Thread.Sleep(delay);
+                Thread.Sleep(DeviceControl.delay);
 
                 boardConnection!.SendData(STOP_READ);
-                Thread.Sleep(delay);
+                Thread.Sleep(DeviceControl.delay);
 
                 boardConnection!.SendData(RESET_PREVIOUS_SETUP);
-                Thread.Sleep(delay);
+                Thread.Sleep(DeviceControl.delay);
 
                 boardConnection!.SendData(START_READ);
                 Thread.Sleep(2000);
@@ -223,13 +234,13 @@ namespace BrainStimulator
                 boardConnection!.SendData(STOP_READ);
                 Thread.Sleep(2000);
 
-                boardConnection!.SendData(START_ROUTINE);
-                Thread.Sleep(delay);
+                boardConnection!.BoardHasData = true;
+                PeriodicTab_StartRoutine.Enabled = true;
             }
             catch (Exception ex) { Error("Error when try to send configs to the board", ex); }
         }
 
-        private void cbCurrents_SelectedIndexChanged(object sender, EventArgs e)
+        private void CbCurrents_SelectedIndexChanged(object sender, EventArgs e)
         {
             foreach (DataGridViewRow row in PeriodicTab_GridMain.Rows)
             {
@@ -237,6 +248,49 @@ namespace BrainStimulator
                 {
                     if (cbCurrents.SelectedValue is string item) pulse.Current = item;
                 }
+            }
+        }
+
+        private void PeriodicTab_StartRoutine_Click(object sender, EventArgs e)
+        {
+            if (boardConnection!.BoardHasData)
+            {
+                if (!boardConnection!.StimulationHasStarted)
+                {
+                    boardConnection!.SendData(START_ROUTINE);
+                    Thread.Sleep(DeviceControl.delay);
+
+                    boardConnection!.StimulationHasStarted = true;
+                    PeriodicTab_SendConfigToBoard.Enabled = false;
+                    PeriodicTab_StartRoutine.Text = stopStimulus;
+                }
+                else
+                {
+                    boardConnection!.SendData(STOP_ROUTINE);
+                    Thread.Sleep(DeviceControl.delay);
+
+                    boardConnection!.StimulationHasStarted = false;
+                    PeriodicTab_SendConfigToBoard.Enabled = true;
+                    PeriodicTab_StartRoutine.Text = startStimulus;
+                }
+            }
+        }       
+
+        private void PeriodicTab_StartRoutine_EnabledChanged(object sender, EventArgs e)
+        {
+            if (PeriodicTab_StartRoutine.Enabled)
+            {
+                if (boardConnection!.BoardHasData) PeriodicTab_StartRoutine.Enabled = true;
+                else PeriodicTab_StartRoutine.Enabled = false;
+            }
+        }
+
+        private void PeriodicTab_SendConfigToBoard_EnabledChanged(object sender, EventArgs e)
+        {
+            if (PeriodicTab_SendConfigToBoard.Enabled)
+            {
+                if (pulses.Count <= 0) PeriodicTab_SendConfigToBoard.Enabled = false;
+                else PeriodicTab_SendConfigToBoard.Enabled = true;
             }
         }
     }
