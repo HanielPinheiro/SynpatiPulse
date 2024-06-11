@@ -1,19 +1,3 @@
-void SetPotentiometerValue(int value) {
-  if (value == 0) SetCurrent_50();
-  else if (value == 1) SetCurrent_100();
-  else if (value == 2) SetCurrent_150();
-  else if (value == 3) SetCurrent_200();
-  else if (value == 4) SetCurrent_250();
-  else if (value == 5) SetCurrent_300();
-  else if (value == 6) SetCurrent_350();
-  else if (value == 7) SetCurrent_400();
-  else if (value == 8) SetCurrent_450();
-  else if (value == 9) SetCurrent_500();
-  else if (value == 10) SetCurrent_550();
-  else if (value == 11) SetCurrent_600();
-  else SetCurrent_650();
-}
-
 void SetCurrent_0() {
   digitalWrite(Ladder_0, 0);
   digitalWrite(Ladder_1, 0);
