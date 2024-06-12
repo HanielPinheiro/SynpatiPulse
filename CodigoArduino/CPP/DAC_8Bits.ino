@@ -10,15 +10,15 @@ void SetCurrent_0() {
 }
 
 void SetCurrent_50() {
-// digitalWrite(Ladder_0, 1);
-//  digitalWrite(Ladder_1, 0);
-//  digitalWrite(Ladder_2, 0);
-//  digitalWrite(Ladder_3, 1);
-//  digitalWrite(Ladder_4, 1);
-//  digitalWrite(Ladder_5, 0);
-//  digitalWrite(Ladder_6, 0);
-//  digitalWrite(Ladder_7, 0);
-  
+  // digitalWrite(Ladder_0, 1);
+  //  digitalWrite(Ladder_1, 0);
+  //  digitalWrite(Ladder_2, 0);
+  //  digitalWrite(Ladder_3, 1);
+  //  digitalWrite(Ladder_4, 1);
+  //  digitalWrite(Ladder_5, 0);
+  //  digitalWrite(Ladder_6, 0);
+  //  digitalWrite(Ladder_7, 0);
+
   digitalWrite(Ladder_0, 0);
   digitalWrite(Ladder_1, 0);
   digitalWrite(Ladder_2, 0);
@@ -30,14 +30,14 @@ void SetCurrent_50() {
 }
 
 void SetCurrent_100() {
-//  digitalWrite(Ladder_0, 1);
-//  digitalWrite(Ladder_1, 1);
-//  digitalWrite(Ladder_2, 1);
-//  digitalWrite(Ladder_3, 1);
-//  digitalWrite(Ladder_4, 1);
-//  digitalWrite(Ladder_5, 0);
-//  digitalWrite(Ladder_6, 0);
-//  digitalWrite(Ladder_7, 0);
+  //  digitalWrite(Ladder_0, 1);
+  //  digitalWrite(Ladder_1, 1);
+  //  digitalWrite(Ladder_2, 1);
+  //  digitalWrite(Ladder_3, 1);
+  //  digitalWrite(Ladder_4, 1);
+  //  digitalWrite(Ladder_5, 0);
+  //  digitalWrite(Ladder_6, 0);
+  //  digitalWrite(Ladder_7, 0);
 
   digitalWrite(Ladder_0, 1);
   digitalWrite(Ladder_1, 0);

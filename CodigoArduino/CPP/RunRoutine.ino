@@ -1,20 +1,26 @@
 void RunRoutine() {
-   for (int i = 0; i < PulseCounter; i++)
-  {
-    SetPotentiometerValue(Pulse[0]);    
+  SetCurrent(Pulse[0]);
 
-    SetPolarity(Pulse[1]);
-    
-    Wait(Pulse[2],  Pulse[3], Pulse[4]);
-    
-    digitalWrite(CLOCK_1_PIN, LOW); digitalWrite(CLOCK_2_PIN, HIGH); // desliga a saida
-    IsWaiting = true;
-    Wait(Pulse[5], Pulse[6], Pulse[7]);
+  SetPolarity(Pulse[1]);
+
+  // Largura do Pulso
+  Wait(Pulse[2],  Pulse[3], Pulse[4]);
+
+  // Intervalo entre pulso
+  digitalWrite(CLOCK_1_PIN, LOW); digitalWrite(CLOCK_2_PIN, HIGH);
+  IsWaiting = true;
+  Wait(Pulse[5], Pulse[6], Pulse[7]);
+
+  if (!PeriodicMode && PulseCounter == ArrayCounter) {
+    IsRunning = false;
+    IsWaiting = false;
   }
+  
+  if(PeriodicMode && ArrayCounter == 1) IsWaiting = false;
 }
 
 // =========================================================
-void SetPotentiometerValue(int value) {
+void SetCurrent(int value) {
   if (value == 0) SetCurrent_50();
   else if (value == 1) SetCurrent_100();
   else if (value == 2) SetCurrent_150();
@@ -48,6 +54,8 @@ void SetPolarity(int polarity) {
 // =========================================================
 void Wait(int timer, int fracTimer, int timeUnity) // --- Delay control ---
 {
+  //Serial.println("Esperando");
+
   if (timeUnity == INSTRUCTION_UNITY_US)
   {
     delayMicroseconds(timer);
@@ -62,4 +70,6 @@ void Wait(int timer, int fracTimer, int timeUnity) // --- Delay control ---
     for (int i = 0; i < timer; i++) delay(1000);
     if (fracTimer > 0) delay(fracTimer);
   }
+  
+  //Serial.println("Parou");
 }

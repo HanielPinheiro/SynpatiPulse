@@ -1,41 +1,43 @@
 void ParsePulseFromArray()
 {
-    /*
-    Tenho que converter o array[pos] para pulse durante o intervalo entre pulsos
-    Contar o avanço
-    Se chegar no ultimo elemento do pulso, espero a proxima sequencia → Software C#
-    */
-    ParseInstruction(ArrayWithPulses[PulseCounter].c_str());
-    PulseCounter++;
+  verifyDelay = millis();
+  DataToBeProcessed = ArrayWithPulses[PulseCounter];
+  ParseInstruction(DataToBeProcessed.c_str());
+  PulseCounter++;
+
+  if (PulseCounter == ArrayCounter && PeriodicMode)PulseCounter = 0;
+
+  verifyDelay = millis() -  verifyDelay;
+  Serial.write("Delay:"); Serial.println(verifyDelay);
 }
 
 // =========================================================
 
 void ParseInstruction(char* data) {
+  Serial.write("<Parsing "); Serial.print(PulseCounter + 1); Serial.write("> - ");
+  Serial.println(data);
   char *token = strtok(data, INSTRUCTION_SEPARATOR);
-  
-    token = strtok(NULL, INSTRUCTION_SEPARATOR);
-    Pulse[0] = atoi(token); //mandar o token como numero direto do c#
-    Serial.write("Current: "); Serial.write(Pulse[0]);
+  Pulse[0] = atoi(token); //mandar o token como numero direto do c#
+  //Serial.write("Current: "); Serial.println(Pulse[0]);
 
-    token = strtok(NULL, INSTRUCTION_SEPARATOR);
-    Pulse[1] = atoi(token);
-    Serial.write("Polarity: "); Serial.write(Pulse[1]);
+  token = strtok(NULL, INSTRUCTION_SEPARATOR);
+  Pulse[1] = atoi(token);
+  //Serial.write("Polarity: "); Serial.println(Pulse[1]);
 
-    token = strtok(NULL, INSTRUCTION_SEPARATOR);
-    GetTimeFromInstruction(token, strlen(token), 2); //,PulseLengthsIntegerPart, PulseLengthsFractionalPart, PulseLengthsMeasureUnity);
+  token = strtok(NULL, INSTRUCTION_SEPARATOR);
+  GetTimeFromInstruction(token, strlen(token), 2); //,PulseLengthsIntegerPart, PulseLengthsFractionalPart, PulseLengthsMeasureUnity);
 
-    token = strtok(NULL, INSTRUCTION_SEPARATOR);
-    GetTimeFromInstruction(token, strlen(token), 5);//, InterpulseLengthsIntegerPart, InterpulseLengthsFractionalPart, InterpulseLengthsMeasureUnity);
+  token = strtok(NULL, INSTRUCTION_SEPARATOR);
+  GetTimeFromInstruction(token, strlen(token), 5);//, InterpulseLengthsIntegerPart, InterpulseLengthsFractionalPart, InterpulseLengthsMeasureUnity);
 
-    PulseCounter++;
-  Serial.write("<Parsed>");
+  Serial.write("<Parsed>"); Serial.write(NEW_LINE);
 }
 
 // =========================================================
 void GetTimeFromInstruction(char *data, int siz, int index) //int* lengths, int* fracs, int* measures)
 {
-  Serial.write(data);
+  //Serial.println(data);
+
   double intPart;
   double fractPart = modf(atof(data), &intPart);
   fractPart *= 1000;
@@ -49,8 +51,10 @@ void GetTimeFromInstruction(char *data, int siz, int index) //int* lengths, int*
   Pulse[index] = (int)intPart;
   Pulse[index + 1] = (int)fractPart;
   Pulse[index + 2] = measureUnity;
+/*
+  Serial.write("Integer: "); Serial.println(Pulse[index]);
 
-  Serial.write("Integer: "); Serial.write(Pulse[index]);
-  Serial.write("Frac: "); Serial.write( Pulse[index + 1]);
-  Serial.write("Measure: "); Serial.write(Pulse[index + 2]);
+  Serial.write("Frac: "); Serial.println( Pulse[index + 1]);
+
+  Serial.write("Measure: "); Serial.println(Pulse[index + 2]);*/
 }

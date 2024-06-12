@@ -1,9 +1,10 @@
-  #define CONTROL_RESET_BOARD 'A'
+#define CONTROL_RESET_BOARD 'A'
 #define CONTROL_RESET_INSTRUCTION 'B'
 #define CONTROL_ROUTINE_START 'C'
 #define CONTROL_ROUTINE_STOP 'D'
 #define CONTROL_READ_START 'E'
 #define CONTROL_READ_STOP 'F'
+#define CONTROL_MODE_PERIODIC 'G'
 
 #define INSTRUCTION_UNITY_MS 77
 #define INSTRUCTION_UNITY_US 85
@@ -11,6 +12,7 @@
 #define INSTRUCTION_DECIMAL '.'
 #define INSTRUCTION_SEPARATOR "$"
 #define INSTRUCTION_END '>'
+#define NEW_LINE "\r\n"
 
 #define Ladder_0 9
 #define Ladder_1 8
@@ -34,12 +36,14 @@ boolean IsRunning = false;
 boolean IsWaiting = false;
 
 String ArrayWithPulses[numOfPulses] = {"NULL"};
+String DataToBeProcessed = "";
 int ArrayCounter = 0;
 boolean ArrayIsFull = false;
+boolean PeriodicMode = false;
 
 int Pulse[8] = {0};
 int PulseCounter = 0;
-
+unsigned long int verifyDelay = 0;
 // =========================================================
 //Variables about SerialCommunication
 int counterBuffer = 0;
