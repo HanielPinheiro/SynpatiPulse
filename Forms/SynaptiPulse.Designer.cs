@@ -34,16 +34,19 @@
             TabControl = new TabControl();
             tabPeriodic = new TabPage();
             tbPanel_PeriodicTab = new TableLayoutPanel();
-            tableLayoutPanel7 = new TableLayoutPanel();
-            PeriodicTab_HeaderPanel = new TableLayoutPanel();
-            PeriodicTab_AddPulse = new MaterialSkin.Controls.MaterialButton();
-            PeriodicTab_RemovePulse = new MaterialSkin.Controls.MaterialButton();
-            PeriodicTab_SendConfigToBoard = new MaterialSkin.Controls.MaterialButton();
-            PeriodicTab_CbCurrents = new MaterialSkin.Controls.MaterialComboBox();
-            PeriodicTab_SwitchCurrent = new MaterialSkin.Controls.MaterialSwitch();
-            PeriodicTab_StartStimulation = new MaterialSkin.Controls.MaterialButton();
             PeriodicTab_GridMain = new DataGridView();
             PeriodicTab_ChartPlotView = new OxyPlot.WindowsForms.PlotView();
+            tableLayoutPanel7 = new TableLayoutPanel();
+            PeriodicTab_HeaderPanel = new TableLayoutPanel();
+            PeriodicTab_SendConfigToBoard = new MaterialSkin.Controls.MaterialButton();
+            PeriodicTab_StartStimulation = new MaterialSkin.Controls.MaterialButton();
+            BtnLoadRoutine = new MaterialSkin.Controls.MaterialButton();
+            BtnSaveRoutine = new MaterialSkin.Controls.MaterialButton();
+            tableLayoutPanel16 = new TableLayoutPanel();
+            PeriodicTab_RemovePulse = new MaterialSkin.Controls.MaterialButton();
+            PeriodicTab_AddPulse = new MaterialSkin.Controls.MaterialButton();
+            PeriodicTab_CbCurrents = new MaterialSkin.Controls.MaterialComboBox();
+            PeriodicTab_SwitchCurrent = new MaterialSkin.Controls.MaterialSwitch();
             tabChaos = new TabPage();
             tableLayoutPanel2 = new TableLayoutPanel();
             tableLayoutPanel3 = new TableLayoutPanel();
@@ -65,30 +68,38 @@
             tableLayoutPanel6 = new TableLayoutPanel();
             ChaosTab_CbPulseTrains = new MaterialSkin.Controls.MaterialComboBox();
             ChaosTab_LblInterval = new MaterialSkin.Controls.MaterialLabel();
-            groupBox2 = new GroupBox();
-            btnCleanTxtReceive = new MaterialSkin.Controls.MaterialButton();
-            txtReceivedData = new MaterialSkin.Controls.MaterialMultiLineTextBox();
+            tableLayoutPanel14 = new TableLayoutPanel();
+            tableLayoutPanel13 = new TableLayoutPanel();
+            materialLabel1 = new MaterialSkin.Controls.MaterialLabel();
+            tableLayoutPanel12 = new TableLayoutPanel();
             btnDisconnect = new MaterialSkin.Controls.MaterialButton();
             btnConnect = new MaterialSkin.Controls.MaterialButton();
+            tableLayoutPanel11 = new TableLayoutPanel();
+            cbComPortsList = new MaterialSkin.Controls.MaterialComboBox();
+            btnUpdate = new MaterialSkin.Controls.MaterialButton();
+            switchDefaultParameters = new MaterialSkin.Controls.MaterialSwitch();
             groupBox1 = new GroupBox();
-            cbHandShake = new MaterialSkin.Controls.MaterialComboBox();
-            cbStopBits = new MaterialSkin.Controls.MaterialComboBox();
-            cbParity = new MaterialSkin.Controls.MaterialComboBox();
-            txtDataBits = new MaterialSkin.Controls.MaterialTextBox();
-            materialLabel10 = new MaterialSkin.Controls.MaterialLabel();
+            tableLayoutPanel9 = new TableLayoutPanel();
+            tableLayoutPanel8 = new TableLayoutPanel();
             txtWriteTimeOut = new MaterialSkin.Controls.MaterialTextBox();
             txtReadTimeOut = new MaterialSkin.Controls.MaterialTextBox();
-            materialLabel9 = new MaterialSkin.Controls.MaterialLabel();
+            txtDataBits = new MaterialSkin.Controls.MaterialTextBox();
             txtBaudRate = new MaterialSkin.Controls.MaterialTextBox();
-            materialLabel4 = new MaterialSkin.Controls.MaterialLabel();
             materialLabel5 = new MaterialSkin.Controls.MaterialLabel();
-            materialLabel6 = new MaterialSkin.Controls.MaterialLabel();
+            materialLabel4 = new MaterialSkin.Controls.MaterialLabel();
             materialLabel7 = new MaterialSkin.Controls.MaterialLabel();
+            materialLabel6 = new MaterialSkin.Controls.MaterialLabel();
+            tableLayoutPanel10 = new TableLayoutPanel();
             materialLabel8 = new MaterialSkin.Controls.MaterialLabel();
-            switchDefaultParameters = new MaterialSkin.Controls.MaterialSwitch();
-            btnUpdate = new MaterialSkin.Controls.MaterialButton();
-            materialLabel1 = new MaterialSkin.Controls.MaterialLabel();
-            cbComPortsList = new MaterialSkin.Controls.MaterialComboBox();
+            cbParity = new MaterialSkin.Controls.MaterialComboBox();
+            cbHandShake = new MaterialSkin.Controls.MaterialComboBox();
+            materialLabel10 = new MaterialSkin.Controls.MaterialLabel();
+            cbStopBits = new MaterialSkin.Controls.MaterialComboBox();
+            materialLabel9 = new MaterialSkin.Controls.MaterialLabel();
+            groupBox2 = new GroupBox();
+            tableLayoutPanel15 = new TableLayoutPanel();
+            btnCleanTxtReceive = new MaterialSkin.Controls.MaterialButton();
+            txtReceivedData = new MaterialSkin.Controls.MaterialMultiLineTextBox();
             tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)splitContainer).BeginInit();
             splitContainer.Panel1.SuspendLayout();
@@ -97,9 +108,10 @@
             TabControl.SuspendLayout();
             tabPeriodic.SuspendLayout();
             tbPanel_PeriodicTab.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)PeriodicTab_GridMain).BeginInit();
             tableLayoutPanel7.SuspendLayout();
             PeriodicTab_HeaderPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)PeriodicTab_GridMain).BeginInit();
+            tableLayoutPanel16.SuspendLayout();
             tabChaos.SuspendLayout();
             tableLayoutPanel2.SuspendLayout();
             tableLayoutPanel3.SuspendLayout();
@@ -108,8 +120,16 @@
             TbPanel_Chaos.SuspendLayout();
             tableLayoutPanel5.SuspendLayout();
             tableLayoutPanel6.SuspendLayout();
-            groupBox2.SuspendLayout();
+            tableLayoutPanel14.SuspendLayout();
+            tableLayoutPanel13.SuspendLayout();
+            tableLayoutPanel12.SuspendLayout();
+            tableLayoutPanel11.SuspendLayout();
             groupBox1.SuspendLayout();
+            tableLayoutPanel9.SuspendLayout();
+            tableLayoutPanel8.SuspendLayout();
+            tableLayoutPanel10.SuspendLayout();
+            groupBox2.SuspendLayout();
+            tableLayoutPanel15.SuspendLayout();
             SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -143,14 +163,7 @@
             // 
             // splitContainer.Panel2
             // 
-            splitContainer.Panel2.Controls.Add(groupBox2);
-            splitContainer.Panel2.Controls.Add(btnDisconnect);
-            splitContainer.Panel2.Controls.Add(btnConnect);
-            splitContainer.Panel2.Controls.Add(groupBox1);
-            splitContainer.Panel2.Controls.Add(switchDefaultParameters);
-            splitContainer.Panel2.Controls.Add(btnUpdate);
-            splitContainer.Panel2.Controls.Add(materialLabel1);
-            splitContainer.Panel2.Controls.Add(cbComPortsList);
+            splitContainer.Panel2.Controls.Add(tableLayoutPanel14);
             splitContainer.Size = new Size(1394, 533);
             splitContainer.SplitterDistance = 800;
             splitContainer.TabIndex = 0;
@@ -181,101 +194,87 @@
             // 
             tbPanel_PeriodicTab.ColumnCount = 1;
             tbPanel_PeriodicTab.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            tbPanel_PeriodicTab.Controls.Add(PeriodicTab_GridMain, 0, 1);
+            tbPanel_PeriodicTab.Controls.Add(PeriodicTab_ChartPlotView, 0, 2);
             tbPanel_PeriodicTab.Controls.Add(tableLayoutPanel7, 0, 0);
-            tbPanel_PeriodicTab.Controls.Add(PeriodicTab_ChartPlotView, 0, 1);
             tbPanel_PeriodicTab.Dock = DockStyle.Fill;
             tbPanel_PeriodicTab.Location = new Point(3, 3);
             tbPanel_PeriodicTab.Margin = new Padding(0);
             tbPanel_PeriodicTab.Name = "tbPanel_PeriodicTab";
-            tbPanel_PeriodicTab.RowCount = 2;
-            tbPanel_PeriodicTab.RowStyles.Add(new RowStyle(SizeType.Percent, 46.7666359F));
-            tbPanel_PeriodicTab.RowStyles.Add(new RowStyle(SizeType.Percent, 53.2333641F));
+            tbPanel_PeriodicTab.RowCount = 3;
+            tbPanel_PeriodicTab.RowStyles.Add(new RowStyle(SizeType.Absolute, 120F));
+            tbPanel_PeriodicTab.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tbPanel_PeriodicTab.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tbPanel_PeriodicTab.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
             tbPanel_PeriodicTab.Size = new Size(786, 499);
             tbPanel_PeriodicTab.TabIndex = 2;
+            // 
+            // PeriodicTab_GridMain
+            // 
+            PeriodicTab_GridMain.AllowUserToAddRows = false;
+            PeriodicTab_GridMain.AllowUserToDeleteRows = false;
+            PeriodicTab_GridMain.AllowUserToOrderColumns = true;
+            PeriodicTab_GridMain.AllowUserToResizeRows = false;
+            PeriodicTab_GridMain.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            PeriodicTab_GridMain.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            PeriodicTab_GridMain.Dock = DockStyle.Fill;
+            PeriodicTab_GridMain.Location = new Point(0, 120);
+            PeriodicTab_GridMain.Margin = new Padding(0);
+            PeriodicTab_GridMain.Name = "PeriodicTab_GridMain";
+            PeriodicTab_GridMain.RowTemplate.Height = 25;
+            PeriodicTab_GridMain.Size = new Size(786, 189);
+            PeriodicTab_GridMain.TabIndex = 4;
+            // 
+            // PeriodicTab_ChartPlotView
+            // 
+            PeriodicTab_ChartPlotView.Dock = DockStyle.Fill;
+            PeriodicTab_ChartPlotView.Location = new Point(3, 312);
+            PeriodicTab_ChartPlotView.Name = "PeriodicTab_ChartPlotView";
+            PeriodicTab_ChartPlotView.PanCursor = Cursors.Hand;
+            PeriodicTab_ChartPlotView.Size = new Size(780, 184);
+            PeriodicTab_ChartPlotView.TabIndex = 2;
+            PeriodicTab_ChartPlotView.Text = "plotView1";
+            PeriodicTab_ChartPlotView.ZoomHorizontalCursor = Cursors.SizeWE;
+            PeriodicTab_ChartPlotView.ZoomRectangleCursor = Cursors.SizeNWSE;
+            PeriodicTab_ChartPlotView.ZoomVerticalCursor = Cursors.SizeNS;
             // 
             // tableLayoutPanel7
             // 
             tableLayoutPanel7.ColumnCount = 1;
-            tableLayoutPanel7.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 26.43979F));
-            tableLayoutPanel7.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 73.56021F));
+            tableLayoutPanel7.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
             tableLayoutPanel7.Controls.Add(PeriodicTab_HeaderPanel, 0, 0);
-            tableLayoutPanel7.Controls.Add(PeriodicTab_GridMain, 1, 1);
+            tableLayoutPanel7.Controls.Add(tableLayoutPanel16, 0, 1);
             tableLayoutPanel7.Dock = DockStyle.Fill;
             tableLayoutPanel7.Location = new Point(0, 0);
             tableLayoutPanel7.Margin = new Padding(0);
             tableLayoutPanel7.Name = "tableLayoutPanel7";
             tableLayoutPanel7.RowCount = 2;
-            tableLayoutPanel7.RowStyles.Add(new RowStyle(SizeType.Percent, 21.393034F));
-            tableLayoutPanel7.RowStyles.Add(new RowStyle(SizeType.Percent, 78.6069641F));
-            tableLayoutPanel7.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel7.Size = new Size(786, 233);
+            tableLayoutPanel7.RowStyles.Add(new RowStyle(SizeType.Absolute, 50F));
+            tableLayoutPanel7.RowStyles.Add(new RowStyle(SizeType.Absolute, 50F));
+            tableLayoutPanel7.Size = new Size(786, 120);
             tableLayoutPanel7.TabIndex = 0;
             // 
             // PeriodicTab_HeaderPanel
             // 
-            PeriodicTab_HeaderPanel.ColumnCount = 6;
-            PeriodicTab_HeaderPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 11.8320608F));
-            PeriodicTab_HeaderPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 13.9949112F));
-            PeriodicTab_HeaderPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 16.666666F));
-            PeriodicTab_HeaderPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 18.70229F));
-            PeriodicTab_HeaderPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 22.0101776F));
-            PeriodicTab_HeaderPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 16.666666F));
-            PeriodicTab_HeaderPanel.Controls.Add(PeriodicTab_AddPulse, 0, 0);
-            PeriodicTab_HeaderPanel.Controls.Add(PeriodicTab_RemovePulse, 1, 0);
-            PeriodicTab_HeaderPanel.Controls.Add(PeriodicTab_SendConfigToBoard, 2, 0);
-            PeriodicTab_HeaderPanel.Controls.Add(PeriodicTab_CbCurrents, 5, 0);
-            PeriodicTab_HeaderPanel.Controls.Add(PeriodicTab_SwitchCurrent, 4, 0);
-            PeriodicTab_HeaderPanel.Controls.Add(PeriodicTab_StartStimulation, 3, 0);
+            PeriodicTab_HeaderPanel.ColumnCount = 5;
+            PeriodicTab_HeaderPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 22F));
+            PeriodicTab_HeaderPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 22F));
+            PeriodicTab_HeaderPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8F));
+            PeriodicTab_HeaderPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 24F));
+            PeriodicTab_HeaderPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 24F));
+            PeriodicTab_HeaderPanel.Controls.Add(PeriodicTab_SendConfigToBoard, 3, 0);
+            PeriodicTab_HeaderPanel.Controls.Add(PeriodicTab_StartStimulation, 4, 0);
+            PeriodicTab_HeaderPanel.Controls.Add(BtnLoadRoutine, 1, 0);
+            PeriodicTab_HeaderPanel.Controls.Add(BtnSaveRoutine, 0, 0);
             PeriodicTab_HeaderPanel.Dock = DockStyle.Fill;
             PeriodicTab_HeaderPanel.Location = new Point(0, 0);
             PeriodicTab_HeaderPanel.Margin = new Padding(0);
             PeriodicTab_HeaderPanel.Name = "PeriodicTab_HeaderPanel";
             PeriodicTab_HeaderPanel.RowCount = 1;
             PeriodicTab_HeaderPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            PeriodicTab_HeaderPanel.Size = new Size(786, 49);
-            PeriodicTab_HeaderPanel.TabIndex = 6;
-            // 
-            // PeriodicTab_AddPulse
-            // 
-            PeriodicTab_AddPulse.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-            PeriodicTab_AddPulse.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            PeriodicTab_AddPulse.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
-            PeriodicTab_AddPulse.Depth = 0;
-            PeriodicTab_AddPulse.HighEmphasis = true;
-            PeriodicTab_AddPulse.Icon = null;
-            PeriodicTab_AddPulse.Location = new Point(4, 6);
-            PeriodicTab_AddPulse.Margin = new Padding(4, 6, 4, 6);
-            PeriodicTab_AddPulse.MouseState = MaterialSkin.MouseState.HOVER;
-            PeriodicTab_AddPulse.Name = "PeriodicTab_AddPulse";
-            PeriodicTab_AddPulse.NoAccentTextColor = Color.Empty;
-            PeriodicTab_AddPulse.Size = new Size(85, 36);
-            PeriodicTab_AddPulse.TabIndex = 0;
-            PeriodicTab_AddPulse.Text = "adicionar pulsos";
-            PeriodicTab_AddPulse.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
-            PeriodicTab_AddPulse.UseAccentColor = false;
-            PeriodicTab_AddPulse.UseVisualStyleBackColor = true;
-            PeriodicTab_AddPulse.Click += PeriodicTab_AddPulse_Click;
-            // 
-            // PeriodicTab_RemovePulse
-            // 
-            PeriodicTab_RemovePulse.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-            PeriodicTab_RemovePulse.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            PeriodicTab_RemovePulse.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
-            PeriodicTab_RemovePulse.Depth = 0;
-            PeriodicTab_RemovePulse.HighEmphasis = true;
-            PeriodicTab_RemovePulse.Icon = null;
-            PeriodicTab_RemovePulse.Location = new Point(97, 6);
-            PeriodicTab_RemovePulse.Margin = new Padding(4, 6, 4, 6);
-            PeriodicTab_RemovePulse.MouseState = MaterialSkin.MouseState.HOVER;
-            PeriodicTab_RemovePulse.Name = "PeriodicTab_RemovePulse";
-            PeriodicTab_RemovePulse.NoAccentTextColor = Color.Empty;
-            PeriodicTab_RemovePulse.Size = new Size(102, 36);
-            PeriodicTab_RemovePulse.TabIndex = 5;
-            PeriodicTab_RemovePulse.Text = "Remover pulsos";
-            PeriodicTab_RemovePulse.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
-            PeriodicTab_RemovePulse.UseAccentColor = false;
-            PeriodicTab_RemovePulse.UseVisualStyleBackColor = true;
-            PeriodicTab_RemovePulse.Click += PeriodicTab_RemovePulse_Click;
+            PeriodicTab_HeaderPanel.Size = new Size(786, 50);
+            PeriodicTab_HeaderPanel.TabIndex = 5;
+            PeriodicTab_HeaderPanel.TabStop = true;
             // 
             // PeriodicTab_SendConfigToBoard
             // 
@@ -286,18 +285,142 @@
             PeriodicTab_SendConfigToBoard.Enabled = false;
             PeriodicTab_SendConfigToBoard.HighEmphasis = true;
             PeriodicTab_SendConfigToBoard.Icon = null;
-            PeriodicTab_SendConfigToBoard.Location = new Point(207, 6);
+            PeriodicTab_SendConfigToBoard.Location = new Point(410, 7);
             PeriodicTab_SendConfigToBoard.Margin = new Padding(4, 6, 4, 6);
             PeriodicTab_SendConfigToBoard.MouseState = MaterialSkin.MouseState.HOVER;
             PeriodicTab_SendConfigToBoard.Name = "PeriodicTab_SendConfigToBoard";
             PeriodicTab_SendConfigToBoard.NoAccentTextColor = Color.Empty;
-            PeriodicTab_SendConfigToBoard.Size = new Size(123, 36);
+            PeriodicTab_SendConfigToBoard.Size = new Size(180, 36);
             PeriodicTab_SendConfigToBoard.TabIndex = 8;
             PeriodicTab_SendConfigToBoard.Text = "Enviar Config à placa";
             PeriodicTab_SendConfigToBoard.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
             PeriodicTab_SendConfigToBoard.UseAccentColor = false;
             PeriodicTab_SendConfigToBoard.UseVisualStyleBackColor = true;
             PeriodicTab_SendConfigToBoard.Click += PeriodicTab_SendConfigToBoard_Click;
+            // 
+            // PeriodicTab_StartStimulation
+            // 
+            PeriodicTab_StartStimulation.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            PeriodicTab_StartStimulation.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            PeriodicTab_StartStimulation.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            PeriodicTab_StartStimulation.Depth = 0;
+            PeriodicTab_StartStimulation.Enabled = false;
+            PeriodicTab_StartStimulation.HighEmphasis = true;
+            PeriodicTab_StartStimulation.Icon = null;
+            PeriodicTab_StartStimulation.Location = new Point(598, 7);
+            PeriodicTab_StartStimulation.Margin = new Padding(4, 6, 4, 6);
+            PeriodicTab_StartStimulation.MouseState = MaterialSkin.MouseState.HOVER;
+            PeriodicTab_StartStimulation.Name = "PeriodicTab_StartStimulation";
+            PeriodicTab_StartStimulation.NoAccentTextColor = Color.Empty;
+            PeriodicTab_StartStimulation.Size = new Size(184, 36);
+            PeriodicTab_StartStimulation.TabIndex = 31;
+            PeriodicTab_StartStimulation.Text = "Começar Estimulação";
+            PeriodicTab_StartStimulation.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            PeriodicTab_StartStimulation.UseAccentColor = false;
+            PeriodicTab_StartStimulation.UseVisualStyleBackColor = true;
+            PeriodicTab_StartStimulation.Click += PeriodicTab_StartStimulation_Click;
+            // 
+            // BtnLoadRoutine
+            // 
+            BtnLoadRoutine.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            BtnLoadRoutine.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            BtnLoadRoutine.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            BtnLoadRoutine.Depth = 0;
+            BtnLoadRoutine.HighEmphasis = true;
+            BtnLoadRoutine.Icon = null;
+            BtnLoadRoutine.Location = new Point(176, 7);
+            BtnLoadRoutine.Margin = new Padding(4, 6, 4, 6);
+            BtnLoadRoutine.MouseState = MaterialSkin.MouseState.HOVER;
+            BtnLoadRoutine.Name = "BtnLoadRoutine";
+            BtnLoadRoutine.NoAccentTextColor = Color.Empty;
+            BtnLoadRoutine.Size = new Size(164, 36);
+            BtnLoadRoutine.TabIndex = 33;
+            BtnLoadRoutine.Text = "Carregar rotina";
+            BtnLoadRoutine.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            BtnLoadRoutine.UseAccentColor = false;
+            BtnLoadRoutine.UseVisualStyleBackColor = true;
+            // 
+            // BtnSaveRoutine
+            // 
+            BtnSaveRoutine.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            BtnSaveRoutine.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            BtnSaveRoutine.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            BtnSaveRoutine.Depth = 0;
+            BtnSaveRoutine.HighEmphasis = true;
+            BtnSaveRoutine.Icon = null;
+            BtnSaveRoutine.Location = new Point(4, 7);
+            BtnSaveRoutine.Margin = new Padding(4, 6, 4, 6);
+            BtnSaveRoutine.MouseState = MaterialSkin.MouseState.HOVER;
+            BtnSaveRoutine.Name = "BtnSaveRoutine";
+            BtnSaveRoutine.NoAccentTextColor = Color.Empty;
+            BtnSaveRoutine.Size = new Size(164, 36);
+            BtnSaveRoutine.TabIndex = 32;
+            BtnSaveRoutine.Text = "Salvar Rotina";
+            BtnSaveRoutine.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            BtnSaveRoutine.UseAccentColor = false;
+            BtnSaveRoutine.UseVisualStyleBackColor = true;
+            // 
+            // tableLayoutPanel16
+            // 
+            tableLayoutPanel16.ColumnCount = 5;
+            tableLayoutPanel16.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 22F));
+            tableLayoutPanel16.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 22F));
+            tableLayoutPanel16.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 8F));
+            tableLayoutPanel16.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 24F));
+            tableLayoutPanel16.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 24F));
+            tableLayoutPanel16.Controls.Add(PeriodicTab_RemovePulse, 1, 0);
+            tableLayoutPanel16.Controls.Add(PeriodicTab_AddPulse, 0, 0);
+            tableLayoutPanel16.Controls.Add(PeriodicTab_CbCurrents, 4, 0);
+            tableLayoutPanel16.Controls.Add(PeriodicTab_SwitchCurrent, 3, 0);
+            tableLayoutPanel16.Dock = DockStyle.Fill;
+            tableLayoutPanel16.Location = new Point(3, 53);
+            tableLayoutPanel16.Name = "tableLayoutPanel16";
+            tableLayoutPanel16.RowCount = 1;
+            tableLayoutPanel16.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tableLayoutPanel16.Size = new Size(780, 64);
+            tableLayoutPanel16.TabIndex = 7;
+            // 
+            // PeriodicTab_RemovePulse
+            // 
+            PeriodicTab_RemovePulse.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            PeriodicTab_RemovePulse.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            PeriodicTab_RemovePulse.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            PeriodicTab_RemovePulse.Depth = 0;
+            PeriodicTab_RemovePulse.HighEmphasis = true;
+            PeriodicTab_RemovePulse.Icon = null;
+            PeriodicTab_RemovePulse.Location = new Point(175, 14);
+            PeriodicTab_RemovePulse.Margin = new Padding(4, 6, 4, 6);
+            PeriodicTab_RemovePulse.MouseState = MaterialSkin.MouseState.HOVER;
+            PeriodicTab_RemovePulse.Name = "PeriodicTab_RemovePulse";
+            PeriodicTab_RemovePulse.NoAccentTextColor = Color.Empty;
+            PeriodicTab_RemovePulse.Size = new Size(163, 36);
+            PeriodicTab_RemovePulse.TabIndex = 5;
+            PeriodicTab_RemovePulse.Text = "Remover pulsos";
+            PeriodicTab_RemovePulse.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            PeriodicTab_RemovePulse.UseAccentColor = false;
+            PeriodicTab_RemovePulse.UseVisualStyleBackColor = true;
+            PeriodicTab_RemovePulse.Click += PeriodicTab_RemovePulse_Click;
+            // 
+            // PeriodicTab_AddPulse
+            // 
+            PeriodicTab_AddPulse.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            PeriodicTab_AddPulse.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            PeriodicTab_AddPulse.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            PeriodicTab_AddPulse.Depth = 0;
+            PeriodicTab_AddPulse.HighEmphasis = true;
+            PeriodicTab_AddPulse.Icon = null;
+            PeriodicTab_AddPulse.Location = new Point(4, 14);
+            PeriodicTab_AddPulse.Margin = new Padding(4, 6, 4, 6);
+            PeriodicTab_AddPulse.MouseState = MaterialSkin.MouseState.HOVER;
+            PeriodicTab_AddPulse.Name = "PeriodicTab_AddPulse";
+            PeriodicTab_AddPulse.NoAccentTextColor = Color.Empty;
+            PeriodicTab_AddPulse.Size = new Size(163, 36);
+            PeriodicTab_AddPulse.TabIndex = 0;
+            PeriodicTab_AddPulse.Text = "adicionar pulsos";
+            PeriodicTab_AddPulse.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            PeriodicTab_AddPulse.UseAccentColor = false;
+            PeriodicTab_AddPulse.UseVisualStyleBackColor = true;
+            PeriodicTab_AddPulse.Click += PeriodicTab_AddPulse_Click;
             // 
             // PeriodicTab_CbCurrents
             // 
@@ -314,11 +437,11 @@
             PeriodicTab_CbCurrents.FormattingEnabled = true;
             PeriodicTab_CbCurrents.IntegralHeight = false;
             PeriodicTab_CbCurrents.ItemHeight = 29;
-            PeriodicTab_CbCurrents.Location = new Point(657, 7);
+            PeriodicTab_CbCurrents.Location = new Point(594, 14);
             PeriodicTab_CbCurrents.MaxDropDownItems = 4;
             PeriodicTab_CbCurrents.MouseState = MaterialSkin.MouseState.OUT;
             PeriodicTab_CbCurrents.Name = "PeriodicTab_CbCurrents";
-            PeriodicTab_CbCurrents.Size = new Size(126, 35);
+            PeriodicTab_CbCurrents.Size = new Size(183, 35);
             PeriodicTab_CbCurrents.StartIndex = 0;
             PeriodicTab_CbCurrents.TabIndex = 22;
             PeriodicTab_CbCurrents.UseTallSize = false;
@@ -334,72 +457,18 @@
             PeriodicTab_SwitchCurrent.Depth = 0;
             PeriodicTab_SwitchCurrent.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
             PeriodicTab_SwitchCurrent.ForeColor = SystemColors.ControlText;
-            PeriodicTab_SwitchCurrent.Location = new Point(481, 6);
+            PeriodicTab_SwitchCurrent.Location = new Point(404, 13);
             PeriodicTab_SwitchCurrent.Margin = new Padding(0);
             PeriodicTab_SwitchCurrent.MouseLocation = new Point(-1, -1);
             PeriodicTab_SwitchCurrent.MouseState = MaterialSkin.MouseState.HOVER;
             PeriodicTab_SwitchCurrent.Name = "PeriodicTab_SwitchCurrent";
             PeriodicTab_SwitchCurrent.Ripple = true;
-            PeriodicTab_SwitchCurrent.Size = new Size(173, 37);
+            PeriodicTab_SwitchCurrent.Size = new Size(187, 37);
             PeriodicTab_SwitchCurrent.TabIndex = 21;
             PeriodicTab_SwitchCurrent.Text = "Fixar corrente";
             PeriodicTab_SwitchCurrent.TextAlign = ContentAlignment.MiddleCenter;
             PeriodicTab_SwitchCurrent.UseVisualStyleBackColor = false;
             PeriodicTab_SwitchCurrent.CheckedChanged += PeriodicTab_SwitchGlobalCurrent_CheckedChanged;
-            // 
-            // PeriodicTab_StartStimulation
-            // 
-            PeriodicTab_StartStimulation.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-            PeriodicTab_StartStimulation.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            PeriodicTab_StartStimulation.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
-            PeriodicTab_StartStimulation.Depth = 0;
-            PeriodicTab_StartStimulation.Enabled = false;
-            PeriodicTab_StartStimulation.HighEmphasis = true;
-            PeriodicTab_StartStimulation.Icon = null;
-            PeriodicTab_StartStimulation.Location = new Point(338, 6);
-            PeriodicTab_StartStimulation.Margin = new Padding(4, 6, 4, 6);
-            PeriodicTab_StartStimulation.MouseState = MaterialSkin.MouseState.HOVER;
-            PeriodicTab_StartStimulation.Name = "PeriodicTab_StartStimulation";
-            PeriodicTab_StartStimulation.NoAccentTextColor = Color.Empty;
-            PeriodicTab_StartStimulation.Size = new Size(139, 36);
-            PeriodicTab_StartStimulation.TabIndex = 31;
-            PeriodicTab_StartStimulation.Text = "Começar Estimulação";
-            PeriodicTab_StartStimulation.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
-            PeriodicTab_StartStimulation.UseAccentColor = false;
-            PeriodicTab_StartStimulation.UseVisualStyleBackColor = true;
-            PeriodicTab_StartStimulation.Click += PeriodicTab_StartStimulation_Click;
-            // 
-            // PeriodicTab_GridMain
-            // 
-            PeriodicTab_GridMain.AllowUserToAddRows = false;
-            PeriodicTab_GridMain.AllowUserToDeleteRows = false;
-            PeriodicTab_GridMain.AllowUserToOrderColumns = true;
-            PeriodicTab_GridMain.AllowUserToResizeRows = false;
-            PeriodicTab_GridMain.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            PeriodicTab_GridMain.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            PeriodicTab_GridMain.Dock = DockStyle.Fill;
-            PeriodicTab_GridMain.Location = new Point(0, 49);
-            PeriodicTab_GridMain.Margin = new Padding(0);
-            PeriodicTab_GridMain.Name = "PeriodicTab_GridMain";
-            PeriodicTab_GridMain.RowTemplate.Height = 25;
-            PeriodicTab_GridMain.Size = new Size(786, 184);
-            PeriodicTab_GridMain.TabIndex = 1;
-            PeriodicTab_GridMain.CellEndEdit += PeriodicTab_GridMain_CellEndEdit;
-            PeriodicTab_GridMain.ColumnDataPropertyNameChanged += PeriodicTab_GridMain_ColumnDataPropertyNameChanged;
-            PeriodicTab_GridMain.DataError += PeriodicTab_GridMain_DataError;
-            // 
-            // PeriodicTab_ChartPlotView
-            // 
-            PeriodicTab_ChartPlotView.Dock = DockStyle.Fill;
-            PeriodicTab_ChartPlotView.Location = new Point(3, 236);
-            PeriodicTab_ChartPlotView.Name = "PeriodicTab_ChartPlotView";
-            PeriodicTab_ChartPlotView.PanCursor = Cursors.Hand;
-            PeriodicTab_ChartPlotView.Size = new Size(780, 260);
-            PeriodicTab_ChartPlotView.TabIndex = 1;
-            PeriodicTab_ChartPlotView.Text = "plotView1";
-            PeriodicTab_ChartPlotView.ZoomHorizontalCursor = Cursors.SizeWE;
-            PeriodicTab_ChartPlotView.ZoomRectangleCursor = Cursors.SizeNWSE;
-            PeriodicTab_ChartPlotView.ZoomVerticalCursor = Cursors.SizeNS;
             // 
             // tabChaos
             // 
@@ -773,17 +842,526 @@
             ChaosTab_LblInterval.TabIndex = 27;
             ChaosTab_LblInterval.Text = "Para visualizar os trens de pulso, mude o seletor na direita";
             // 
+            // tableLayoutPanel14
+            // 
+            tableLayoutPanel14.ColumnCount = 2;
+            tableLayoutPanel14.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutPanel14.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutPanel14.Controls.Add(tableLayoutPanel13, 0, 0);
+            tableLayoutPanel14.Controls.Add(groupBox2, 1, 0);
+            tableLayoutPanel14.Dock = DockStyle.Fill;
+            tableLayoutPanel14.Location = new Point(0, 0);
+            tableLayoutPanel14.Name = "tableLayoutPanel14";
+            tableLayoutPanel14.RowCount = 1;
+            tableLayoutPanel14.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayoutPanel14.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayoutPanel14.Size = new Size(590, 533);
+            tableLayoutPanel14.TabIndex = 28;
+            // 
+            // tableLayoutPanel13
+            // 
+            tableLayoutPanel13.ColumnCount = 1;
+            tableLayoutPanel13.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            tableLayoutPanel13.Controls.Add(materialLabel1, 0, 0);
+            tableLayoutPanel13.Controls.Add(tableLayoutPanel12, 0, 4);
+            tableLayoutPanel13.Controls.Add(tableLayoutPanel11, 0, 1);
+            tableLayoutPanel13.Controls.Add(switchDefaultParameters, 0, 2);
+            tableLayoutPanel13.Controls.Add(groupBox1, 0, 3);
+            tableLayoutPanel13.Dock = DockStyle.Fill;
+            tableLayoutPanel13.Location = new Point(3, 3);
+            tableLayoutPanel13.Name = "tableLayoutPanel13";
+            tableLayoutPanel13.RowCount = 5;
+            tableLayoutPanel13.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            tableLayoutPanel13.RowStyles.Add(new RowStyle(SizeType.Absolute, 50F));
+            tableLayoutPanel13.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
+            tableLayoutPanel13.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tableLayoutPanel13.RowStyles.Add(new RowStyle(SizeType.Absolute, 50F));
+            tableLayoutPanel13.Size = new Size(289, 527);
+            tableLayoutPanel13.TabIndex = 27;
+            // 
+            // materialLabel1
+            // 
+            materialLabel1.AutoSize = true;
+            materialLabel1.Depth = 0;
+            materialLabel1.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
+            materialLabel1.Location = new Point(3, 0);
+            materialLabel1.MouseState = MaterialSkin.MouseState.HOVER;
+            materialLabel1.Name = "materialLabel1";
+            materialLabel1.Size = new Size(99, 19);
+            materialLabel1.TabIndex = 18;
+            materialLabel1.Text = "Portas Seriais";
+            // 
+            // tableLayoutPanel12
+            // 
+            tableLayoutPanel12.ColumnCount = 2;
+            tableLayoutPanel12.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutPanel12.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutPanel12.Controls.Add(btnDisconnect, 1, 0);
+            tableLayoutPanel12.Controls.Add(btnConnect, 0, 0);
+            tableLayoutPanel12.Dock = DockStyle.Fill;
+            tableLayoutPanel12.Location = new Point(3, 480);
+            tableLayoutPanel12.Name = "tableLayoutPanel12";
+            tableLayoutPanel12.RowCount = 1;
+            tableLayoutPanel12.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayoutPanel12.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayoutPanel12.Size = new Size(283, 44);
+            tableLayoutPanel12.TabIndex = 26;
+            // 
+            // btnDisconnect
+            // 
+            btnDisconnect.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            btnDisconnect.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            btnDisconnect.Depth = 0;
+            btnDisconnect.Dock = DockStyle.Fill;
+            btnDisconnect.Enabled = false;
+            btnDisconnect.HighEmphasis = true;
+            btnDisconnect.Icon = null;
+            btnDisconnect.Location = new Point(145, 6);
+            btnDisconnect.Margin = new Padding(4, 6, 4, 6);
+            btnDisconnect.MouseState = MaterialSkin.MouseState.HOVER;
+            btnDisconnect.Name = "btnDisconnect";
+            btnDisconnect.NoAccentTextColor = Color.Empty;
+            btnDisconnect.Size = new Size(134, 32);
+            btnDisconnect.TabIndex = 23;
+            btnDisconnect.Text = "Desconectar";
+            btnDisconnect.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            btnDisconnect.UseAccentColor = false;
+            btnDisconnect.UseVisualStyleBackColor = true;
+            btnDisconnect.Click += BtnDisconnect_Click;
+            // 
+            // btnConnect
+            // 
+            btnConnect.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            btnConnect.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            btnConnect.Depth = 0;
+            btnConnect.Dock = DockStyle.Fill;
+            btnConnect.HighEmphasis = true;
+            btnConnect.Icon = null;
+            btnConnect.Location = new Point(4, 6);
+            btnConnect.Margin = new Padding(4, 6, 4, 6);
+            btnConnect.MouseState = MaterialSkin.MouseState.HOVER;
+            btnConnect.Name = "btnConnect";
+            btnConnect.NoAccentTextColor = Color.Empty;
+            btnConnect.Size = new Size(133, 32);
+            btnConnect.TabIndex = 22;
+            btnConnect.Text = "Conectar";
+            btnConnect.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            btnConnect.UseAccentColor = false;
+            btnConnect.UseVisualStyleBackColor = true;
+            btnConnect.Click += BtnConnect_Click;
+            // 
+            // tableLayoutPanel11
+            // 
+            tableLayoutPanel11.ColumnCount = 2;
+            tableLayoutPanel11.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutPanel11.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutPanel11.Controls.Add(cbComPortsList, 0, 0);
+            tableLayoutPanel11.Controls.Add(btnUpdate, 1, 0);
+            tableLayoutPanel11.Dock = DockStyle.Fill;
+            tableLayoutPanel11.Location = new Point(3, 23);
+            tableLayoutPanel11.Name = "tableLayoutPanel11";
+            tableLayoutPanel11.RowCount = 1;
+            tableLayoutPanel11.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayoutPanel11.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayoutPanel11.Size = new Size(283, 44);
+            tableLayoutPanel11.TabIndex = 25;
+            // 
+            // cbComPortsList
+            // 
+            cbComPortsList.AutoResize = false;
+            cbComPortsList.BackColor = Color.FromArgb(255, 255, 255);
+            cbComPortsList.Depth = 0;
+            cbComPortsList.Dock = DockStyle.Fill;
+            cbComPortsList.DrawMode = DrawMode.OwnerDrawVariable;
+            cbComPortsList.DropDownHeight = 118;
+            cbComPortsList.DropDownStyle = ComboBoxStyle.DropDownList;
+            cbComPortsList.DropDownWidth = 121;
+            cbComPortsList.Font = new Font("Microsoft Sans Serif", 14F, FontStyle.Bold, GraphicsUnit.Pixel);
+            cbComPortsList.ForeColor = Color.FromArgb(222, 0, 0, 0);
+            cbComPortsList.FormattingEnabled = true;
+            cbComPortsList.IntegralHeight = false;
+            cbComPortsList.ItemHeight = 29;
+            cbComPortsList.Location = new Point(3, 3);
+            cbComPortsList.MaxDropDownItems = 4;
+            cbComPortsList.MouseState = MaterialSkin.MouseState.OUT;
+            cbComPortsList.Name = "cbComPortsList";
+            cbComPortsList.Size = new Size(135, 35);
+            cbComPortsList.StartIndex = 0;
+            cbComPortsList.TabIndex = 17;
+            cbComPortsList.UseTallSize = false;
+            // 
+            // btnUpdate
+            // 
+            btnUpdate.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            btnUpdate.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            btnUpdate.Depth = 0;
+            btnUpdate.Dock = DockStyle.Fill;
+            btnUpdate.HighEmphasis = true;
+            btnUpdate.Icon = null;
+            btnUpdate.Location = new Point(145, 6);
+            btnUpdate.Margin = new Padding(4, 6, 4, 6);
+            btnUpdate.MouseState = MaterialSkin.MouseState.HOVER;
+            btnUpdate.Name = "btnUpdate";
+            btnUpdate.NoAccentTextColor = Color.Empty;
+            btnUpdate.Size = new Size(134, 32);
+            btnUpdate.TabIndex = 19;
+            btnUpdate.Text = "Atualizar";
+            btnUpdate.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            btnUpdate.UseAccentColor = false;
+            btnUpdate.UseVisualStyleBackColor = true;
+            btnUpdate.Click += BtnUpdate_Click;
+            // 
+            // switchDefaultParameters
+            // 
+            switchDefaultParameters.AutoSize = true;
+            switchDefaultParameters.Checked = true;
+            switchDefaultParameters.CheckState = CheckState.Checked;
+            switchDefaultParameters.Depth = 0;
+            switchDefaultParameters.Location = new Point(0, 70);
+            switchDefaultParameters.Margin = new Padding(0);
+            switchDefaultParameters.MouseLocation = new Point(-1, -1);
+            switchDefaultParameters.MouseState = MaterialSkin.MouseState.HOVER;
+            switchDefaultParameters.Name = "switchDefaultParameters";
+            switchDefaultParameters.Ripple = true;
+            switchDefaultParameters.Size = new Size(229, 30);
+            switchDefaultParameters.TabIndex = 20;
+            switchDefaultParameters.Text = "Usar parâmetros padrão";
+            switchDefaultParameters.UseVisualStyleBackColor = true;
+            switchDefaultParameters.CheckedChanged += SwitchDefaultParameters_CheckedChanged;
+            // 
+            // groupBox1
+            // 
+            groupBox1.Controls.Add(tableLayoutPanel9);
+            groupBox1.Dock = DockStyle.Fill;
+            groupBox1.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            groupBox1.Location = new Point(3, 103);
+            groupBox1.Name = "groupBox1";
+            groupBox1.Size = new Size(283, 371);
+            groupBox1.TabIndex = 21;
+            groupBox1.TabStop = false;
+            groupBox1.Text = "Parâmetros";
+            // 
+            // tableLayoutPanel9
+            // 
+            tableLayoutPanel9.ColumnCount = 1;
+            tableLayoutPanel9.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutPanel9.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutPanel9.Controls.Add(tableLayoutPanel8, 0, 0);
+            tableLayoutPanel9.Controls.Add(tableLayoutPanel10, 0, 1);
+            tableLayoutPanel9.Dock = DockStyle.Fill;
+            tableLayoutPanel9.Location = new Point(3, 29);
+            tableLayoutPanel9.Name = "tableLayoutPanel9";
+            tableLayoutPanel9.RowCount = 2;
+            tableLayoutPanel9.RowStyles.Add(new RowStyle(SizeType.Percent, 37.68546F));
+            tableLayoutPanel9.RowStyles.Add(new RowStyle(SizeType.Percent, 62.31454F));
+            tableLayoutPanel9.Size = new Size(277, 339);
+            tableLayoutPanel9.TabIndex = 25;
+            // 
+            // tableLayoutPanel8
+            // 
+            tableLayoutPanel8.ColumnCount = 2;
+            tableLayoutPanel8.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutPanel8.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutPanel8.Controls.Add(txtWriteTimeOut, 1, 3);
+            tableLayoutPanel8.Controls.Add(txtReadTimeOut, 0, 3);
+            tableLayoutPanel8.Controls.Add(txtDataBits, 1, 1);
+            tableLayoutPanel8.Controls.Add(txtBaudRate, 0, 1);
+            tableLayoutPanel8.Controls.Add(materialLabel5, 1, 0);
+            tableLayoutPanel8.Controls.Add(materialLabel4, 0, 0);
+            tableLayoutPanel8.Controls.Add(materialLabel7, 1, 2);
+            tableLayoutPanel8.Controls.Add(materialLabel6, 0, 2);
+            tableLayoutPanel8.Dock = DockStyle.Fill;
+            tableLayoutPanel8.Location = new Point(3, 3);
+            tableLayoutPanel8.Name = "tableLayoutPanel8";
+            tableLayoutPanel8.RowCount = 4;
+            tableLayoutPanel8.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            tableLayoutPanel8.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayoutPanel8.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            tableLayoutPanel8.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayoutPanel8.Size = new Size(271, 121);
+            tableLayoutPanel8.TabIndex = 24;
+            // 
+            // txtWriteTimeOut
+            // 
+            txtWriteTimeOut.AnimateReadOnly = false;
+            txtWriteTimeOut.BorderStyle = BorderStyle.None;
+            txtWriteTimeOut.Depth = 0;
+            txtWriteTimeOut.Dock = DockStyle.Fill;
+            txtWriteTimeOut.Font = new Font("Roboto", 16F, FontStyle.Regular, GraphicsUnit.Pixel);
+            txtWriteTimeOut.LeadingIcon = null;
+            txtWriteTimeOut.Location = new Point(138, 83);
+            txtWriteTimeOut.MaxLength = 50;
+            txtWriteTimeOut.MouseState = MaterialSkin.MouseState.OUT;
+            txtWriteTimeOut.Multiline = false;
+            txtWriteTimeOut.Name = "txtWriteTimeOut";
+            txtWriteTimeOut.Size = new Size(130, 36);
+            txtWriteTimeOut.TabIndex = 17;
+            txtWriteTimeOut.Text = "";
+            txtWriteTimeOut.TrailingIcon = null;
+            txtWriteTimeOut.UseTallSize = false;
+            // 
+            // txtReadTimeOut
+            // 
+            txtReadTimeOut.AnimateReadOnly = false;
+            txtReadTimeOut.BorderStyle = BorderStyle.None;
+            txtReadTimeOut.Depth = 0;
+            txtReadTimeOut.Dock = DockStyle.Fill;
+            txtReadTimeOut.Font = new Font("Roboto", 16F, FontStyle.Regular, GraphicsUnit.Pixel);
+            txtReadTimeOut.LeadingIcon = null;
+            txtReadTimeOut.Location = new Point(3, 83);
+            txtReadTimeOut.MaxLength = 50;
+            txtReadTimeOut.MouseState = MaterialSkin.MouseState.OUT;
+            txtReadTimeOut.Multiline = false;
+            txtReadTimeOut.Name = "txtReadTimeOut";
+            txtReadTimeOut.Size = new Size(129, 36);
+            txtReadTimeOut.TabIndex = 16;
+            txtReadTimeOut.Text = "";
+            txtReadTimeOut.TrailingIcon = null;
+            txtReadTimeOut.UseTallSize = false;
+            // 
+            // txtDataBits
+            // 
+            txtDataBits.AnimateReadOnly = false;
+            txtDataBits.BorderStyle = BorderStyle.None;
+            txtDataBits.Depth = 0;
+            txtDataBits.Dock = DockStyle.Fill;
+            txtDataBits.Font = new Font("Roboto", 16F, FontStyle.Regular, GraphicsUnit.Pixel);
+            txtDataBits.LeadingIcon = null;
+            txtDataBits.Location = new Point(138, 23);
+            txtDataBits.MaxLength = 50;
+            txtDataBits.MouseState = MaterialSkin.MouseState.OUT;
+            txtDataBits.Multiline = false;
+            txtDataBits.Name = "txtDataBits";
+            txtDataBits.Size = new Size(130, 36);
+            txtDataBits.TabIndex = 18;
+            txtDataBits.Text = "";
+            txtDataBits.TrailingIcon = null;
+            txtDataBits.UseTallSize = false;
+            // 
+            // txtBaudRate
+            // 
+            txtBaudRate.AnimateReadOnly = false;
+            txtBaudRate.BorderStyle = BorderStyle.None;
+            txtBaudRate.Depth = 0;
+            txtBaudRate.Dock = DockStyle.Fill;
+            txtBaudRate.Font = new Font("Roboto", 16F, FontStyle.Regular, GraphicsUnit.Pixel);
+            txtBaudRate.LeadingIcon = null;
+            txtBaudRate.Location = new Point(3, 23);
+            txtBaudRate.MaxLength = 50;
+            txtBaudRate.MouseState = MaterialSkin.MouseState.OUT;
+            txtBaudRate.Multiline = false;
+            txtBaudRate.Name = "txtBaudRate";
+            txtBaudRate.Size = new Size(129, 36);
+            txtBaudRate.TabIndex = 15;
+            txtBaudRate.Text = "";
+            txtBaudRate.TrailingIcon = null;
+            txtBaudRate.UseTallSize = false;
+            // 
+            // materialLabel5
+            // 
+            materialLabel5.AutoSize = true;
+            materialLabel5.Depth = 0;
+            materialLabel5.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
+            materialLabel5.Location = new Point(138, 0);
+            materialLabel5.MouseState = MaterialSkin.MouseState.HOVER;
+            materialLabel5.Name = "materialLabel5";
+            materialLabel5.Size = new Size(70, 19);
+            materialLabel5.TabIndex = 9;
+            materialLabel5.Text = "Data Bits:";
+            // 
+            // materialLabel4
+            // 
+            materialLabel4.AutoSize = true;
+            materialLabel4.Depth = 0;
+            materialLabel4.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
+            materialLabel4.Location = new Point(3, 0);
+            materialLabel4.MouseState = MaterialSkin.MouseState.HOVER;
+            materialLabel4.Name = "materialLabel4";
+            materialLabel4.Size = new Size(78, 19);
+            materialLabel4.TabIndex = 8;
+            materialLabel4.Text = "Baud Rate:";
+            // 
+            // materialLabel7
+            // 
+            materialLabel7.AutoSize = true;
+            materialLabel7.Depth = 0;
+            materialLabel7.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
+            materialLabel7.Location = new Point(138, 60);
+            materialLabel7.MouseState = MaterialSkin.MouseState.HOVER;
+            materialLabel7.Name = "materialLabel7";
+            materialLabel7.Size = new Size(110, 19);
+            materialLabel7.TabIndex = 11;
+            materialLabel7.Text = "Write Time Out:";
+            // 
+            // materialLabel6
+            // 
+            materialLabel6.AutoSize = true;
+            materialLabel6.Depth = 0;
+            materialLabel6.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
+            materialLabel6.Location = new Point(3, 60);
+            materialLabel6.MouseState = MaterialSkin.MouseState.HOVER;
+            materialLabel6.Name = "materialLabel6";
+            materialLabel6.Size = new Size(110, 19);
+            materialLabel6.TabIndex = 10;
+            materialLabel6.Text = "Read Time Out:";
+            // 
+            // tableLayoutPanel10
+            // 
+            tableLayoutPanel10.ColumnCount = 1;
+            tableLayoutPanel10.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            tableLayoutPanel10.Controls.Add(materialLabel8, 0, 0);
+            tableLayoutPanel10.Controls.Add(cbParity, 0, 1);
+            tableLayoutPanel10.Controls.Add(cbHandShake, 0, 5);
+            tableLayoutPanel10.Controls.Add(materialLabel10, 0, 4);
+            tableLayoutPanel10.Controls.Add(cbStopBits, 0, 3);
+            tableLayoutPanel10.Controls.Add(materialLabel9, 0, 2);
+            tableLayoutPanel10.Dock = DockStyle.Fill;
+            tableLayoutPanel10.Location = new Point(3, 130);
+            tableLayoutPanel10.Name = "tableLayoutPanel10";
+            tableLayoutPanel10.RowCount = 6;
+            tableLayoutPanel10.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            tableLayoutPanel10.RowStyles.Add(new RowStyle(SizeType.Percent, 33.3333321F));
+            tableLayoutPanel10.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            tableLayoutPanel10.RowStyles.Add(new RowStyle(SizeType.Percent, 33.3333321F));
+            tableLayoutPanel10.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            tableLayoutPanel10.RowStyles.Add(new RowStyle(SizeType.Percent, 33.3333321F));
+            tableLayoutPanel10.Size = new Size(271, 206);
+            tableLayoutPanel10.TabIndex = 25;
+            // 
+            // materialLabel8
+            // 
+            materialLabel8.AutoSize = true;
+            materialLabel8.Depth = 0;
+            materialLabel8.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
+            materialLabel8.Location = new Point(3, 0);
+            materialLabel8.MouseState = MaterialSkin.MouseState.HOVER;
+            materialLabel8.Name = "materialLabel8";
+            materialLabel8.Size = new Size(46, 19);
+            materialLabel8.TabIndex = 12;
+            materialLabel8.Text = "Parity:";
+            // 
+            // cbParity
+            // 
+            cbParity.AutoResize = false;
+            cbParity.BackColor = Color.FromArgb(255, 255, 255);
+            cbParity.Depth = 0;
+            cbParity.Dock = DockStyle.Fill;
+            cbParity.DrawMode = DrawMode.OwnerDrawVariable;
+            cbParity.DropDownHeight = 118;
+            cbParity.DropDownStyle = ComboBoxStyle.DropDownList;
+            cbParity.DropDownWidth = 121;
+            cbParity.Font = new Font("Microsoft Sans Serif", 14F, FontStyle.Bold, GraphicsUnit.Pixel);
+            cbParity.ForeColor = Color.FromArgb(222, 0, 0, 0);
+            cbParity.FormattingEnabled = true;
+            cbParity.IntegralHeight = false;
+            cbParity.ItemHeight = 29;
+            cbParity.Location = new Point(3, 23);
+            cbParity.MaxDropDownItems = 4;
+            cbParity.MouseState = MaterialSkin.MouseState.OUT;
+            cbParity.Name = "cbParity";
+            cbParity.Size = new Size(265, 35);
+            cbParity.StartIndex = 0;
+            cbParity.TabIndex = 15;
+            cbParity.UseTallSize = false;
+            // 
+            // cbHandShake
+            // 
+            cbHandShake.AutoResize = false;
+            cbHandShake.BackColor = Color.FromArgb(255, 255, 255);
+            cbHandShake.Depth = 0;
+            cbHandShake.Dock = DockStyle.Fill;
+            cbHandShake.DrawMode = DrawMode.OwnerDrawVariable;
+            cbHandShake.DropDownHeight = 118;
+            cbHandShake.DropDownStyle = ComboBoxStyle.DropDownList;
+            cbHandShake.DropDownWidth = 121;
+            cbHandShake.Font = new Font("Microsoft Sans Serif", 14F, FontStyle.Bold, GraphicsUnit.Pixel);
+            cbHandShake.ForeColor = Color.FromArgb(222, 0, 0, 0);
+            cbHandShake.FormattingEnabled = true;
+            cbHandShake.IntegralHeight = false;
+            cbHandShake.ItemHeight = 29;
+            cbHandShake.Location = new Point(3, 159);
+            cbHandShake.MaxDropDownItems = 4;
+            cbHandShake.MouseState = MaterialSkin.MouseState.OUT;
+            cbHandShake.Name = "cbHandShake";
+            cbHandShake.Size = new Size(265, 35);
+            cbHandShake.StartIndex = 0;
+            cbHandShake.TabIndex = 23;
+            cbHandShake.UseTallSize = false;
+            // 
+            // materialLabel10
+            // 
+            materialLabel10.AutoSize = true;
+            materialLabel10.Depth = 0;
+            materialLabel10.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
+            materialLabel10.Location = new Point(3, 136);
+            materialLabel10.MouseState = MaterialSkin.MouseState.HOVER;
+            materialLabel10.Name = "materialLabel10";
+            materialLabel10.Size = new Size(91, 19);
+            materialLabel10.TabIndex = 14;
+            materialLabel10.Text = "Hand Shake:";
+            // 
+            // cbStopBits
+            // 
+            cbStopBits.AutoResize = false;
+            cbStopBits.BackColor = Color.FromArgb(255, 255, 255);
+            cbStopBits.Depth = 0;
+            cbStopBits.Dock = DockStyle.Fill;
+            cbStopBits.DrawMode = DrawMode.OwnerDrawVariable;
+            cbStopBits.DropDownHeight = 118;
+            cbStopBits.DropDownStyle = ComboBoxStyle.DropDownList;
+            cbStopBits.DropDownWidth = 121;
+            cbStopBits.Font = new Font("Microsoft Sans Serif", 14F, FontStyle.Bold, GraphicsUnit.Pixel);
+            cbStopBits.ForeColor = Color.FromArgb(222, 0, 0, 0);
+            cbStopBits.FormattingEnabled = true;
+            cbStopBits.IntegralHeight = false;
+            cbStopBits.ItemHeight = 29;
+            cbStopBits.Location = new Point(3, 91);
+            cbStopBits.MaxDropDownItems = 4;
+            cbStopBits.MouseState = MaterialSkin.MouseState.OUT;
+            cbStopBits.Name = "cbStopBits";
+            cbStopBits.Size = new Size(265, 35);
+            cbStopBits.StartIndex = 0;
+            cbStopBits.TabIndex = 22;
+            cbStopBits.UseTallSize = false;
+            // 
+            // materialLabel9
+            // 
+            materialLabel9.AutoSize = true;
+            materialLabel9.Depth = 0;
+            materialLabel9.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
+            materialLabel9.Location = new Point(3, 68);
+            materialLabel9.MouseState = MaterialSkin.MouseState.HOVER;
+            materialLabel9.Name = "materialLabel9";
+            materialLabel9.Size = new Size(69, 19);
+            materialLabel9.TabIndex = 13;
+            materialLabel9.Text = "Stop Bits:";
+            // 
             // groupBox2
             // 
-            groupBox2.Controls.Add(btnCleanTxtReceive);
-            groupBox2.Controls.Add(txtReceivedData);
+            groupBox2.Controls.Add(tableLayoutPanel15);
+            groupBox2.Dock = DockStyle.Fill;
             groupBox2.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
-            groupBox2.Location = new Point(272, 4);
+            groupBox2.Location = new Point(298, 3);
             groupBox2.Name = "groupBox2";
-            groupBox2.Size = new Size(318, 519);
+            groupBox2.Size = new Size(289, 527);
             groupBox2.TabIndex = 24;
             groupBox2.TabStop = false;
             groupBox2.Text = "Dados Recebidos";
+            // 
+            // tableLayoutPanel15
+            // 
+            tableLayoutPanel15.ColumnCount = 1;
+            tableLayoutPanel15.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            tableLayoutPanel15.Controls.Add(btnCleanTxtReceive, 0, 0);
+            tableLayoutPanel15.Controls.Add(txtReceivedData, 0, 1);
+            tableLayoutPanel15.Dock = DockStyle.Fill;
+            tableLayoutPanel15.Location = new Point(3, 28);
+            tableLayoutPanel15.Name = "tableLayoutPanel15";
+            tableLayoutPanel15.RowCount = 2;
+            tableLayoutPanel15.RowStyles.Add(new RowStyle(SizeType.Absolute, 50F));
+            tableLayoutPanel15.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tableLayoutPanel15.Size = new Size(283, 496);
+            tableLayoutPanel15.TabIndex = 29;
             // 
             // btnCleanTxtReceive
             // 
@@ -793,13 +1371,13 @@
             btnCleanTxtReceive.Dock = DockStyle.Top;
             btnCleanTxtReceive.HighEmphasis = true;
             btnCleanTxtReceive.Icon = null;
-            btnCleanTxtReceive.Location = new Point(3, 28);
+            btnCleanTxtReceive.Location = new Point(4, 6);
             btnCleanTxtReceive.Margin = new Padding(4, 6, 4, 6);
             btnCleanTxtReceive.MouseState = MaterialSkin.MouseState.HOVER;
             btnCleanTxtReceive.Name = "btnCleanTxtReceive";
             btnCleanTxtReceive.NoAccentTextColor = Color.Empty;
-            btnCleanTxtReceive.Size = new Size(312, 36);
-            btnCleanTxtReceive.TabIndex = 20;
+            btnCleanTxtReceive.Size = new Size(275, 36);
+            btnCleanTxtReceive.TabIndex = 21;
             btnCleanTxtReceive.Text = "Limpar";
             btnCleanTxtReceive.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
             btnCleanTxtReceive.UseAccentColor = false;
@@ -811,381 +1389,17 @@
             txtReceivedData.BackColor = Color.FromArgb(255, 255, 255);
             txtReceivedData.BorderStyle = BorderStyle.None;
             txtReceivedData.Depth = 0;
+            txtReceivedData.Dock = DockStyle.Fill;
             txtReceivedData.Font = new Font("Microsoft Sans Serif", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
             txtReceivedData.ForeColor = Color.FromArgb(222, 0, 0, 0);
-            txtReceivedData.Location = new Point(6, 73);
+            txtReceivedData.Location = new Point(3, 53);
             txtReceivedData.MouseState = MaterialSkin.MouseState.HOVER;
             txtReceivedData.Name = "txtReceivedData";
             txtReceivedData.ReadOnly = true;
-            txtReceivedData.Size = new Size(306, 439);
+            txtReceivedData.Size = new Size(277, 440);
             txtReceivedData.TabIndex = 0;
             txtReceivedData.Text = "";
             txtReceivedData.TextChanged += TxtReceivedData_TextChanged;
-            // 
-            // btnDisconnect
-            // 
-            btnDisconnect.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            btnDisconnect.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            btnDisconnect.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
-            btnDisconnect.Depth = 0;
-            btnDisconnect.Enabled = false;
-            btnDisconnect.HighEmphasis = true;
-            btnDisconnect.Icon = null;
-            btnDisconnect.Location = new Point(140, 480);
-            btnDisconnect.Margin = new Padding(4, 6, 4, 6);
-            btnDisconnect.MouseState = MaterialSkin.MouseState.HOVER;
-            btnDisconnect.Name = "btnDisconnect";
-            btnDisconnect.NoAccentTextColor = Color.Empty;
-            btnDisconnect.Size = new Size(125, 36);
-            btnDisconnect.TabIndex = 23;
-            btnDisconnect.Text = "Desconectar";
-            btnDisconnect.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
-            btnDisconnect.UseAccentColor = false;
-            btnDisconnect.UseVisualStyleBackColor = true;
-            btnDisconnect.Click += BtnDisconnect_Click;
-            // 
-            // btnConnect
-            // 
-            btnConnect.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            btnConnect.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            btnConnect.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
-            btnConnect.Depth = 0;
-            btnConnect.HighEmphasis = true;
-            btnConnect.Icon = null;
-            btnConnect.Location = new Point(5, 480);
-            btnConnect.Margin = new Padding(4, 6, 4, 6);
-            btnConnect.MouseState = MaterialSkin.MouseState.HOVER;
-            btnConnect.Name = "btnConnect";
-            btnConnect.NoAccentTextColor = Color.Empty;
-            btnConnect.Size = new Size(98, 36);
-            btnConnect.TabIndex = 22;
-            btnConnect.Text = "Conectar";
-            btnConnect.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
-            btnConnect.UseAccentColor = false;
-            btnConnect.UseVisualStyleBackColor = true;
-            btnConnect.Click += BtnConnect_Click;
-            // 
-            // groupBox1
-            // 
-            groupBox1.Controls.Add(cbHandShake);
-            groupBox1.Controls.Add(cbStopBits);
-            groupBox1.Controls.Add(cbParity);
-            groupBox1.Controls.Add(txtDataBits);
-            groupBox1.Controls.Add(materialLabel10);
-            groupBox1.Controls.Add(txtWriteTimeOut);
-            groupBox1.Controls.Add(txtReadTimeOut);
-            groupBox1.Controls.Add(materialLabel9);
-            groupBox1.Controls.Add(txtBaudRate);
-            groupBox1.Controls.Add(materialLabel4);
-            groupBox1.Controls.Add(materialLabel5);
-            groupBox1.Controls.Add(materialLabel6);
-            groupBox1.Controls.Add(materialLabel7);
-            groupBox1.Controls.Add(materialLabel8);
-            groupBox1.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            groupBox1.Location = new Point(5, 102);
-            groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(260, 369);
-            groupBox1.TabIndex = 21;
-            groupBox1.TabStop = false;
-            groupBox1.Text = "Parâmetros";
-            // 
-            // cbHandShake
-            // 
-            cbHandShake.AutoResize = false;
-            cbHandShake.BackColor = Color.FromArgb(255, 255, 255);
-            cbHandShake.Depth = 0;
-            cbHandShake.DrawMode = DrawMode.OwnerDrawVariable;
-            cbHandShake.DropDownHeight = 118;
-            cbHandShake.DropDownStyle = ComboBoxStyle.DropDownList;
-            cbHandShake.DropDownWidth = 121;
-            cbHandShake.Font = new Font("Microsoft Sans Serif", 14F, FontStyle.Bold, GraphicsUnit.Pixel);
-            cbHandShake.ForeColor = Color.FromArgb(222, 0, 0, 0);
-            cbHandShake.FormattingEnabled = true;
-            cbHandShake.IntegralHeight = false;
-            cbHandShake.ItemHeight = 29;
-            cbHandShake.Location = new Point(6, 326);
-            cbHandShake.MaxDropDownItems = 4;
-            cbHandShake.MouseState = MaterialSkin.MouseState.OUT;
-            cbHandShake.Name = "cbHandShake";
-            cbHandShake.Size = new Size(248, 35);
-            cbHandShake.StartIndex = 0;
-            cbHandShake.TabIndex = 23;
-            cbHandShake.UseTallSize = false;
-            // 
-            // cbStopBits
-            // 
-            cbStopBits.AutoResize = false;
-            cbStopBits.BackColor = Color.FromArgb(255, 255, 255);
-            cbStopBits.Depth = 0;
-            cbStopBits.DrawMode = DrawMode.OwnerDrawVariable;
-            cbStopBits.DropDownHeight = 118;
-            cbStopBits.DropDownStyle = ComboBoxStyle.DropDownList;
-            cbStopBits.DropDownWidth = 121;
-            cbStopBits.Font = new Font("Microsoft Sans Serif", 14F, FontStyle.Bold, GraphicsUnit.Pixel);
-            cbStopBits.ForeColor = Color.FromArgb(222, 0, 0, 0);
-            cbStopBits.FormattingEnabled = true;
-            cbStopBits.IntegralHeight = false;
-            cbStopBits.ItemHeight = 29;
-            cbStopBits.Location = new Point(6, 258);
-            cbStopBits.MaxDropDownItems = 4;
-            cbStopBits.MouseState = MaterialSkin.MouseState.OUT;
-            cbStopBits.Name = "cbStopBits";
-            cbStopBits.Size = new Size(248, 35);
-            cbStopBits.StartIndex = 0;
-            cbStopBits.TabIndex = 22;
-            cbStopBits.UseTallSize = false;
-            // 
-            // cbParity
-            // 
-            cbParity.AutoResize = false;
-            cbParity.BackColor = Color.FromArgb(255, 255, 255);
-            cbParity.Depth = 0;
-            cbParity.DrawMode = DrawMode.OwnerDrawVariable;
-            cbParity.DropDownHeight = 118;
-            cbParity.DropDownStyle = ComboBoxStyle.DropDownList;
-            cbParity.DropDownWidth = 121;
-            cbParity.Font = new Font("Microsoft Sans Serif", 14F, FontStyle.Bold, GraphicsUnit.Pixel);
-            cbParity.ForeColor = Color.FromArgb(222, 0, 0, 0);
-            cbParity.FormattingEnabled = true;
-            cbParity.IntegralHeight = false;
-            cbParity.ItemHeight = 29;
-            cbParity.Location = new Point(6, 188);
-            cbParity.MaxDropDownItems = 4;
-            cbParity.MouseState = MaterialSkin.MouseState.OUT;
-            cbParity.Name = "cbParity";
-            cbParity.Size = new Size(248, 35);
-            cbParity.StartIndex = 0;
-            cbParity.TabIndex = 15;
-            cbParity.UseTallSize = false;
-            // 
-            // txtDataBits
-            // 
-            txtDataBits.AnimateReadOnly = false;
-            txtDataBits.BorderStyle = BorderStyle.None;
-            txtDataBits.Depth = 0;
-            txtDataBits.Font = new Font("Roboto", 16F, FontStyle.Regular, GraphicsUnit.Pixel);
-            txtDataBits.LeadingIcon = null;
-            txtDataBits.Location = new Point(144, 47);
-            txtDataBits.MaxLength = 50;
-            txtDataBits.MouseState = MaterialSkin.MouseState.OUT;
-            txtDataBits.Multiline = false;
-            txtDataBits.Name = "txtDataBits";
-            txtDataBits.Size = new Size(110, 36);
-            txtDataBits.TabIndex = 18;
-            txtDataBits.Text = "";
-            txtDataBits.TrailingIcon = null;
-            txtDataBits.UseTallSize = false;
-            // 
-            // materialLabel10
-            // 
-            materialLabel10.AutoSize = true;
-            materialLabel10.Depth = 0;
-            materialLabel10.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
-            materialLabel10.Location = new Point(6, 306);
-            materialLabel10.MouseState = MaterialSkin.MouseState.HOVER;
-            materialLabel10.Name = "materialLabel10";
-            materialLabel10.Size = new Size(91, 19);
-            materialLabel10.TabIndex = 14;
-            materialLabel10.Text = "Hand Shake:";
-            // 
-            // txtWriteTimeOut
-            // 
-            txtWriteTimeOut.AnimateReadOnly = false;
-            txtWriteTimeOut.BorderStyle = BorderStyle.None;
-            txtWriteTimeOut.Depth = 0;
-            txtWriteTimeOut.Font = new Font("Roboto", 16F, FontStyle.Regular, GraphicsUnit.Pixel);
-            txtWriteTimeOut.LeadingIcon = null;
-            txtWriteTimeOut.Location = new Point(144, 118);
-            txtWriteTimeOut.MaxLength = 50;
-            txtWriteTimeOut.MouseState = MaterialSkin.MouseState.OUT;
-            txtWriteTimeOut.Multiline = false;
-            txtWriteTimeOut.Name = "txtWriteTimeOut";
-            txtWriteTimeOut.Size = new Size(110, 36);
-            txtWriteTimeOut.TabIndex = 17;
-            txtWriteTimeOut.Text = "";
-            txtWriteTimeOut.TrailingIcon = null;
-            txtWriteTimeOut.UseTallSize = false;
-            // 
-            // txtReadTimeOut
-            // 
-            txtReadTimeOut.AnimateReadOnly = false;
-            txtReadTimeOut.BorderStyle = BorderStyle.None;
-            txtReadTimeOut.Depth = 0;
-            txtReadTimeOut.Font = new Font("Roboto", 16F, FontStyle.Regular, GraphicsUnit.Pixel);
-            txtReadTimeOut.LeadingIcon = null;
-            txtReadTimeOut.Location = new Point(6, 118);
-            txtReadTimeOut.MaxLength = 50;
-            txtReadTimeOut.MouseState = MaterialSkin.MouseState.OUT;
-            txtReadTimeOut.Multiline = false;
-            txtReadTimeOut.Name = "txtReadTimeOut";
-            txtReadTimeOut.Size = new Size(110, 36);
-            txtReadTimeOut.TabIndex = 16;
-            txtReadTimeOut.Text = "";
-            txtReadTimeOut.TrailingIcon = null;
-            txtReadTimeOut.UseTallSize = false;
-            // 
-            // materialLabel9
-            // 
-            materialLabel9.AutoSize = true;
-            materialLabel9.Depth = 0;
-            materialLabel9.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
-            materialLabel9.Location = new Point(6, 236);
-            materialLabel9.MouseState = MaterialSkin.MouseState.HOVER;
-            materialLabel9.Name = "materialLabel9";
-            materialLabel9.Size = new Size(69, 19);
-            materialLabel9.TabIndex = 13;
-            materialLabel9.Text = "Stop Bits:";
-            // 
-            // txtBaudRate
-            // 
-            txtBaudRate.AnimateReadOnly = false;
-            txtBaudRate.BorderStyle = BorderStyle.None;
-            txtBaudRate.Depth = 0;
-            txtBaudRate.Font = new Font("Roboto", 16F, FontStyle.Regular, GraphicsUnit.Pixel);
-            txtBaudRate.LeadingIcon = null;
-            txtBaudRate.Location = new Point(6, 47);
-            txtBaudRate.MaxLength = 50;
-            txtBaudRate.MouseState = MaterialSkin.MouseState.OUT;
-            txtBaudRate.Multiline = false;
-            txtBaudRate.Name = "txtBaudRate";
-            txtBaudRate.Size = new Size(110, 36);
-            txtBaudRate.TabIndex = 15;
-            txtBaudRate.Text = "";
-            txtBaudRate.TrailingIcon = null;
-            txtBaudRate.UseTallSize = false;
-            // 
-            // materialLabel4
-            // 
-            materialLabel4.AutoSize = true;
-            materialLabel4.Depth = 0;
-            materialLabel4.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
-            materialLabel4.Location = new Point(6, 25);
-            materialLabel4.MouseState = MaterialSkin.MouseState.HOVER;
-            materialLabel4.Name = "materialLabel4";
-            materialLabel4.Size = new Size(78, 19);
-            materialLabel4.TabIndex = 8;
-            materialLabel4.Text = "Baud Rate:";
-            // 
-            // materialLabel5
-            // 
-            materialLabel5.AutoSize = true;
-            materialLabel5.Depth = 0;
-            materialLabel5.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
-            materialLabel5.Location = new Point(144, 25);
-            materialLabel5.MouseState = MaterialSkin.MouseState.HOVER;
-            materialLabel5.Name = "materialLabel5";
-            materialLabel5.Size = new Size(70, 19);
-            materialLabel5.TabIndex = 9;
-            materialLabel5.Text = "Data Bits:";
-            // 
-            // materialLabel6
-            // 
-            materialLabel6.AutoSize = true;
-            materialLabel6.Depth = 0;
-            materialLabel6.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
-            materialLabel6.Location = new Point(6, 96);
-            materialLabel6.MouseState = MaterialSkin.MouseState.HOVER;
-            materialLabel6.Name = "materialLabel6";
-            materialLabel6.Size = new Size(110, 19);
-            materialLabel6.TabIndex = 10;
-            materialLabel6.Text = "Read Time Out:";
-            // 
-            // materialLabel7
-            // 
-            materialLabel7.AutoSize = true;
-            materialLabel7.Depth = 0;
-            materialLabel7.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
-            materialLabel7.Location = new Point(144, 96);
-            materialLabel7.MouseState = MaterialSkin.MouseState.HOVER;
-            materialLabel7.Name = "materialLabel7";
-            materialLabel7.Size = new Size(110, 19);
-            materialLabel7.TabIndex = 11;
-            materialLabel7.Text = "Write Time Out:";
-            // 
-            // materialLabel8
-            // 
-            materialLabel8.AutoSize = true;
-            materialLabel8.Depth = 0;
-            materialLabel8.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
-            materialLabel8.Location = new Point(6, 166);
-            materialLabel8.MouseState = MaterialSkin.MouseState.HOVER;
-            materialLabel8.Name = "materialLabel8";
-            materialLabel8.Size = new Size(46, 19);
-            materialLabel8.TabIndex = 12;
-            materialLabel8.Text = "Parity:";
-            // 
-            // switchDefaultParameters
-            // 
-            switchDefaultParameters.AutoSize = true;
-            switchDefaultParameters.Checked = true;
-            switchDefaultParameters.CheckState = CheckState.Checked;
-            switchDefaultParameters.Depth = 0;
-            switchDefaultParameters.Location = new Point(5, 65);
-            switchDefaultParameters.Margin = new Padding(0);
-            switchDefaultParameters.MouseLocation = new Point(-1, -1);
-            switchDefaultParameters.MouseState = MaterialSkin.MouseState.HOVER;
-            switchDefaultParameters.Name = "switchDefaultParameters";
-            switchDefaultParameters.Ripple = true;
-            switchDefaultParameters.Size = new Size(229, 37);
-            switchDefaultParameters.TabIndex = 20;
-            switchDefaultParameters.Text = "Usar parâmetros padrão";
-            switchDefaultParameters.UseVisualStyleBackColor = true;
-            switchDefaultParameters.CheckedChanged += SwitchDefaultParameters_CheckedChanged;
-            // 
-            // btnUpdate
-            // 
-            btnUpdate.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            btnUpdate.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
-            btnUpdate.Depth = 0;
-            btnUpdate.HighEmphasis = true;
-            btnUpdate.Icon = null;
-            btnUpdate.Location = new Point(166, 23);
-            btnUpdate.Margin = new Padding(4, 6, 4, 6);
-            btnUpdate.MouseState = MaterialSkin.MouseState.HOVER;
-            btnUpdate.Name = "btnUpdate";
-            btnUpdate.NoAccentTextColor = Color.Empty;
-            btnUpdate.Size = new Size(99, 36);
-            btnUpdate.TabIndex = 19;
-            btnUpdate.Text = "Atualizar";
-            btnUpdate.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
-            btnUpdate.UseAccentColor = false;
-            btnUpdate.UseVisualStyleBackColor = true;
-            btnUpdate.Click += BtnUpdate_Click;
-            // 
-            // materialLabel1
-            // 
-            materialLabel1.AutoSize = true;
-            materialLabel1.Depth = 0;
-            materialLabel1.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
-            materialLabel1.Location = new Point(5, 2);
-            materialLabel1.MouseState = MaterialSkin.MouseState.HOVER;
-            materialLabel1.Name = "materialLabel1";
-            materialLabel1.Size = new Size(99, 19);
-            materialLabel1.TabIndex = 18;
-            materialLabel1.Text = "Portas Seriais";
-            // 
-            // cbComPortsList
-            // 
-            cbComPortsList.AutoResize = false;
-            cbComPortsList.BackColor = Color.FromArgb(255, 255, 255);
-            cbComPortsList.Depth = 0;
-            cbComPortsList.DrawMode = DrawMode.OwnerDrawVariable;
-            cbComPortsList.DropDownHeight = 118;
-            cbComPortsList.DropDownStyle = ComboBoxStyle.DropDownList;
-            cbComPortsList.DropDownWidth = 121;
-            cbComPortsList.Font = new Font("Microsoft Sans Serif", 14F, FontStyle.Bold, GraphicsUnit.Pixel);
-            cbComPortsList.ForeColor = Color.FromArgb(222, 0, 0, 0);
-            cbComPortsList.FormattingEnabled = true;
-            cbComPortsList.IntegralHeight = false;
-            cbComPortsList.ItemHeight = 29;
-            cbComPortsList.Location = new Point(5, 24);
-            cbComPortsList.MaxDropDownItems = 4;
-            cbComPortsList.MouseState = MaterialSkin.MouseState.OUT;
-            cbComPortsList.Name = "cbComPortsList";
-            cbComPortsList.Size = new Size(154, 35);
-            cbComPortsList.StartIndex = 0;
-            cbComPortsList.TabIndex = 17;
-            cbComPortsList.UseTallSize = false;
             // 
             // SynaptiPulse
             // 
@@ -1203,16 +1417,17 @@
             tableLayoutPanel1.ResumeLayout(false);
             splitContainer.Panel1.ResumeLayout(false);
             splitContainer.Panel2.ResumeLayout(false);
-            splitContainer.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)splitContainer).EndInit();
             splitContainer.ResumeLayout(false);
             TabControl.ResumeLayout(false);
             tabPeriodic.ResumeLayout(false);
             tbPanel_PeriodicTab.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)PeriodicTab_GridMain).EndInit();
             tableLayoutPanel7.ResumeLayout(false);
             PeriodicTab_HeaderPanel.ResumeLayout(false);
             PeriodicTab_HeaderPanel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)PeriodicTab_GridMain).EndInit();
+            tableLayoutPanel16.ResumeLayout(false);
+            tableLayoutPanel16.PerformLayout();
             tabChaos.ResumeLayout(false);
             tableLayoutPanel2.ResumeLayout(false);
             tableLayoutPanel3.ResumeLayout(false);
@@ -1223,10 +1438,22 @@
             tableLayoutPanel5.ResumeLayout(false);
             tableLayoutPanel6.ResumeLayout(false);
             tableLayoutPanel6.PerformLayout();
-            groupBox2.ResumeLayout(false);
-            groupBox2.PerformLayout();
+            tableLayoutPanel14.ResumeLayout(false);
+            tableLayoutPanel13.ResumeLayout(false);
+            tableLayoutPanel13.PerformLayout();
+            tableLayoutPanel12.ResumeLayout(false);
+            tableLayoutPanel12.PerformLayout();
+            tableLayoutPanel11.ResumeLayout(false);
+            tableLayoutPanel11.PerformLayout();
             groupBox1.ResumeLayout(false);
-            groupBox1.PerformLayout();
+            tableLayoutPanel9.ResumeLayout(false);
+            tableLayoutPanel8.ResumeLayout(false);
+            tableLayoutPanel8.PerformLayout();
+            tableLayoutPanel10.ResumeLayout(false);
+            tableLayoutPanel10.PerformLayout();
+            groupBox2.ResumeLayout(false);
+            tableLayoutPanel15.ResumeLayout(false);
+            tableLayoutPanel15.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -1267,8 +1494,6 @@
         private MaterialSkin.Controls.MaterialButton PeriodicTab_SendConfigToBoard;
         private MaterialSkin.Controls.MaterialComboBox PeriodicTab_CbCurrents;
         private MaterialSkin.Controls.MaterialSwitch PeriodicTab_SwitchCurrent;
-        private DataGridView PeriodicTab_GridMain;
-        private OxyPlot.WindowsForms.PlotView PeriodicTab_ChartPlotView;
         private TabPage tabChaos;
         private TableLayoutPanel tableLayoutPanel2;
         private TableLayoutPanel tableLayoutPanel3;
@@ -1288,9 +1513,22 @@
         private TableLayoutPanel tableLayoutPanel6;
         private MaterialSkin.Controls.MaterialLabel ChaosTab_LblInterval;
         private MaterialSkin.Controls.MaterialButton PeriodicTab_StartStimulation;
-        private MaterialSkin.Controls.MaterialButton btnCleanTxtReceive;
         private MaterialSkin.Controls.MaterialLabel ChaosTab_LabelStatus;
         private MaterialSkin.Controls.MaterialLabel ChaosTab_Status;
         private MaterialSkin.Controls.MaterialComboBox ChaosTab_CbPulseTrains;
+        private TableLayoutPanel tableLayoutPanel9;
+        private TableLayoutPanel tableLayoutPanel8;
+        private TableLayoutPanel tableLayoutPanel10;
+        private TableLayoutPanel tableLayoutPanel13;
+        private TableLayoutPanel tableLayoutPanel12;
+        private TableLayoutPanel tableLayoutPanel11;
+        private TableLayoutPanel tableLayoutPanel14;
+        private TableLayoutPanel tableLayoutPanel15;
+        private MaterialSkin.Controls.MaterialButton btnCleanTxtReceive;
+        private OxyPlot.WindowsForms.PlotView PeriodicTab_ChartPlotView;
+        private TableLayoutPanel tableLayoutPanel16;
+        private MaterialSkin.Controls.MaterialButton BtnLoadRoutine;
+        private MaterialSkin.Controls.MaterialButton BtnSaveRoutine;
+        private DataGridView PeriodicTab_GridMain;
     }
 }
