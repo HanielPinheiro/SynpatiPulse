@@ -9,7 +9,6 @@ using System.Data;
 using System.IO.Ports;
 using System.Globalization;
 using System.Text;
-using OxyPlot.WindowsForms;
 
 namespace SynaptiPulse
 {
@@ -18,11 +17,15 @@ namespace SynaptiPulse
         private DeviceControl? serialControl = new();
         private readonly DeviceControlParameters? editableParameters = new();
 
-        public bool IsRunning { get; private set; } = false;
-        private string receivedData = string.Empty;
         private string chaosData = string.Empty;
+        private string receivedData = string.Empty;
         private Pulse[][]? parsedChaosData = null;
-
+        private double chaosInterval = 0d;
+        private bool NeedWaiting = false;
+        private bool HasParsed = false;
+        private bool CanSend = false;
+        private bool PulseTrainRunning = false;
+        
         private readonly BindingList<Pulse> periodicTabPulses = new();
         private readonly BindingList<Pulse> chaoticTabPulses = new();
 
@@ -30,8 +33,8 @@ namespace SynaptiPulse
         private DataGridViewCellStyle? DefaultCellStyle;
 
         private const string appName = "\\SynaptiPulse\\";
-        private string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + appName;
-        private string fullPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\SynaptiPulse\\" + "pulses.txt";
+        private readonly string path;
+        private readonly string fullPath;
 
         public const string RESET_BOARD = "A";
         public const string RESET_INSTRUCTION = "B";
@@ -40,14 +43,17 @@ namespace SynaptiPulse
         public const string READ_START = "E";
         public const string READ_STOP = "F";
         public const string MODE_PERIODIC = "G";
-        public const string MODE_PULSETRAINS = "H";
-        public const int Delay = 2000;
-
+        public const string PREFIX = "<";
+        public const string SUFIX = ">";
         private const string JUMPLINE = "\r\n";
         private const string CB_PULSE_TRAIN = "Trem de Pulso ";
+        public const int Delay = 100;
 
         public SynaptiPulse()
         {
+            path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + appName;
+            fullPath = path + "pulses.txt";
+
             InitializeComponent();
             SetFormTheme();
 
@@ -77,6 +83,7 @@ namespace SynaptiPulse
             DisableFields();
 
             #endregion
+
         }
 
         #region On Load
@@ -111,7 +118,7 @@ namespace SynaptiPulse
             ChaosTab_GridMain.SetHeaderText(Pulse.DisplayNameFromProperties);
             ChaosTab_GridMain.SetWidth(Pulse.ColumSizeFromProperties);
             ChaosTab_ChartPlotView_Train.Model = GetModelToTrainPulses();
-            
+
             if (Directory.Exists(path) && File.Exists(fullPath))
             {
                 using (StreamReader sr = File.OpenText(fullPath))
@@ -226,7 +233,7 @@ namespace SynaptiPulse
 
             if (!File.Exists(fullPath)) File.CreateText(fullPath);
 
-            using (StreamWriter sw = new StreamWriter(fullPath))
+            using (StreamWriter sw = new(fullPath))
             {
                 foreach (var pulse in periodicTabPulses)
                     sw.WriteLine(pulse);
@@ -462,25 +469,23 @@ namespace SynaptiPulse
             if (pulseLength >= 1e6d) { pulseLength /= 1e6d; pulseLengthMeasure = Pulse.MeasureUnityToCombobox[MeasureUnity.Seconds]; }
             else if (pulseLength >= 1e3d) { pulseLength /= 1e3d; pulseLengthMeasure = Pulse.MeasureUnityToCombobox[MeasureUnity.Milliseconds]; }
 
-            List<double[]> totalData = chaosData.Replace(',', '.')
-                                        .Split("\r\n", StringSplitOptions.RemoveEmptyEntries)
+            List<double[]> totalData = chaosData.Split("\r\n", StringSplitOptions.RemoveEmptyEntries)
                                         .Select(p => p.Split(';', StringSplitOptions.RemoveEmptyEntries)
                                            .Select(d => double.Parse(d, CultureInfo.InvariantCulture)).ToArray()
                                          ).ToList();
             int rows = totalData.Count;
             int columns = totalData[0].Length;
-
-
-
             parsedChaosData = new Pulse[columns][];
+
             Pulse[]? rowData = null;
+
             for (int col = 0; col < columns; col++)
             {
                 rowData = new Pulse[rows];
                 for (int row = 0; row < rows; row++)
                 {
                     double afterPulseLengthInMs = 0d;
-                    if (row > 0) afterPulseLengthInMs = Math.Round((totalData[row][col] - totalData[row - 1][col] - pulseLengthInSeconds) * 1000, 3);
+                    if (row > 0) afterPulseLengthInMs = Math.Round((totalData[row][col] - pulseLengthInSeconds) * 1000, 3);
                     else afterPulseLengthInMs = Math.Round(totalData[row][col] * 1000, 3);
                     if (afterPulseLengthInMs <= 0d) throw new InvalidOperationException("O tempo estipulado para largura do pulso é muito grande!");
 
@@ -504,12 +509,79 @@ namespace SynaptiPulse
 
         private void ChaosTab_SendConfigToBoard_Click(object sender, EventArgs e)
         {
-            Task.WaitAny(Task.Run(() => SendConfig_ChaoticData()));
+            // Task.WaitAny(Task.Run(() => SendConfig_ChaoticData()));
         }
 
-        private void ChaosTab_btnStartStimulus_Click(object sender, EventArgs e)
+        private async void ChaosTab_btnStartStimulus_Click(object sender, EventArgs e)
         {
+            if (parsedChaosData == null) return;
 
+            chaosInterval = double.Parse(ChaosTab_TxtInterpulseInterval.Text, CultureInfo.CurrentCulture);
+
+            ResetControllers();
+
+            int totalData = parsedChaosData!.Length;
+            for (int i = 0; i < totalData; i++)
+            {
+                NeedWaiting = i < totalData - 1;
+                await Task.Run(async () => await SendDataAndRun(parsedChaosData![i]));
+            }
+        }
+
+        private async Task SendDataAndRun(Pulse[] pulseTrain)
+        {
+            await Task.Run(() => { Parallel.Invoke(() => RunningChaos(pulseTrain)); });
+        }
+
+        private void RunningChaos(Pulse[] pulseTrain)
+        {
+            try
+            {
+                int totalPulses = pulseTrain.Length;
+                int maxNumOfPulsesThatArduinoAchieve = 40;
+
+                this.BeginInvoke(() => { ChaosTab_Status.Text = "Estimulando"; });
+                PulseTrainRunning = true;
+
+                SendData($"{PREFIX}{RESET_BOARD}{SUFIX}");
+                Thread.Sleep(Delay);
+
+                SendData($"{PREFIX}{READ_START}{SUFIX}");
+                Thread.Sleep(Delay);
+                int i = 0;
+                for (; i < maxNumOfPulsesThatArduinoAchieve; i++)
+                {
+                    string txt = pulseTrain[i].ToString().Replace(",", ".");
+                    SendData($"{PREFIX}{txt}{SUFIX}");
+                    Thread.Sleep(Delay);
+                }
+
+                SendData($"{PREFIX}{READ_STOP}{SUFIX}");
+                Thread.Sleep(Delay);
+
+                SendData($"{PREFIX}{ROUTINE_START}{SUFIX}");
+                Thread.Sleep(Delay);
+
+                while (!HasParsed) { }
+
+                for (; i < totalPulses;)
+                {
+                    if (CanSend)
+                    {
+                        string txt = pulseTrain[i].ToString().Replace(",", ".");
+                        SendData($"{PREFIX}{txt}{SUFIX}");
+                        Thread.Sleep(Delay);
+                        i++;
+                        CanSend = false;
+                    }
+                }
+
+                while (PulseTrainRunning) { }
+
+                if (NeedWaiting) Thread.Sleep((int)chaosInterval);
+
+            }
+            catch (Exception ex) { Error("Error when try to send configs to the board", ex); }
         }
 
         #endregion
@@ -611,7 +683,7 @@ namespace SynaptiPulse
                 serialControl = new DeviceControl(editableParameters);
                 serialControl!.SetDataReceivedEventHandler(new SerialDataReceivedEventHandler(DataReceivedHandler));
                 serialControl!.InitializeSerialPort();
-                serialControl.SendData(RESET_BOARD);
+                serialControl.SendData($"{PREFIX}{RESET_BOARD}{SUFIX}");
             }
             catch (Exception ex) { Error("Problema ao tentar conectar na placa", ex); }
         }
@@ -625,13 +697,14 @@ namespace SynaptiPulse
 
                 if (PeriodicTab_StartStimulation.Text == "Parar Estimulação")
                 {
-                    SendData(ROUTINE_STOP);
+                    SendData($"{PREFIX}{ROUTINE_STOP}{SUFIX}");
                     Thread.Sleep(Delay);
                     PeriodicTab_StartStimulation.Text = "Começar Estimulação";
                 }
 
                 txtReceivedData.Text = string.Empty;
                 PeriodicTab_StartStimulation.Enabled = false;
+                Refresh();
             }
             catch (Exception ex) { Error("Problema ao tentar conectar na placa", ex); }
         }
@@ -655,7 +728,7 @@ namespace SynaptiPulse
             btnConnect.Enabled = value;
             btnDisconnect.Enabled = !value;
             PeriodicTab_SendConfigToBoard.Enabled = !value;
-            ChaosTab_btnSendConfigToBoard.Enabled = !value;
+            ChaosTab_btnStartStimulus.Enabled = !value;
 
             cbComPortsList.Enabled = value;
             btnUpdate.Enabled = value;
@@ -666,7 +739,7 @@ namespace SynaptiPulse
 
         #region txtReceiveData
 
-        private void btnCleanTxtReceive_Click(object sender, EventArgs e)
+        private void BtnCleanTxtReceive_Click(object sender, EventArgs e)
         {
             txtReceivedData.Text = string.Empty;
         }
@@ -679,7 +752,6 @@ namespace SynaptiPulse
 
         public void ResetControllers()
         {
-            IsRunning = false;
             receivedData = string.Empty;
             this.BeginInvoke(() => { txtReceivedData.Text = string.Empty; });
         }
@@ -730,38 +802,26 @@ namespace SynaptiPulse
         {
             string newText = ((SerialPort)sender).ReadExisting();
 
-            if (newText.Contains("Ready")) this.BeginInvoke(() => { SetButtonsState(false); });
+            if (newText.Contains("Ready")) this.BeginInvoke(() => { if (serialControl!.IsConnected) SetButtonsState(false); });
             if (newText.Contains("Saved")) this.BeginInvoke(() => { PeriodicTab_StartStimulation.Enabled = true; });
+            if (newText.Contains("Parsed")) HasParsed = true;
+            if (newText.Contains("Executed") && HasParsed) CanSend = true;
+            if (newText.Contains("FimDoTremDePulsos"))
+            {
+                 PulseTrainRunning = false;
+                 if (NeedWaiting) this.BeginInvoke(() => { ChaosTab_Status.Text = "Aguardando"; });  
+                 else this.BeginInvoke(() => { ChaosTab_Status.Text = "Concluído"; });
+            }
 
             this.BeginInvoke(() => { if (serialControl!.IsConnected) txtReceivedData.Text += newText; });
         }
 
         public void ResetDataCommunication()
         {
-            ////Task<string> responseTask;
-
-            //try
-            //{
-            //    /*
-            //    SendData(SynaptiPulse.READ_STOP);
-            //    responseTask = Task.Run(() => serialControl!.ReadLine());
-            //    Task.WaitAny(responseTask, Task.Delay(localDelay));*/
-            //}
-            //catch {/*Ignore*/ }
-
-            //try
-            //{
-            //    /*SendData(SynaptiPulse.RESET_BOARD);
-            //    responseTask = Task.Run(() => serialControl!.ReadLine());
-            //    Task.WaitAny(responseTask, Task.Delay(localDelay));*/
-            //}
-            //catch {/*Ignore*/ }
-
-
-            SendData(SynaptiPulse.ROUTINE_STOP);
+            SendData($"{PREFIX}{ROUTINE_STOP}{SUFIX}");
             Thread.Sleep(Delay);
 
-            SendData(SynaptiPulse.READ_STOP);
+            SendData($"{PREFIX}{RESET_BOARD}{SUFIX}");
             Thread.Sleep(Delay);
 
             serialControl!.UnSetDataReceivedEventHandler(new SerialDataReceivedEventHandler(DataReceivedHandler));
@@ -782,19 +842,19 @@ namespace SynaptiPulse
             ResetControllers();
             try
             {
-                SendData(ROUTINE_STOP);
+                SendData($"{PREFIX}{ROUTINE_STOP}{SUFIX}");
                 Thread.Sleep(Delay);
 
-                SendData(READ_STOP);
+                SendData($"{PREFIX}{READ_STOP}{SUFIX}");
                 Thread.Sleep(Delay);
 
-                SendData(RESET_INSTRUCTION);
+                SendData($"{PREFIX}{RESET_INSTRUCTION}{SUFIX}");
                 Thread.Sleep(Delay);
 
-                SendData(READ_START);
+                SendData($"{PREFIX}{READ_START}{SUFIX}");
                 Thread.Sleep(Delay);
 
-                SendData(MODE_PERIODIC);
+                SendData($"{PREFIX}{MODE_PERIODIC}{SUFIX}");
                 Thread.Sleep(Delay);
 
                 foreach (DataGridViewRow row in PeriodicTab_GridMain.Rows)
@@ -802,48 +862,12 @@ namespace SynaptiPulse
                     if (row.DataBoundItem is Pulse pulse)
                     {
                         var txt = pulse.ToString().Replace(",", ".");
-                        SendData(txt);
+                        SendData($"{PREFIX}{txt}{SUFIX}");
                         Thread.Sleep(Delay);
                     }
                 }
 
-                SendData(READ_STOP);
-                Thread.Sleep(Delay);
-            }
-            catch (Exception ex) { Error("Error when try to send configs to the board", ex); }
-        }
-
-        public void SendConfig_ChaoticData()
-        {
-            ResetControllers();
-            try
-            {
-                SendData(ROUTINE_STOP);
-                Thread.Sleep(Delay);
-
-                SendData(READ_STOP);
-                Thread.Sleep(Delay);
-
-                SendData(RESET_INSTRUCTION);
-                Thread.Sleep(Delay);
-
-                SendData(READ_START);
-                Thread.Sleep(Delay);
-
-                foreach (DataGridViewRow row in ChaosTab_GridMain.Rows)
-                {
-                    if (row.DataBoundItem is Pulse pulse)
-                    {
-                        var txt = pulse.ToString().Replace(",", ".");
-                        SendData(txt);
-                        Thread.Sleep(Delay);
-                    }
-                }
-
-                SendData(READ_STOP);
-                Thread.Sleep(Delay);
-
-                SendData(ROUTINE_START);
+                SendData($"{PREFIX}{READ_STOP}{SUFIX}");
                 Thread.Sleep(Delay);
             }
             catch (Exception ex) { Error("Error when try to send configs to the board", ex); }
@@ -880,7 +904,7 @@ namespace SynaptiPulse
                 ResetDataCommunication();
                 btnConnect.Enabled = true;
                 PeriodicTab_SendConfigToBoard.Enabled = false;
-                try { serialControl!.Dispose(RESET_BOARD); } catch { /* Ignorado */ }
+                try { serialControl!.Dispose($"{PREFIX}{RESET_BOARD}{SUFIX}"); } catch { /* Ignorado */ }
             }
         }
 
@@ -899,14 +923,14 @@ namespace SynaptiPulse
         {
             if (PeriodicTab_StartStimulation.Text == "Começar Estimulação")
             {
-                SendData(ROUTINE_START);
+                SendData($"{PREFIX}{ROUTINE_START}{SUFIX}");
                 Thread.Sleep(Delay);
                 PeriodicTab_StartStimulation.Text = "Parar Estimulação";
                 PeriodicTab_SendConfigToBoard.Enabled = false;
             }
             else
             {
-                SendData(ROUTINE_STOP);
+                SendData($"{PREFIX}{ROUTINE_STOP}{SUFIX}");
                 Thread.Sleep(Delay);
                 PeriodicTab_StartStimulation.Text = "Começar Estimulação";
                 PeriodicTab_SendConfigToBoard.Enabled = true;

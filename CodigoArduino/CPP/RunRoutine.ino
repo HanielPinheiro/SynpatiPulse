@@ -8,15 +8,8 @@ void RunRoutine() {
 
   // Intervalo entre pulso
   digitalWrite(CLOCK_1_PIN, LOW); digitalWrite(CLOCK_2_PIN, HIGH);
-  IsWaiting = true;
   Wait(Pulse[5], Pulse[6], Pulse[7]);
 
-  if (!PeriodicMode && PulseCounter == ArrayCounter) {
-    IsRunning = false;
-    IsWaiting = false;
-  }
-  
-  if(PeriodicMode && ArrayCounter == 1) IsWaiting = false;
 }
 
 // =========================================================
@@ -54,7 +47,7 @@ void SetPolarity(int polarity) {
 // =========================================================
 void Wait(int timer, int fracTimer, int timeUnity) // --- Delay control ---
 {
-  //Serial.println("Esperando");
+  //Serial.println(F("Esperando"));
 
   if (timeUnity == INSTRUCTION_UNITY_US)
   {
@@ -70,6 +63,6 @@ void Wait(int timer, int fracTimer, int timeUnity) // --- Delay control ---
     for (int i = 0; i < timer; i++) delay(1000);
     if (fracTimer > 0) delay(fracTimer);
   }
-  
-  //Serial.println("Parou");
+
+  //Serial.println(F("Parou"));
 }

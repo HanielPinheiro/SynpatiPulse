@@ -1,5 +1,5 @@
 #define CONTROL_RESET_BOARD 'A'
-#define CONTROL_RESET_INSTRUCTION 'B'
+#define CONTROL_ROUTINE_RESTART 'B'
 #define CONTROL_ROUTINE_START 'C'
 #define CONTROL_ROUTINE_STOP 'D'
 #define CONTROL_READ_START 'E'
@@ -11,8 +11,6 @@
 #define INSTRUCTION_UNITY_S 83
 #define INSTRUCTION_DECIMAL '.'
 #define INSTRUCTION_SEPARATOR "$"
-#define INSTRUCTION_END '>'
-#define NEW_LINE "\r\n"
 
 #define Ladder_0 9
 #define Ladder_1 8
@@ -26,7 +24,7 @@
 #define CLOCK_1_PIN 12
 #define CLOCK_2_PIN 11
 
-#define numOfPulses 50
+#define numOfPulses 40
 #define bufferSize 30
 
 // =========================================================
@@ -34,9 +32,9 @@
 boolean IsReading = false;
 boolean IsRunning = false;
 boolean IsWaiting = false;
+boolean Restarted = false;
 
-String ArrayWithPulses[numOfPulses] = {"NULL"};
-String DataToBeProcessed = "";
+char ArrayWithPulses[numOfPulses][bufferSize];
 int ArrayCounter = 0;
 boolean ArrayIsFull = false;
 boolean PeriodicMode = false;
@@ -44,6 +42,8 @@ boolean PeriodicMode = false;
 int Pulse[8] = {0};
 int PulseCounter = 0;
 unsigned long int verifyDelay = 0;
+
+int ParsedCounter = 0;
 // =========================================================
 //Variables about SerialCommunication
 int counterBuffer = 0;

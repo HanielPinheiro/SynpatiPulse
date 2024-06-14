@@ -110,25 +110,25 @@ namespace SynaptiPulse.Models
         public override string ToString()
         {
             PulsePolariy polarity = pulsePolarityToCombobox.Where(p => p.Value == Polarity).FirstOrDefault().Key;
-            return $"SET{separator}{Current}{separator}{pulsePolarityValues[polarity]}{separator}{PulseLength}{measureUnity_DefaultToAmbientRelation[PulseMeasureUnity]}{separator}{AfterPulseLength}{measureUnity_DefaultToAmbientRelation[AfterPulseMeasureUnity]}>";
+            return $"{Current}{separator}{pulsePolarityValues[polarity]}{separator}{PulseLength}{measureUnity_DefaultToAmbientRelation[PulseMeasureUnity]}{separator}{AfterPulseLength}{measureUnity_DefaultToAmbientRelation[AfterPulseMeasureUnity]}>";
         }
 
         public void FromString(string pulseLikeString)
         {
             var splitedString = pulseLikeString.Split(separator, StringSplitOptions.RemoveEmptyEntries);
-            this.Current = splitedString[1];
-            double pulsePolarityValue = Convert.ToDouble(splitedString[2]);
+            this.Current = splitedString[0];
+            double pulsePolarityValue = Convert.ToDouble(splitedString[1]);
             PulsePolariy polarity = pulsePolarityValues.Where(p => p.Value == pulsePolarityValue).FirstOrDefault().Key;
             this.Polarity = pulsePolarityToCombobox[polarity];
 
-            string pulse = splitedString[3].Substring(0, splitedString[3].Length - 1);
-            string measure = Convert.ToString(splitedString[3].Last());
+            string pulse = splitedString[2].Substring(0, splitedString[2].Length - 1);
+            string measure = Convert.ToString(splitedString[2].Last());
             this.PulseLength = Convert.ToDouble(pulse);
             this.PulseMeasureUnity = measureUnity_DefaultToAmbientRelation.Where(p => p.Value == measure).FirstOrDefault().Key;
 
-            splitedString[4] = splitedString[4].Remove(splitedString[4].Length - 1, 1);
-            pulse = splitedString[4].Substring(0, splitedString[4].Length - 1);
-            measure = Convert.ToString(splitedString[4].Last());
+            splitedString[3] = splitedString[3].Remove(splitedString[3].Length - 1, 1);
+            pulse = splitedString[3].Substring(0, splitedString[3].Length - 1);
+            measure = Convert.ToString(splitedString[3].Last());
             this.AfterPulseLength = Convert.ToDouble(pulse);
             this.AfterPulseMeasureUnity = measureUnity_DefaultToAmbientRelation.Where(p => p.Value == measure).FirstOrDefault().Key;
         }

@@ -1,21 +1,23 @@
 void ParsePulseFromArray()
 {
-  verifyDelay = millis();
-  DataToBeProcessed = ArrayWithPulses[PulseCounter];
-  ParseInstruction(DataToBeProcessed.c_str());
+  //verifyDelay = millis();
+  char data[bufferSize];
+  memcpy(&data[0], &ArrayWithPulses[PulseCounter], bufferSize);
+ 
+  ParseInstruction(data);
   PulseCounter++;
+  if (PulseCounter == ArrayCounter && PeriodicMode) PulseCounter = 0;
 
-  if (PulseCounter == ArrayCounter && PeriodicMode)PulseCounter = 0;
-
-  verifyDelay = millis() -  verifyDelay;
-  Serial.write("Delay:"); Serial.println(verifyDelay);
+  //verifyDelay = millis() -  verifyDelay;
+  //Serial.print(F("<Delay> ")); Serial.println(verifyDelay);
 }
 
 // =========================================================
 
 void ParseInstruction(char* data) {
-  Serial.write("<Parsing "); Serial.print(PulseCounter + 1); Serial.write("> - ");
-  Serial.println(data);
+  int value = PulseCounter + 1;
+  Serial.print(F("<Parsing ")); Serial.print(value); Serial.print(F("> - ")); Serial.println(data);
+
   char *token = strtok(data, INSTRUCTION_SEPARATOR);
   Pulse[0] = atoi(token); //mandar o token como numero direto do c#
   //Serial.write("Current: "); Serial.println(Pulse[0]);
@@ -30,7 +32,7 @@ void ParseInstruction(char* data) {
   token = strtok(NULL, INSTRUCTION_SEPARATOR);
   GetTimeFromInstruction(token, strlen(token), 5);//, InterpulseLengthsIntegerPart, InterpulseLengthsFractionalPart, InterpulseLengthsMeasureUnity);
 
-  Serial.write("<Parsed>"); Serial.write(NEW_LINE);
+  Serial.println(F("<Parsed>"));
 }
 
 // =========================================================
@@ -51,10 +53,10 @@ void GetTimeFromInstruction(char *data, int siz, int index) //int* lengths, int*
   Pulse[index] = (int)intPart;
   Pulse[index + 1] = (int)fractPart;
   Pulse[index + 2] = measureUnity;
-/*
-  Serial.write("Integer: "); Serial.println(Pulse[index]);
 
-  Serial.write("Frac: "); Serial.println( Pulse[index + 1]);
+  /*Serial.write("Integer: "); Serial.println(Pulse[index]);
 
-  Serial.write("Measure: "); Serial.println(Pulse[index + 2]);*/
+    Serial.write("Frac: "); Serial.println( Pulse[index + 1]);
+
+    Serial.write("Measure: "); Serial.println(Pulse[index + 2]);*/
 }

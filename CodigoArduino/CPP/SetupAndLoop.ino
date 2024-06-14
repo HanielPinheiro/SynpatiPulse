@@ -10,18 +10,14 @@ void setup() {
 
   pinMode(CLOCK_1_PIN, OUTPUT);
   pinMode(CLOCK_2_PIN, OUTPUT);
-  StopPulses();
-
-  Serial.begin(115200);
-  Serial.write("<Ready>");
-  Serial.write(NEW_LINE);
-}
-
-void StopPulses() {
   digitalWrite(CLOCK_1_PIN, LOW);
   digitalWrite(CLOCK_2_PIN, HIGH);
   SetCurrent_0();
+
+  Serial.begin(115200);
+  Serial.println(F("<Ready>"));
 }
+
 //<100$1$100U$200M>
 //<500$0$70U$125.9M>
 //<250$1$48U$78.3M>
@@ -30,11 +26,36 @@ void StopPulses() {
 
 void loop()
 {
-  if (IsRunning && !IsWaiting) RunRoutine();
+  if (IsRunning)
+  {
+    if (!IsWaiting)
+    {
+      RunRoutine();
+      IsWaiting = true;
 
-  if (IsWaiting && ArrayCounter > 1) {
+      if (!PeriodicMode && PulseCounter == ArrayCounter) {
+        if (ParsedCounter == 0)
+        {
+          IsRunning = false;
+          IsWaiting = false;
+          Serial.println(F("<FimDoTremDePulsos>"));
+        }
+        else {
+          Serial.println(F("<HasMoreData>"));
+          ArrayCounter = ParsedCounter;
+          PulseCounter = 0;
+          ParsedCounter = 0;
+        }
+      }
+
+      if (PeriodicMode && ArrayCounter == 1) IsWaiting = false;
+      Serial.println(F("<Executed>"));
+    }
+    else if ( ArrayCounter > 1)
+    {
       ParsePulseFromArray();
       IsWaiting = false;
+    }
   }
 
   if (millis() - verifySerial >= 50)
@@ -70,23 +91,32 @@ void loop()
     }
 
     if (newData == true) {
-      Serial.write("ReceivedData:"); Serial.write(tempData);
-      Serial.write(NEW_LINE);
+      Serial.print(F("ReceivedData:")); Serial.println(tempData);
       if (counterBuffer == 1) ParseCommands(tempData[0]);
 
-      if (counterBuffer > 1 && IsReading) {
-        if (!ArrayIsFull)
+      if (counterBuffer > 1) {
+
+        if (IsReading)
         {
-          if (ArrayCounter < numOfPulses)
+          if (!ArrayIsFull)
           {
-            ArrayWithPulses[ArrayCounter] = tempData;
-            ArrayCounter++;
-            if (ArrayCounter == numOfPulses) ArrayIsFull = true;
+            if (ArrayCounter < numOfPulses)
+            {
+              memcpy(&ArrayWithPulses[ArrayCounter][0], tempData, counterBuffer);
+              ArrayCounter++;
+
+              if (ArrayCounter == numOfPulses) ArrayIsFull = true;
+            }
+
           }
-        }  else
-        {
-          Serial.write("<ArrayFull>");
-          Serial.write(NEW_LINE);
+          else Serial.println(F("<ArrayFull>"));
+        }
+
+        if (IsRunning) {
+          Serial.print(F("<Add> "));
+          memcpy(&ArrayWithPulses[ParsedCounter][0], tempData, counterBuffer);
+          Serial.println(ArrayWithPulses[ParsedCounter]);
+          ParsedCounter++;
         }
       }
 

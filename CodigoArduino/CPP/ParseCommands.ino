@@ -5,16 +5,11 @@ void ParseCommands(char target) {
     asm ("jmp (0x0000)");
   }
 
-  if (target == CONTROL_RESET_INSTRUCTION)  //B>
+  if (target == CONTROL_ROUTINE_RESTART)  //B>
   {
-    StopPulses();
-    IsReading = false;
-    IsRunning = false;
-    IsWaiting = false;
-    PulseCounter = 0;
-
-    Serial.write("<Reseted>");
-    Serial.write(NEW_LINE);
+      PulseCounter = 0;
+      IsWaiting = true;
+      Serial.println(F("<CanRestart>"));
   }
 
   if (target == CONTROL_ROUTINE_START)  //C>
@@ -22,8 +17,7 @@ void ParseCommands(char target) {
     if (!IsRunning)
     {
       IsRunning = true;
-      Serial.write("<StartingRoutine>");
-      Serial.write(NEW_LINE);
+      Serial.println(F("<StartingRoutine>"));
     }
   }
 
@@ -32,8 +26,7 @@ void ParseCommands(char target) {
     if (IsRunning)
     {
       IsRunning = false;
-      Serial.write("<StoppingRoutine>");
-      Serial.write(NEW_LINE);
+      Serial.println(F("<StoppingRoutine>"));
     }
   }
 
@@ -41,8 +34,7 @@ void ParseCommands(char target) {
   {
     if (!IsRunning && !ArrayIsFull) {
       IsReading = true;
-      Serial.write("<ReadEnabled>");
-      Serial.write(NEW_LINE);
+      Serial.println(F("<ReadEnabled>"));
     }
   }
 
@@ -51,10 +43,9 @@ void ParseCommands(char target) {
     if (!IsRunning && IsReading) {
       IsReading = false;
 
-      Serial.write("<ReadDisabled>");
-      Serial.write(NEW_LINE);
+      Serial.println(F("<ReadDisabled>"));
 
-      Serial.write("SavedData:");
+      Serial.print(F("SavedData:"));
       Serial.println(ArrayCounter);
 
       ParsePulseFromArray();
@@ -66,8 +57,7 @@ void ParseCommands(char target) {
     PeriodicMode = !PeriodicMode;
     PulseCounter = 0;
 
-    if (PeriodicMode) Serial.write("<PeriodicModeOn>");
-    else Serial.write("<PeriodicModeOff>");
-    Serial.write(NEW_LINE);
+    if (PeriodicMode) Serial.println(F("<PeriodicModeOn>"));
+    else Serial.println(F("<PeriodicModeOff>"));
   }
 }
