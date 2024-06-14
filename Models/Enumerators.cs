@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace BrainStimulator.Models
+namespace SynaptiPulse.Models
 {
     /// <summary>
     /// Valência da corrente do pulso (essa é a corrente que vai fluir na carga)

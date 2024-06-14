@@ -2,7 +2,7 @@
 using System.Data;
 using System.Reflection;
 
-namespace BrainStimulator.Utils
+namespace SynaptiPulse.Utils
 {
     public static class ReflectionHandler
     {
@@ -130,7 +130,7 @@ namespace BrainStimulator.Utils
                 PropertyInfo[] properties = typeof(T).GetProperties();
                 foreach (var property in properties)
                 {
-                    var attribute = property.GetCustomAttributes(typeof(DisplayNameAttribute), true)[0];
+                    var attribute = property.GetCustomAttributes(typeof(DisplayNameAttribute), true).FirstOrDefault();
                     if (attribute != null && attribute is DisplayNameAttribute d) relation_Name_DisplayName.Add(property.Name, d.DisplayName);
                 }
                 return relation_Name_DisplayName;
@@ -147,7 +147,7 @@ namespace BrainStimulator.Utils
                 PropertyInfo[] properties = typeof(T).GetProperties();
                 foreach (var property in properties)
                 {
-                    var attribute = property.GetCustomAttributes(typeof(ColumnSizeAttribute), true)[0];
+                    var attribute = property.GetCustomAttributes(typeof(ColumnSizeAttribute), true).FirstOrDefault();
                     if (attribute != null && attribute is ColumnSizeAttribute d) relation_Name_ColumnSize.Add(property.Name, d.ColumSize);
                 }
                 return relation_Name_ColumnSize;

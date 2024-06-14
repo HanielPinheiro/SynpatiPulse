@@ -1,44 +1,61 @@
-﻿using BrainStimulator.Utils;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using SynaptiPulse.Utils;
 using System.ComponentModel;
 using System.Globalization;
 
-namespace BrainStimulator.Models
+namespace SynaptiPulse.Models
 {
     /// <summary>
     /// Classe que define o objeto Pulse que aparece no grid
     /// </summary>
     public class Pulse
     {
-        private const string separator = "$";
         #region Static fields
 
-        public static readonly Dictionary<string, int> columSizeFromProperties = ReflectionHandler.GetFromProperties_ColumnSizeAttribute<Pulse>();
-        public static readonly Dictionary<string, string> displayNameFromProperties = ReflectionHandler.GetFromProperties_DisplayNameAttributes<Pulse>();
+        private static readonly Dictionary<string, int> columSizeFromProperties = ReflectionHandler.GetFromProperties_ColumnSizeAttribute<Pulse>();
+        private static readonly Dictionary<string, string> displayNameFromProperties = ReflectionHandler.GetFromProperties_DisplayNameAttributes<Pulse>();
 
-        public static readonly Dictionary<PulsePolariy, string> pulsePolarityToCombobox = ReflectionHandler.GetFromEnum_DescriptionAttributes<PulsePolariy>();
-        public static readonly Dictionary<PulseCurrents, string> pulseCurrentToCombobox = ReflectionHandler.GetFromEnum_DescriptionAttributes<PulseCurrents>();
-        public static readonly Dictionary<MeasureUnity, string> measureUnityToCombobox = ReflectionHandler.GetFromEnum_DescriptionAttributes<MeasureUnity>();
-                       
-        public static readonly Dictionary<PulsePolariy, double> pulsePolarityValues = ReflectionHandler.GetFromEnum_DefaultValueAttributes<PulsePolariy>();
-        public static readonly Dictionary<PulseCurrents, double> pulseCurrentValues = ReflectionHandler.GetFromEnum_DefaultValueAttributes<PulseCurrents>();
-        public static readonly Dictionary<MeasureUnity, double> measureUnityValues = ReflectionHandler.GetFromEnum_DefaultValueAttributes<MeasureUnity>();
-                       
-        public static readonly Dictionary<string, string> measureUnity_DefaultToAmbientRelation= ReflectionHandler.GetFromEnum_DescriptionAndAmbientValueAttributes<MeasureUnity>();
+        private static readonly Dictionary<PulsePolariy, string> pulsePolarityToCombobox = ReflectionHandler.GetFromEnum_DescriptionAttributes<PulsePolariy>();
+        private static readonly Dictionary<PulseCurrents, string> pulseCurrentToCombobox = ReflectionHandler.GetFromEnum_DescriptionAttributes<PulseCurrents>();
+        private static readonly Dictionary<MeasureUnity, string> measureUnityToCombobox = ReflectionHandler.GetFromEnum_DescriptionAttributes<MeasureUnity>();
 
-        public const string Layout = $"|{nameof(Pulse.PulseLength)}|{nameof(Pulse.PulseMeasureUnity)}|{nameof(Pulse.AfterPulseLength)}"
-                                    + $"|{nameof(Pulse.AfterPulseMeasureUnity)}|{nameof(Pulse.Polarity)}";
-        //+ $"|{nameof(Pulse.AfterPulseMeasureUnity)}|{nameof(Pulse.Current)}|{nameof(Pulse.Polarity)}";
+        private static readonly Dictionary<PulsePolariy, double> pulsePolarityValues = ReflectionHandler.GetFromEnum_DefaultValueAttributes<PulsePolariy>();
+        private static readonly Dictionary<PulseCurrents, double> pulseCurrentValues = ReflectionHandler.GetFromEnum_DefaultValueAttributes<PulseCurrents>();
+        private static readonly Dictionary<MeasureUnity, double> measureUnityValues = ReflectionHandler.GetFromEnum_DefaultValueAttributes<MeasureUnity>();
+
+        private static readonly Dictionary<string, string> measureUnity_DefaultToAmbientRelation = ReflectionHandler.GetFromEnum_DescriptionAndAmbientValueAttributes<MeasureUnity>();
 
         #endregion
 
-        public Pulse(){}
 
-        public Pulse(string newLine)
+        public const string separator = "$";
+        public const string SingleLayout = $"|{nameof(Pulse.AfterPulseLength)}|{nameof(Pulse.AfterPulseMeasureUnity)}";
+        public const string CompleteLayout = $"|{nameof(Pulse.PulseLength)}|{nameof(Pulse.PulseMeasureUnity)}|{nameof(Pulse.AfterPulseLength)}|{nameof(Pulse.AfterPulseMeasureUnity)}|{nameof(Pulse.Polarity)}|{nameof(Pulse.Current)}";
+
+        public Pulse() { }
+        public Pulse(string? newLine)
         {
-            this.FromString(newLine);
+            if (string.IsNullOrEmpty(newLine)) return;
+            else this.FromString(newLine!);
         }
+
+        #region Encapsulated Properties to Static Fields
+
+        public static Dictionary<string, int> ColumSizeFromProperties { get => columSizeFromProperties; }
+        public static Dictionary<string, string> DisplayNameFromProperties { get => displayNameFromProperties; }
+
+        public static Dictionary<PulsePolariy, string> PulsePolarityToCombobox { get => pulsePolarityToCombobox; }
+        public static Dictionary<PulseCurrents, string> PulseCurrentToCombobox { get => pulseCurrentToCombobox; }
+        public static Dictionary<MeasureUnity, string> MeasureUnityToCombobox { get => measureUnityToCombobox; }
+
+        public static Dictionary<PulsePolariy, double> PulsePolarityValues { get => pulsePolarityValues; }
+        public static Dictionary<PulseCurrents, double> PulseCurrentValues { get => pulseCurrentValues; }
+        public static Dictionary<MeasureUnity, double> MeasureUnityValues { get => measureUnityValues; }
+
+        public static Dictionary<string, string> MeasureUnity_DefaultToAmbientRelation { get => measureUnity_DefaultToAmbientRelation; }
+
+        #endregion
+
+        #region Display Grid Properties
 
         #region Largura do Pulso
 
@@ -88,27 +105,30 @@ namespace BrainStimulator.Models
         [DisplayName("Polaridade [uA]"), ColumnSize(90)]
         public string Polarity { get; set; } = pulsePolarityToCombobox[PulsePolariy.Positive];
 
+        #endregion
+
         public override string ToString()
-        {            
-            return $"SET{separator}{Current}{separator}{Polarity}{separator}{PulseLength}{measureUnity_DefaultToAmbientRelation[PulseMeasureUnity]}{separator}{AfterPulseLength}{measureUnity_DefaultToAmbientRelation[AfterPulseMeasureUnity]}>";
+        {
+            PulsePolariy polarity = pulsePolarityToCombobox.Where(p => p.Value == Polarity).FirstOrDefault().Key;
+            return $"{Current}{separator}{pulsePolarityValues[polarity]}{separator}{PulseLength}{measureUnity_DefaultToAmbientRelation[PulseMeasureUnity]}{separator}{AfterPulseLength}{measureUnity_DefaultToAmbientRelation[AfterPulseMeasureUnity]}>";
         }
 
         public void FromString(string pulseLikeString)
         {
             var splitedString = pulseLikeString.Split(separator, StringSplitOptions.RemoveEmptyEntries);
-            this.Current = splitedString[1];
-            string pulsePolarityValue = splitedString[2];
-            PulsePolariy polarity = pulsePolarityToCombobox.Where(p => p.Value == pulsePolarityValue).FirstOrDefault().Key;
+            this.Current = splitedString[0];
+            double pulsePolarityValue = Convert.ToDouble(splitedString[1]);
+            PulsePolariy polarity = pulsePolarityValues.Where(p => p.Value == pulsePolarityValue).FirstOrDefault().Key;
             this.Polarity = pulsePolarityToCombobox[polarity];
 
-            string pulse = splitedString[3].Substring(0, splitedString[3].Length - 1);
-            string measure = Convert.ToString(splitedString[3].Last());
+            string pulse = splitedString[2].Substring(0, splitedString[2].Length - 1);
+            string measure = Convert.ToString(splitedString[2].Last());
             this.PulseLength = Convert.ToDouble(pulse);
             this.PulseMeasureUnity = measureUnity_DefaultToAmbientRelation.Where(p => p.Value == measure).FirstOrDefault().Key;
 
-            splitedString[4] = splitedString[4].Remove(splitedString[4].Length - 1, 1);
-            pulse = splitedString[4].Substring(0, splitedString[4].Length - 1);
-            measure = Convert.ToString(splitedString[4].Last());
+            splitedString[3] = splitedString[3].Remove(splitedString[3].Length - 1, 1);
+            pulse = splitedString[3].Substring(0, splitedString[3].Length - 1);
+            measure = Convert.ToString(splitedString[3].Last());
             this.AfterPulseLength = Convert.ToDouble(pulse);
             this.AfterPulseMeasureUnity = measureUnity_DefaultToAmbientRelation.Where(p => p.Value == measure).FirstOrDefault().Key;
         }

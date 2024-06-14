@@ -2,7 +2,7 @@
 using System.Reflection;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
-namespace BrainStimulator.Utils
+namespace SynaptiPulse.Utils
 {
     public static class DataGridViewHandler
     {
