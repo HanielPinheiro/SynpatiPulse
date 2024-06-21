@@ -26,7 +26,6 @@ namespace SynaptiPulse.Models
 
         #endregion
 
-
         public const string separator = "$";
         public const string SingleLayout = $"|{nameof(Pulse.AfterPulseLength)}|{nameof(Pulse.AfterPulseMeasureUnity)}";
         public const string CompleteLayout = $"|{nameof(Pulse.PulseLength)}|{nameof(Pulse.PulseMeasureUnity)}|{nameof(Pulse.AfterPulseLength)}|{nameof(Pulse.AfterPulseMeasureUnity)}|{nameof(Pulse.Polarity)}|{nameof(Pulse.Current)}";
