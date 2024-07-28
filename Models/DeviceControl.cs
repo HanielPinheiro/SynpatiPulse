@@ -7,6 +7,21 @@ namespace SynaptiPulse.Models
         private readonly DeviceControlParameters parameters = new();
         private readonly SerialPort serialPort;
 
+        public const string RESET_BOARD = "A";
+        public const string RESET_INSTRUCTION = "B";
+        public const string ROUTINE_START = "C";
+        public const string ROUTINE_STOP = "D";
+        public const string READ_START = "E";
+        public const string READ_STOP = "F";
+        public const string MODE_PERIODIC = "G";
+        public const string PREFIX = "<";
+        public const string SUFIX = ">";
+        public const string JUMPLINE = "\r\n";
+        public const string CB_PULSE_TRAIN = "Trem de Pulso ";
+        public const string EXTENSION = ".txt";
+        public const int Delay = 100;
+
+
         public bool IsConnected { get => serialPort!.IsOpen; }
 
         public DeviceControl() { serialPort = new SerialPort(); }
@@ -83,7 +98,7 @@ namespace SynaptiPulse.Models
                 if (!string.IsNullOrEmpty(instructionToSendToTurnOffBoard))
                 {
                     serialPort!.Write(instructionToSendToTurnOffBoard);
-                    Thread.Sleep(SynaptiPulse.Delay);
+                    Thread.Sleep(Delay);
                 }
 
                 serialPort!.Dispose();
