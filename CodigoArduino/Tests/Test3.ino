@@ -11,7 +11,7 @@ uint8_t _vin2Pin = 11;
 uint8_t _vin1Pin = 12;
 uint8_t _ledPin = 13;
 
-#define value 0
+#define value 1
 void setup()
 {
   DefineDigitalPins();
@@ -19,7 +19,7 @@ void setup()
   digitalWrite(_vin1Pin, value);
   digitalWrite(_vin2Pin, value);
 
-  SetCurrent_650();
+  SetCurrent_600();
 }
 
 void loop() {
@@ -43,310 +43,157 @@ void DefineDigitalPins() {
 }
 
 void SetCurrent_50() {
-  if (digitalRead(_vin1Pin) == 0 && digitalRead(_vin2Pin) == 0)
-  {
-    digitalWrite(Ladder_0, 0);
-    digitalWrite(Ladder_1, 1);
-    digitalWrite(Ladder_2, 0);
-    digitalWrite(Ladder_3, 0);
-    digitalWrite(Ladder_4, 0);
-    digitalWrite(Ladder_5, 1);
-    digitalWrite(Ladder_6, 0);
-    digitalWrite(Ladder_7, 0);
-  }
-  else
-  {
-    digitalWrite(Ladder_0, 0);
-    digitalWrite(Ladder_1, 0);
-    digitalWrite(Ladder_2, 0);
-    digitalWrite(Ladder_3, 0);
-    digitalWrite(Ladder_4, 0);
-    digitalWrite(Ladder_5, 1);
-    digitalWrite(Ladder_6, 0);
-    digitalWrite(Ladder_7, 0);
-  }
+  digitalWrite(Ladder_0, 0);
+  digitalWrite(Ladder_1, 0);
+  digitalWrite(Ladder_2, 0);
+  digitalWrite(Ladder_3, 1);
+  digitalWrite(Ladder_4, 0);
+  digitalWrite(Ladder_5, 1);
+  digitalWrite(Ladder_6, 0);
+  digitalWrite(Ladder_7, 0);
 }
 
 void SetCurrent_100() {
-  if (digitalRead(_vin1Pin) == 0 && digitalRead(_vin2Pin) == 0)
-  {
-    digitalWrite(Ladder_0, 1);
-    digitalWrite(Ladder_1, 0);
-    digitalWrite(Ladder_2, 1);
-    digitalWrite(Ladder_3, 0);
-    digitalWrite(Ladder_4, 0);
-    digitalWrite(Ladder_5, 1);
-    digitalWrite(Ladder_6, 0);
-    digitalWrite(Ladder_7, 0);
-  }
-  else
-  {
-    digitalWrite(Ladder_0, 0);
-    digitalWrite(Ladder_1, 0);
-    digitalWrite(Ladder_2, 1);
-    digitalWrite(Ladder_3, 0);
-    digitalWrite(Ladder_4, 0);
-    digitalWrite(Ladder_5, 1);
-    digitalWrite(Ladder_6, 0);
-    digitalWrite(Ladder_7, 0);
-  }
+  digitalWrite(Ladder_0, 1);
+  digitalWrite(Ladder_1, 1);
+  digitalWrite(Ladder_2, 0);
+  digitalWrite(Ladder_3, 0);
+  digitalWrite(Ladder_4, 1);
+  digitalWrite(Ladder_5, 1);
+  digitalWrite(Ladder_6, 0);
+  digitalWrite(Ladder_7, 0);
 }
 
 void SetCurrent_150() {
- if (digitalRead(_vin1Pin) == 0 && digitalRead(_vin2Pin) == 0)
-  {
-    digitalWrite(Ladder_0, 1);
-  digitalWrite(Ladder_1, 1);
+  digitalWrite(Ladder_0, 1);
+  digitalWrite(Ladder_1, 0);
   digitalWrite(Ladder_2, 1);
-  digitalWrite(Ladder_3, 0);
-  digitalWrite(Ladder_4, 0);
+  digitalWrite(Ladder_3, 1);
+  digitalWrite(Ladder_4, 1);
   digitalWrite(Ladder_5, 1);
   digitalWrite(Ladder_6, 0);
   digitalWrite(Ladder_7, 0);
-  }
-  else
-  {
- digitalWrite(Ladder_0, 0);
-  digitalWrite(Ladder_1, 1);
-  digitalWrite(Ladder_2, 1);
-  digitalWrite(Ladder_3, 0);
-  digitalWrite(Ladder_4, 0);
-  digitalWrite(Ladder_5, 1);
-  digitalWrite(Ladder_6, 0);
-  digitalWrite(Ladder_7, 0);
-  } 
 }
 
 void SetCurrent_200() {
   digitalWrite(Ladder_0, 0);
-  digitalWrite(Ladder_1, 1);
+  digitalWrite(Ladder_1, 0);
   digitalWrite(Ladder_2, 0);
   digitalWrite(Ladder_3, 1);
   digitalWrite(Ladder_4, 0);
-  digitalWrite(Ladder_5, 1);
-  digitalWrite(Ladder_6, 0);
+  digitalWrite(Ladder_5, 0);
+  digitalWrite(Ladder_6, 1);
   digitalWrite(Ladder_7, 0);
 }
 
 void SetCurrent_250() {
-   if (digitalRead(_vin1Pin) == 0 && digitalRead(_vin2Pin) == 0)
-  {
   digitalWrite(Ladder_0, 1);
-  digitalWrite(Ladder_1, 1);
-  digitalWrite(Ladder_2, 0);
-  digitalWrite(Ladder_3, 1);
-  digitalWrite(Ladder_4, 0);
-  digitalWrite(Ladder_5, 1);
-  digitalWrite(Ladder_6, 0);
-  digitalWrite(Ladder_7, 0);
-   }
-  else
-  {
-    digitalWrite(Ladder_0, 1);
   digitalWrite(Ladder_1, 0);
-  digitalWrite(Ladder_2, 1);
-  digitalWrite(Ladder_3, 1);
-  digitalWrite(Ladder_4, 0);
-  digitalWrite(Ladder_5, 1);
-  digitalWrite(Ladder_6, 0);
+  digitalWrite(Ladder_2, 0);
+  digitalWrite(Ladder_3, 0);
+  digitalWrite(Ladder_4, 1);
+  digitalWrite(Ladder_5, 0);
+  digitalWrite(Ladder_6, 1);
   digitalWrite(Ladder_7, 0);
-  }
 }
 
 void SetCurrent_300() {
-    digitalWrite(Ladder_0,0);
+  digitalWrite(Ladder_0, 0);
   digitalWrite(Ladder_1, 1);
-  digitalWrite(Ladder_2, 1);
+  digitalWrite(Ladder_2, 0);
   digitalWrite(Ladder_3, 1);
-  digitalWrite(Ladder_4, 0);
-  digitalWrite(Ladder_5, 1);
-  digitalWrite(Ladder_6, 0);
+  digitalWrite(Ladder_4, 1);
+  digitalWrite(Ladder_5, 0);
+  digitalWrite(Ladder_6, 1);
   digitalWrite(Ladder_7, 0);
 }
 
 void SetCurrent_350() {
-   if (digitalRead(_vin1Pin) == 0 && digitalRead(_vin2Pin) == 0)
-   {
-     digitalWrite(Ladder_0, 0);
-  digitalWrite(Ladder_1, 0);
-  digitalWrite(Ladder_2, 0);
-  digitalWrite(Ladder_3, 0);
-  digitalWrite(Ladder_4, 1);
-  digitalWrite(Ladder_5, 1);
-  digitalWrite(Ladder_6, 0);
-  digitalWrite(Ladder_7, 0);
-    }
-   else{
   digitalWrite(Ladder_0, 1);
-  digitalWrite(Ladder_1, 0);
+  digitalWrite(Ladder_1, 1);
   digitalWrite(Ladder_2, 0);
   digitalWrite(Ladder_3, 0);
-  digitalWrite(Ladder_4, 1);
+  digitalWrite(Ladder_4, 0);
   digitalWrite(Ladder_5, 1);
-  digitalWrite(Ladder_6, 0);
+  digitalWrite(Ladder_6, 1);
   digitalWrite(Ladder_7, 0);
-   }
 }
 
 void SetCurrent_400() {
-    if (digitalRead(_vin1Pin) == 0 && digitalRead(_vin2Pin) == 0)
-  {
   digitalWrite(Ladder_0, 0);
-  digitalWrite(Ladder_1, 1);
-  digitalWrite(Ladder_2, 0);
-  digitalWrite(Ladder_3, 0);
-  digitalWrite(Ladder_4, 1);
+  digitalWrite(Ladder_1, 0);
+  digitalWrite(Ladder_2, 1);
+  digitalWrite(Ladder_3, 1);
+  digitalWrite(Ladder_4, 0);
   digitalWrite(Ladder_5, 1);
-  digitalWrite(Ladder_6, 0);
+  digitalWrite(Ladder_6, 1);
   digitalWrite(Ladder_7, 0);
-  }
-  else
-  {
-   digitalWrite(Ladder_0, 1);
-  digitalWrite(Ladder_1, 1);
-  digitalWrite(Ladder_2, 0);
-  digitalWrite(Ladder_3, 0);
-  digitalWrite(Ladder_4, 1);
-  digitalWrite(Ladder_5, 1);
-  digitalWrite(Ladder_6, 0);
-  digitalWrite(Ladder_7, 0);
-  }
 }
 
 void SetCurrent_450() {
-    if (digitalRead(_vin1Pin) == 0 && digitalRead(_vin2Pin) == 0)
-  {
   digitalWrite(Ladder_0, 0);
-  digitalWrite(Ladder_1, 0);
+  digitalWrite(Ladder_1, 1);
   digitalWrite(Ladder_2, 1);
   digitalWrite(Ladder_3, 0);
   digitalWrite(Ladder_4, 1);
   digitalWrite(Ladder_5, 1);
-  digitalWrite(Ladder_6, 0);
+  digitalWrite(Ladder_6, 1);
   digitalWrite(Ladder_7, 0);
-   }
-  else
-  {
-       digitalWrite(Ladder_0, 1);
-  digitalWrite(Ladder_1, 0);
-  digitalWrite(Ladder_2, 1);
-  digitalWrite(Ladder_3, 0);
-  digitalWrite(Ladder_4, 1);
-  digitalWrite(Ladder_5, 1);
-  digitalWrite(Ladder_6, 0);
-  digitalWrite(Ladder_7, 0);
-  }
 }
 
 void SetCurrent_500() {
- if (digitalRead(_vin1Pin) == 0 && digitalRead(_vin2Pin) == 0)
-  {
-  digitalWrite(Ladder_0, 1);
+  digitalWrite(Ladder_0, 0);
   digitalWrite(Ladder_1, 0);
   digitalWrite(Ladder_2, 1);
   digitalWrite(Ladder_3, 0);
-  digitalWrite(Ladder_4, 1);
-  digitalWrite(Ladder_5, 1);
+  digitalWrite(Ladder_4, 0);
+  digitalWrite(Ladder_5, 0);
   digitalWrite(Ladder_6, 0);
-  digitalWrite(Ladder_7, 0);
-   }
-  else
-  {
- digitalWrite(Ladder_0, 1);
-  digitalWrite(Ladder_1, 1);
-  digitalWrite(Ladder_2, 1);
-  digitalWrite(Ladder_3, 0);
-  digitalWrite(Ladder_4, 1);
-  digitalWrite(Ladder_5, 1);
-  digitalWrite(Ladder_6, 0);
-  digitalWrite(Ladder_7, 0);
-  }
+  digitalWrite(Ladder_7, 1);
 }
 
 void SetCurrent_550() {
- if (digitalRead(_vin1Pin) == 0 && digitalRead(_vin2Pin) == 0)
-  {
-  digitalWrite(Ladder_0, 1);
+  digitalWrite(Ladder_0, 0);
   digitalWrite(Ladder_1, 1);
   digitalWrite(Ladder_2, 1);
-  digitalWrite(Ladder_3, 0);
-  digitalWrite(Ladder_4, 1);
-  digitalWrite(Ladder_5, 1);
-  digitalWrite(Ladder_6, 0);
-  digitalWrite(Ladder_7, 0);
-   }
-  else
-  {
- digitalWrite(Ladder_0, 1);
-  digitalWrite(Ladder_1, 0);
-  digitalWrite(Ladder_2, 0);
   digitalWrite(Ladder_3, 1);
-  digitalWrite(Ladder_4, 1);
-  digitalWrite(Ladder_5, 1);
+  digitalWrite(Ladder_4, 0);
+  digitalWrite(Ladder_5, 0);
   digitalWrite(Ladder_6, 0);
-  digitalWrite(Ladder_7, 0);
-  }
+  digitalWrite(Ladder_7, 1);
 }
 
 void SetCurrent_600() {
-if (digitalRead(_vin1Pin) == 0 && digitalRead(_vin2Pin) == 0)
-  {
-  digitalWrite(Ladder_0, 0);
+  digitalWrite(Ladder_0, 1);
   digitalWrite(Ladder_1, 0);
   digitalWrite(Ladder_2, 0);
   digitalWrite(Ladder_3, 1);
   digitalWrite(Ladder_4, 1);
-  digitalWrite(Ladder_5, 1);
+  digitalWrite(Ladder_5, 0);
   digitalWrite(Ladder_6, 0);
-  digitalWrite(Ladder_7, 0);
-   }
-  else
-  {
- digitalWrite(Ladder_0, 1);
-  digitalWrite(Ladder_1, 1);
-  digitalWrite(Ladder_2, 0);
-  digitalWrite(Ladder_3, 1);
-  digitalWrite(Ladder_4, 1);
-  digitalWrite(Ladder_5, 1);
-  digitalWrite(Ladder_6, 0);
-  digitalWrite(Ladder_7, 0);
-  }
+  digitalWrite(Ladder_7, 1);
 }
 
 void SetCurrent_650() {
-  if (digitalRead(_vin1Pin) == 0 && digitalRead(_vin2Pin) == 0)
-  {
-  digitalWrite(Ladder_0, 0);
-  digitalWrite(Ladder_1, 1);
-  digitalWrite(Ladder_2, 0);
-  digitalWrite(Ladder_3, 1);
-  digitalWrite(Ladder_4, 1);
-  digitalWrite(Ladder_5, 1);
-  digitalWrite(Ladder_6, 0);
-  digitalWrite(Ladder_7, 0);
-   }
-  else
-  {
- digitalWrite(Ladder_0, 0);
+  digitalWrite(Ladder_0, 1);
   digitalWrite(Ladder_1, 0);
   digitalWrite(Ladder_2, 1);
-  digitalWrite(Ladder_3, 1);
-  digitalWrite(Ladder_4, 1);
+  digitalWrite(Ladder_3, 0);
+  digitalWrite(Ladder_4, 0);
   digitalWrite(Ladder_5, 1);
   digitalWrite(Ladder_6, 0);
-  digitalWrite(Ladder_7, 0);
-  }
+  digitalWrite(Ladder_7, 1);
 }
 
 void Routine2()
 {
   digitalWrite(_vin1Pin, value);
   digitalWrite(_vin2Pin, value);
-  delayMicroseconds(80);
+  delayMicroseconds(280);
   digitalWrite(_vin1Pin, 0);
   digitalWrite(_vin2Pin, 1);
-  delayMicroseconds(920);
-  delay(249);
+  //delayMicroseconds(920);
+  delay(1);
 }
 
 

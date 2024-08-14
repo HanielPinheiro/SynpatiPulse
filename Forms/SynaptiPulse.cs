@@ -9,6 +9,7 @@ using System.Data;
 using System.IO.Ports;
 using System.Globalization;
 using System.Text;
+using System.Threading;
 
 namespace SynaptiPulse
 {
@@ -69,7 +70,6 @@ namespace SynaptiPulse
 
         private void SetFormTheme()
         {
-            materialSkinManager.EnforceBackcolorOnAllComponents = true;
             materialSkinManager.AddFormToManage(this);
             materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
             materialSkinManager.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
@@ -211,7 +211,8 @@ namespace SynaptiPulse
 
         private void PeriodicTab_SendConfigToBoard_Click(object sender, EventArgs e)
         {
-            Task.WaitAny(Task.Run(() => SendConfig_PeriodicData()));
+            if (periodicTabPulses.Count > 0 && serialControl!.IsConnected)
+                Task.WaitAny(Task.Run(() => SendConfig_PeriodicData()));
         }
 
 
@@ -232,7 +233,7 @@ namespace SynaptiPulse
                 PeriodicTab_SendConfigToBoard.Enabled = true;
             }
         }
-        
+
         private void PeriodicTab_AddPulse_Click(object sender, EventArgs e)
         {
             if (periodicTabPulses.Count < 10)
@@ -442,6 +443,12 @@ namespace SynaptiPulse
                 if (conversion) newValue = Math.Round(newValue, 0);
                 else newValue = Math.Round(double.Parse(value, NumberStyles.None, CultureInfo.CurrentCulture), 0);
 
+                if (newValue < 20)
+                {
+                    newValue = 20;
+                    ChaosTab_TxtPulseLength.Text = "20";
+                }
+
                 ParseData(newValue);
             }
             catch (InvalidOperationException iEx) { Error("Erro por ação inválida!", iEx); }
@@ -493,6 +500,8 @@ namespace SynaptiPulse
 
         private void ParseData(double? newPulseLengthValueInMicros = null)
         {
+            if (string.IsNullOrEmpty(chaosData)) return;
+
             string current = (ChaosTab_CbCurrent.SelectedValue as string)!;
 
             double pulseLength = 0d;
@@ -542,19 +551,21 @@ namespace SynaptiPulse
             RefreshAll_ChaosTab();
         }
 
-        private void DisableConfig()
+        private void DisableChaosButtons()
         {
             ChaosTab_CbCurrent.Enabled = false;
             ChaosTab_TxtPulseLength.Enabled = false;
             ChaosTab_TxtInterpulseInterval.Enabled = false;
             ChaosTab_btnLoadPulses.Enabled = false;
+            ChaosTab_btnStartStimulus.Enabled = false;
         }
-        private void EnableConfig()
+        private void EnableChaosButtons()
         {
             ChaosTab_CbCurrent.Enabled = true;
             ChaosTab_TxtPulseLength.Enabled = true;
             ChaosTab_TxtInterpulseInterval.Enabled = true;
             ChaosTab_btnLoadPulses.Enabled = true;
+            ChaosTab_btnStartStimulus.Enabled = true;
         }
 
         private async void ChaosTab_btnStartStimulus_Click(object sender, EventArgs e)
@@ -563,42 +574,47 @@ namespace SynaptiPulse
 
             chaosInterval = double.Parse(ChaosTab_TxtInterpulseInterval.Text, CultureInfo.CurrentCulture);
 
-            DisableConfig();
-
             ResetControllers();
 
+            CancellationToken cancellationToken = new();
             int totalData = parsedChaosData!.Length;
             for (int i = 0; i < totalData; i++)
             {
                 NeedWaiting = i < totalData - 1;
-                await Task.Run(async () => await SendDataAndRun(parsedChaosData![i]));
+                this.BeginInvoke(() => { ChaosTab_Status.Text = $"Estimulando trem de pulso" + (i + 1); });
+                await Task.Run(async () => await SendDataAndRun(parsedChaosData![i], cancellationToken));
             }
         }
 
-        private async Task SendDataAndRun(Pulse[] pulseTrain)
+        private async Task SendDataAndRun(Pulse[] pulseTrain, CancellationToken cancellationToken)
         {
-            await Task.Run(() => { Parallel.Invoke(() => RunningChaos(pulseTrain)); });
+            await Task.Run(() => { Parallel.Invoke(() => RunningChaos(pulseTrain, cancellationToken)); });
         }
 
-        private void RunningChaos(Pulse[] pulseTrain)
+        private void RunningChaos(Pulse[] pulseTrain, CancellationToken cancellationToken)
         {
             try
             {
+                cancellationToken.ThrowIfCancellationRequested();
+
                 int totalPulses = pulseTrain.Length;
                 int maxNumOfPulsesThatArduinoAchieve = 40;
-
-                this.BeginInvoke(() => { ChaosTab_Status.Text = "Estimulando"; });
                 PulseTrainRunning = true;
 
                 SendData($"{DeviceControl.PREFIX}{DeviceControl.RESET_BOARD}{DeviceControl.SUFIX}");
                 Thread.Sleep(DeviceControl.Delay);
+
+                this.BeginInvoke(() => { DisableChaosButtons(); });
 
                 SendData($"{DeviceControl.PREFIX}{DeviceControl.READ_START}{DeviceControl.SUFIX}");
                 Thread.Sleep(DeviceControl.Delay);
                 int i = 0;
                 for (; i < maxNumOfPulsesThatArduinoAchieve; i++)
                 {
-                    string txt = pulseTrain[i].ToString().Replace(",", ".");
+                    cancellationToken.ThrowIfCancellationRequested();
+                    var p = pulseTrain[i];
+                    if(p.PulseLength > 0) p.PulseLength = p.PulseLength - 10;
+                    string txt = p.ToString().Replace(",", ".");
                     SendData($"{DeviceControl.PREFIX}{txt}{DeviceControl.SUFIX}");
                     Thread.Sleep(DeviceControl.Delay);
                 }
@@ -609,24 +625,29 @@ namespace SynaptiPulse
                 SendData($"{DeviceControl.PREFIX}{DeviceControl.ROUTINE_START}{DeviceControl.SUFIX}");
                 Thread.Sleep(DeviceControl.Delay);
 
-                while (!HasParsed) { }
+                while (!HasParsed) { cancellationToken.ThrowIfCancellationRequested(); }
 
-                for (; i < totalPulses;)
+                for (; i < totalPulses;) // send the extra pulses that the arduino buffer can't receive
                 {
                     if (CanSend)
                     {
-                        string txt = pulseTrain[i].ToString().Replace(",", ".");
+                        cancellationToken.ThrowIfCancellationRequested();
+                        var p = pulseTrain[i];
+                        if (p.PulseLength > 0) p.PulseLength = p.PulseLength - 10; #warning ajustar aqui
+                        string txt = p.ToString().Replace(",", ".");
                         SendData($"{DeviceControl.PREFIX}{txt}{DeviceControl.SUFIX}");
                         Thread.Sleep(DeviceControl.Delay);
                         i++;
                         CanSend = false;
                     }
+                    cancellationToken.ThrowIfCancellationRequested();
                 }
 
-                while (PulseTrainRunning) { }
+                while (PulseTrainRunning) { cancellationToken.ThrowIfCancellationRequested(); }
+
+                cancellationToken.ThrowIfCancellationRequested();
 
                 if (NeedWaiting) Thread.Sleep((int)chaosInterval);
-
             }
             catch (Exception ex) { Error("Error when try to send configs to the board", ex); }
         }
@@ -754,6 +775,7 @@ namespace SynaptiPulse
                 Refresh();
             }
             catch (Exception ex) { Error("Problema ao tentar conectar na placa", ex); }
+            finally { ChaosTab_Status.Text = "Não iniciado"; }
         }
 
         private void SetButtonsState(bool value)
@@ -858,7 +880,7 @@ namespace SynaptiPulse
             {
                 PulseTrainRunning = false;
                 if (NeedWaiting) this.BeginInvoke(() => { ChaosTab_Status.Text = "Aguardando"; });
-                else this.BeginInvoke(() => { ChaosTab_Status.Text = "Concluído"; });
+                else this.BeginInvoke(() => { ChaosTab_Status.Text = "Concluído"; EnableChaosButtons(); });
             }
 
             this.BeginInvoke(() => { if (serialControl!.IsConnected) txtReceivedData.Text += newText; });
@@ -882,6 +904,11 @@ namespace SynaptiPulse
         public void SendData(string text)
         {
             try { serialControl!.SendData(text); }
+            catch (TimeoutException timeOutException)
+            {
+                Error("The write operation timed out.", timeOutException);
+                // Retry logic or additional handling here
+            }
             catch (Exception ex) { Error($"Error when try to{nameof(SendData)}!", ex); }
         }
 
@@ -963,6 +990,7 @@ namespace SynaptiPulse
         }
 
         #endregion
+
 
     }
 }

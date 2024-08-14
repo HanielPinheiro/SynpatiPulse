@@ -698,10 +698,11 @@
             // ChaosTab_Status
             // 
             ChaosTab_Status.AutoSize = true;
-            ChaosTab_Status.BackColor = SystemColors.Control;
+            ChaosTab_Status.BackColor = Color.Firebrick;
             ChaosTab_Status.Depth = 0;
             ChaosTab_Status.Dock = DockStyle.Fill;
             ChaosTab_Status.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
+            ChaosTab_Status.ForeColor = Color.White;
             ChaosTab_Status.Location = new Point(164, 0);
             ChaosTab_Status.MouseState = MaterialSkin.MouseState.HOVER;
             ChaosTab_Status.Name = "ChaosTab_Status";
@@ -1543,8 +1544,6 @@
         private GroupBox groupBox4;
         private TableLayoutPanel TbPanel_Chaos;
         private TableLayoutPanel tableLayoutPanel18;
-        private MaterialSkin.Controls.MaterialLabel ChaosTab_LabelStatus;
-        private MaterialSkin.Controls.MaterialLabel ChaosTab_Status;
         private MaterialSkin.Controls.MaterialButton ChaosTab_btnStartStimulus;
         private MaterialSkin.Controls.MaterialButton ChaosTab_btnLoadPulses;
         private MaterialSkin.Controls.MaterialLabel ChaosTab_LblInterpulseInterval;
@@ -1553,5 +1552,7 @@
         private MaterialSkin.Controls.MaterialLabel ChaosTab_LblPulseLarge;
         private MaterialSkin.Controls.MaterialTextBox ChaosTab_TxtPulseLength;
         private MaterialSkin.Controls.MaterialTextBox ChaosTab_TxtInterpulseInterval;
+        private MaterialSkin.Controls.MaterialLabel ChaosTab_LabelStatus;
+        private MaterialSkin.Controls.MaterialLabel ChaosTab_Status;
     }
 }
