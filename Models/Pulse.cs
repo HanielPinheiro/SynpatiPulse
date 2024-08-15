@@ -131,6 +131,16 @@ namespace SynaptiPulse.Models
             this.AfterPulseLength = Convert.ToDouble(pulse);
             this.AfterPulseMeasureUnity = measureUnity_DefaultToAmbientRelation.Where(p => p.Value == measure).FirstOrDefault().Key;
         }
+
+        public void CopyFrom(Pulse pulse)
+        {
+            this.Current = pulse.Current;
+            this.Polarity = pulse.Polarity;
+            this.PulseLength = pulse.PulseLength;
+            this.PulseMeasureUnity = pulse.PulseMeasureUnity;
+            this.AfterPulseLength = pulse.AfterPulseLength;
+            this.AfterPulseMeasureUnity = pulse.AfterPulseMeasureUnity;
+        }
     }
 
 }

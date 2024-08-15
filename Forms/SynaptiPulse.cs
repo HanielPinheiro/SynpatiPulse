@@ -612,8 +612,11 @@ namespace SynaptiPulse
                 for (; i < maxNumOfPulsesThatArduinoAchieve; i++)
                 {
                     cancellationToken.ThrowIfCancellationRequested();
-                    var p = pulseTrain[i];
-                    if(p.PulseLength > 0) p.PulseLength = p.PulseLength - 10;
+
+                    Pulse p = new();
+                    p.CopyFrom(pulseTrain[i]);
+                    if (p.PulseLength > 0) p.PulseLength -= 10;
+
                     string txt = p.ToString().Replace(",", ".");
                     SendData($"{DeviceControl.PREFIX}{txt}{DeviceControl.SUFIX}");
                     Thread.Sleep(DeviceControl.Delay);
@@ -632,11 +635,15 @@ namespace SynaptiPulse
                     if (CanSend)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        var p = pulseTrain[i];
-                        if (p.PulseLength > 0) p.PulseLength = p.PulseLength - 10; #warning ajustar aqui
+                        
+                        Pulse p = new();
+                        p.CopyFrom(pulseTrain[i]);                        
+                        if (p.PulseLength > 0) p.PulseLength -= 10; 
+                        
                         string txt = p.ToString().Replace(",", ".");
                         SendData($"{DeviceControl.PREFIX}{txt}{DeviceControl.SUFIX}");
                         Thread.Sleep(DeviceControl.Delay);
+
                         i++;
                         CanSend = false;
                     }
