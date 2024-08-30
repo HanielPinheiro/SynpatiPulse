@@ -7,6 +7,7 @@ void ParsePulseFromArray()
   int measureUnity = 0;
   int multiplier = 100;  // Inicial para o número inteiro
   bool isFraction = false;
+  bool isNegative = false;
 
   for (int i = 0; data[i] != '\0'; i++) {
     char c = data[i];
@@ -19,9 +20,12 @@ void ParsePulseFromArray()
           fractPart += (c - '0') * multiplier;
           multiplier /= 10;
         }
-        else intPart = intPart * 10 + (c - '0');
+        else {
+          if(isNegative) intPart = 0;
+          else intPart = intPart * 10 + (c - '0');
+        }
       }
-
+      else if (c == '-') isNegative = true;
       else if (c == '.') isFraction = true;
 
       else if (c == INSTRUCTION_UNITY_MS || c == INSTRUCTION_UNITY_US || c == INSTRUCTION_UNITY_S) measureUnity = c;
@@ -39,6 +43,7 @@ void ParsePulseFromArray()
       fractPart = 0;
       multiplier = 100;
       isFraction = false;
+      isNegative = false;
       stage++;
     }
   }
@@ -47,12 +52,7 @@ void ParsePulseFromArray()
     Pulse[6] = fractPart;
     Pulse[7] = measureUnity;
   }
-
-  /* for (int a = 0; a < 8; a++) {
-     Serial.print(Pulse[a]);
-     if (a == 7) Serial.println(); else Serial.print(F(" - "));
-    }*/
-
+    
   PulseCounter++;
   if (PulseCounter == ArrayCounter && PeriodicMode) PulseCounter = 0;
 }

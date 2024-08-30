@@ -12,7 +12,9 @@ void RunPulse() {
 
 // =========================================================
 void SetCurrent(int value) {
-  if (value == 50) SetCurrent_50();
+  if (value == 30) SetCurrent_30();
+  else if (value == 50) SetCurrent_50();
+  else if (value == 75) SetCurrent_75();
   else if (value == 100) SetCurrent_100();
   else if (value == 150) SetCurrent_150();
   else if (value == 200) SetCurrent_200();

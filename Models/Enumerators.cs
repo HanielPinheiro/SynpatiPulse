@@ -18,8 +18,12 @@ namespace SynaptiPulse.Models
     /// </summary>
     public enum PulseCurrents
     {
+        [Description("30"), DefaultValue(30)]
+        Thirty,
         [Description("50"), DefaultValue(50)]
         Fifty,
+        [Description("75"), DefaultValue(75)]
+        SeventyFive,
         [Description("100"), DefaultValue(100)]
         Hundred,
         [Description("150"), DefaultValue(150)]
@@ -41,7 +45,9 @@ namespace SynaptiPulse.Models
         [Description("550"), DefaultValue(550)]
         FiveHundredFifty,
         [Description("600"), DefaultValue(600)]
-        SixHundred
+        SixHundred,
+        [Description("650"), DefaultValue(650)]
+        SixHundredFifty
     }
 
     /// <summary>

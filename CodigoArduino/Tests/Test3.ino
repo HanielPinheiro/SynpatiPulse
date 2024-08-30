@@ -1,3 +1,4 @@
+/*
 uint8_t Ladder_0 = 9;
 uint8_t Ladder_1 = 8;
 uint8_t Ladder_2 = 7;
@@ -187,13 +188,14 @@ void SetCurrent_650() {
 
 void Routine2()
 {
-  digitalWrite(_vin1Pin, value);
-  digitalWrite(_vin2Pin, value);
-  delayMicroseconds(280);
   digitalWrite(_vin1Pin, 0);
-  digitalWrite(_vin2Pin, 1);
-  //delayMicroseconds(920);
-  delay(1);
+  digitalWrite(_vin2Pin, 0);
+  delayMicroseconds(100);
+  //delay(1000);
+  digitalWrite(_vin1Pin, 0);
+  digitalWrite(_vin2Pin, 1);  
+  delay(250);
+  //delay(1000);
 }
 
 
@@ -226,3 +228,4 @@ void BlinkLed() {
   delay(300);
   digitalWrite(_ledPin, 0);
 }
+*/

@@ -1,6 +1,6 @@
 /*
    DAC 8 Bits para Resistores da primeira versão que eu montei 4k7 e 10k
- * */
+ *
 void SetCurrent_0() {
   digitalWrite(Ladder_0, 0);
   digitalWrite(Ladder_1, 0);
