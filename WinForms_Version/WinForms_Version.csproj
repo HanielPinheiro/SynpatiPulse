@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0-windows</TargetFramework>
+    <TargetFramework>net8.0-windows7.0</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
@@ -11,10 +11,13 @@
   <ItemGroup>
     <Compile Remove="ArduinoController\**" />
     <Compile Remove="Arduino\**" />
+    <Compile Remove="WPF_Version\**" />
     <EmbeddedResource Remove="ArduinoController\**" />
     <EmbeddedResource Remove="Arduino\**" />
+    <EmbeddedResource Remove="WPF_Version\**" />
     <None Remove="ArduinoController\**" />
     <None Remove="Arduino\**" />
+    <None Remove="WPF_Version\**" />
   </ItemGroup>
 
   <ItemGroup>
