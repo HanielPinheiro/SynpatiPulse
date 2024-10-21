@@ -1,9 +1,9 @@
 {
   "profiles": {
-    "ExploringWinUI (Package)": {
+    "WinUI_Version (Package)": {
       "commandName": "MsixPackage"
     },
-    "ExploringWinUI (Unpackaged)": {
+    "WinUI_Version (Unpackaged)": {
       "commandName": "Project"
     }
   }
