@@ -1,0 +1,48 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Avalonia_Version.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:CompileBindings="True"
+        x:Class="Avalonia_Version.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="Avalonia_Version">
+
+	<Design.DataContext>
+		<!-- This only sets the DataContext for the previewer in an IDE,
+             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+		<vm:MainWindowViewModel/>
+	</Design.DataContext>
+
+	<StackPanel Name="B" DataContext="{Binding ReactiveViewModel}" Spacing="10">
+		<Border Margin="5" CornerRadius="10" Background="LightBlue">
+			<TextBlock Margin="5" FontSize="24" HorizontalAlignment="Center" Text="Temperature Converter">
+			</TextBlock>
+		</Border>
+		<Grid ShowGridLines="True"  Margin="5"
+		  ColumnDefinitions="120, 100"
+		  RowDefinitions="Auto, Auto, Auto , Auto, Auto">
+			<Label Grid.Row="0" Grid.Column="0" Margin="10">Celsius</Label>
+			<TextBox Grid.Row="0" Grid.Column="1" Margin="5" Text="0"/>
+			<Label Grid.Row="1" Grid.Column="0" Margin="10">Fahrenheit</Label>
+			<TextBox Grid.Row="1"  Grid.Column="1" Margin="5" Text="0"/>
+			<Button Grid.Row="2" Grid.Column="1" Margin="5">Calculate</Button>
+			<TextBlock Grid.Row="3" Grid.Column="0">Enter your Name:</TextBlock>
+			<TextBox Grid.Row="3"  Grid.Column="1" Text="{Binding Name}" />
+			<TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Greeting, Mode=OneWay}" 
+					 IsReadOnly="True" FontWeight="Bold" />
+		</Grid>
+			<TextBlock>Enter your Name:</TextBlock>
+			<TextBox Text="{Binding Name}" />
+			<TextBox Text="{Binding Greeting, Mode=OneWay}"
+					 IsReadOnly="True"
+					 FontWeight="Bold" />
+	</StackPanel>
+	<!--<StackPanel DataContext="{Binding SimpleViewModel}" Spacing="10">
+		<TextBlock>Enter your Name:</TextBlock>
+		<TextBox Text="{Binding Name}" />
+		<TextBox Text="{Binding Greeting, Mode=OneWay}" IsReadOnly="True" FontWeight="Bold" />
+	</StackPanel>-->
+</Window>
