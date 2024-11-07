@@ -15,34 +15,74 @@
              to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
 		<vm:MainWindowViewModel/>
 	</Design.DataContext>
+	<Grid ShowGridLines="False" Margin="5" RowDefinitions="Auto, Auto">
+		
+		<!-- This button will ask HAL to open the doors for a fellow robot -->
+		<!-- We use CommandParameter to provide the name of the robot -->
+		<!-- Note that the button is automatically disabled if we don't enter a name-->
+		<StackPanel Grid.Row="0"  Orientation="Horizontal" Spacing="5">
+			<Button Command="{Binding OpenThePodBayDoorsDirectCommand}">DirectButton</Button>
+			
+			<Button Command="{Binding OpenThePodBayDoorsAsyncCommand}">AsyncButton</Button>
+			
+			<TextBox Text="{Binding RobotName}" Watermark="Robot Name" />
+			
+			<Button Command="{Binding OpenThePodBayDoorsFellowRobotCommand}"
+					Content="{Binding RobotName, StringFormat='Fellow for {0}'}"
+					CommandParameter="{Binding RobotName}" />
 
-	<StackPanel Name="B" DataContext="{Binding ReactiveViewModel}" Spacing="10">
-		<Border Margin="5" CornerRadius="10" Background="LightBlue">
-			<TextBlock Margin="5" FontSize="24" HorizontalAlignment="Center" Text="Temperature Converter">
-			</TextBlock>
-		</Border>
-		<Grid ShowGridLines="True"  Margin="5"
-		  ColumnDefinitions="120, 100"
-		  RowDefinitions="Auto, Auto, Auto , Auto, Auto">
-			<Label Grid.Row="0" Grid.Column="0" Margin="10">Celsius</Label>
-			<TextBox Grid.Row="0" Grid.Column="1" Margin="5" Text="0"/>
-			<Label Grid.Row="1" Grid.Column="0" Margin="10">Fahrenheit</Label>
-			<TextBox Grid.Row="1"  Grid.Column="1" Margin="5" Text="0"/>
-			<Button Grid.Row="2" Grid.Column="1" Margin="5">Calculate</Button>
-			<TextBlock Grid.Row="3" Grid.Column="0">Enter your Name:</TextBlock>
-			<TextBox Grid.Row="3"  Grid.Column="1" Text="{Binding Name}" />
-			<TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Greeting, Mode=OneWay}" 
-					 IsReadOnly="True" FontWeight="Bold" />
-		</Grid>
-			<TextBlock>Enter your Name:</TextBlock>
-			<TextBox Text="{Binding Name}" />
-			<TextBox Text="{Binding Greeting, Mode=OneWay}"
-					 IsReadOnly="True"
-					 FontWeight="Bold" />
-	</StackPanel>
-	<!--<StackPanel DataContext="{Binding SimpleViewModel}" Spacing="10">
-		<TextBlock>Enter your Name:</TextBlock>
-		<TextBox Text="{Binding Name}" />
-		<TextBox Text="{Binding Greeting, Mode=OneWay}" IsReadOnly="True" FontWeight="Bold" />
-	</StackPanel>-->
+			<Separator Grid.Row="1" Grid.ColumnSpan="2"
+				   HorizontalAlignment="Stretch"
+				   Margin="5"
+				   Height="2"
+				   Background="LightGray"/>
+
+			<TextBlock Grid.Column="0" Grid.Row="2"
+					   Text="HAL 9000:"
+					   FontWeight="Bold"
+					   Margin="5"
+					   VerticalAlignment="Center"/>
+
+			<!-- This is the area where the output of HAL9000 is rendered -->
+			<Border Grid.Column="1" Grid.Row="2"
+					CornerRadius="10" Margin="5"
+					BorderThickness="1" BorderBrush="{DynamicResource SystemAccentColor}">
+				<Grid ColumnDefinitions="*,Auto">
+					<ItemsControl Margin="5"
+								  ItemsSource="{Binding ConversationLog}" />
+
+					<!-- This button will clear the recent conversation log-->
+					<!-- which is not supported via CompiledBinding.                                 -->
+					<Button Grid.Column="1"
+							VerticalAlignment="Stretch" VerticalContentAlignment="Center"
+							Background="Transparent"
+							Command="{Binding ConversationLog.Clear}"
+							Content="❌"/>
+				</Grid>
+			</Border>
+		</StackPanel>
+		
+		
+		<StackPanel Grid.Row="1"  Name="B" DataContext="{Binding ReactiveViewModel}" Spacing="10">
+			<Border Margin="5" CornerRadius="10" Background="LightBlue">
+				<TextBlock Margin="5" FontSize="24" HorizontalAlignment="Center" Text="Temperature Converter">
+				</TextBlock>
+			</Border>
+
+			<Grid ShowGridLines="True"  Margin="5"
+			  ColumnDefinitions="120, 100"
+			  RowDefinitions="Auto, Auto, Auto , Auto, Auto">
+				<Label Grid.Row="0" Grid.Column="0" Margin="10">Celsius</Label>
+				<TextBox Grid.Row="0" Grid.Column="1" Margin="5" Text="0"/>
+				<Label Grid.Row="1" Grid.Column="0" Margin="10">Fahrenheit</Label>
+				<TextBox Grid.Row="1"  Grid.Column="1" Margin="5" Text="0"/>
+				<Button Grid.Row="2" Grid.Column="1" Margin="5">Calculate</Button>
+				<TextBlock Grid.Row="3" Grid.Column="0">Enter your Name:</TextBlock>
+				<TextBox Grid.Row="3"  Grid.Column="1" Text="{Binding Name}" />
+				<TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Greeting, Mode=OneWay}"
+						 IsReadOnly="True" FontWeight="Bold" />
+			</Grid>
+		</StackPanel>
+	</Grid>
+
 </Window>
